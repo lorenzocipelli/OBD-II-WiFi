@@ -50,5 +50,50 @@ namespace OBD_II_WiFi
 
             //return result.Status == IPStatus.Success;
         }
+
+        void configDevice()
+        {
+
+            send("\r");
+
+            send("AT SP 0" + "\r");
+
+            send("AT D" + "\r");
+
+            send("AT DPN" + "\r");
+
+            send("AT I" + "\r");
+
+            send("0100" + "\r");
+
+            send("AT H0" + "\r");
+
+            send("AT AT2" + "\r");
+
+            send("AT SH 7FF" + "\r");
+
+            Console.WriteLine("Battery Voltage:");
+            send("AT RV" + "\r");
+
+            send("0902" + "\r");
+        }
+
+        public void send(string msg)
+        {
+            if (stream == null)
+            {
+                Console.WriteLine("No stream yet");
+            }
+            var msgByte = Encoding.ASCII.GetBytes(msg);
+            try
+            {
+                stream.Write(msgByte, 0, msgByte.Length);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+        }
     }
 }
