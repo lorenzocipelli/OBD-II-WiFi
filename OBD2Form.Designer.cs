@@ -1,6 +1,6 @@
 ﻿namespace OBD_II_WiFi
 {
-    partial class Form1
+    partial class OBD2Form
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
+            portTextBox = new TextBox();
             label1 = new Label();
             label2 = new Label();
-            textBox2 = new TextBox();
-            button1 = new Button();
+            ipTextBox = new TextBox();
+            initConnButton = new Button();
             display = new RichTextBox();
             SuspendLayout();
             // 
-            // textBox1
+            // portTextBox
             // 
-            textBox1.Location = new Point(58, 41);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(137, 23);
-            textBox1.TabIndex = 0;
-            textBox1.Text = "35000";
+            portTextBox.Location = new Point(58, 41);
+            portTextBox.Name = "portTextBox";
+            portTextBox.Size = new Size(137, 23);
+            portTextBox.TabIndex = 0;
+            portTextBox.Text = "35000";
             // 
             // label1
             // 
@@ -62,23 +62,23 @@
             label2.TabIndex = 2;
             label2.Text = "PORT";
             // 
-            // textBox2
+            // ipTextBox
             // 
-            textBox2.Location = new Point(58, 12);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(137, 23);
-            textBox2.TabIndex = 3;
-            textBox2.Text = "192.168.0.149";
+            ipTextBox.Location = new Point(58, 12);
+            ipTextBox.Name = "ipTextBox";
+            ipTextBox.Size = new Size(137, 23);
+            ipTextBox.TabIndex = 3;
+            ipTextBox.Text = "192.168.0.149";
             // 
-            // button1
+            // initConnButton
             // 
-            button1.Location = new Point(12, 70);
-            button1.Name = "button1";
-            button1.Size = new Size(183, 23);
-            button1.TabIndex = 4;
-            button1.Text = "Connect";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            initConnButton.Location = new Point(12, 70);
+            initConnButton.Name = "initConnButton";
+            initConnButton.Size = new Size(183, 23);
+            initConnButton.TabIndex = 4;
+            initConnButton.Text = "Init TCP Connection";
+            initConnButton.UseVisualStyleBackColor = true;
+            initConnButton.Click += button1_Click;
             // 
             // display
             // 
@@ -88,18 +88,18 @@
             display.TabIndex = 5;
             display.Text = "";
             // 
-            // Form1
+            // OBD2Form
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(995, 525);
             Controls.Add(display);
-            Controls.Add(button1);
-            Controls.Add(textBox2);
+            Controls.Add(initConnButton);
+            Controls.Add(ipTextBox);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(textBox1);
-            Name = "Form1";
+            Controls.Add(portTextBox);
+            Name = "OBD2Form";
             Text = "OBD II - Logger";
             ResumeLayout(false);
             PerformLayout();
@@ -107,11 +107,11 @@
 
         #endregion
 
-        private TextBox textBox1;
+        private TextBox portTextBox;
         private Label label1;
         private Label label2;
-        private TextBox textBox2;
-        private Button button1;
+        private TextBox ipTextBox;
+        private Button initConnButton;
         private RichTextBox display;
     }
 }
