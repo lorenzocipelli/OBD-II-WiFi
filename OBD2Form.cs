@@ -41,6 +41,8 @@ namespace OBD_II_WiFi
 
             data = new byte[client.ReceiveBufferSize];
 
+            findOutPIDs();
+
             /*Ping ping = new Ping();
 
             PingReply result = await ping.SendPingAsync(ip_to_ping);
@@ -51,31 +53,14 @@ namespace OBD_II_WiFi
             //return result.Status == IPStatus.Success;
         }
 
-        void configDevice()
-        {
 
-            send("\r");
-
-            send("AT SP 0" + "\r");
-
-            send("AT D" + "\r");
-
-            send("AT DPN" + "\r");
-
-            send("AT I" + "\r");
-
-            send("0100" + "\r");
-
-            send("AT H0" + "\r");
-
-            send("AT AT2" + "\r");
-
-            send("AT SH 7FF" + "\r");
-
-            Console.WriteLine("Battery Voltage:");
-            send("AT RV" + "\r");
-
-            send("0902" + "\r");
+        void findOutPIDs() {
+            //send("0100" + "\r");
+            //send("0120" + "\r");
+            //send("0140" + "\r");
+            //send("0160" + "\r");
+            //send("0180" + "\r");
+            //send("01A0" + "\r"); // ultimo, non ritorna tutto come gli altri
         }
 
         public void send(string msg)
@@ -87,7 +72,8 @@ namespace OBD_II_WiFi
             var msgByte = Encoding.ASCII.GetBytes(msg);
             try
             {
-                stream.Write(msgByte, 0, msgByte.Length);
+                //stream.Write(msgByte, 0, msgByte.Length);
+                display.Text += "\nSent: " + msg;
             }
             catch (Exception e)
             {
