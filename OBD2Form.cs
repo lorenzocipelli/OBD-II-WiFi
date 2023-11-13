@@ -48,11 +48,12 @@ namespace OBD_II_WiFi
             });
 
             if (n_try == 6) startListening(); // apertura thread di ascolto della stream
-            else { display.Text += "\n" + "IP address is uncreachable at the moment, try again later..."; }
+            else { display.Text += "\n" + "IP address is unreachable at the moment, try again later..."; }
         }
 
-        private async void startListening() {
-            display.Text = "\n" + "Connection ESTABILSHED";
+        private async void startListening()
+        {
+            display.Text = "Connection established!";
             await Task.Run(() =>
             {
                 while (!stopListening)
@@ -72,7 +73,8 @@ namespace OBD_II_WiFi
             });
         }
 
-        private void writeDisplay(string text) {
+        private void writeDisplay(string text)
+        {
             if (display.InvokeRequired)
             {
                 writeDisplayDelegate d = new writeDisplayDelegate(writeDisplay);
@@ -89,24 +91,28 @@ namespace OBD_II_WiFi
             findOutPIDs();
         }
 
-        void findOutPIDs() {
-            send("0100" + "\r");
-            // 0100 41 00 BE 3E A8 13  
-            // 0100 41 00 BE 3E A8 13
-            Task.Delay(2000).Wait();
-            send("0120" + "\r");
+        private async void findOutPIDs()
+        {
+            await Task.Run(() =>
+            {
+                send("0100" + "\r");
+                // 0100 41 00 BE 3E A8 13  
+                // 0100 41 00 BE 3E A8 13
+                Task.Delay(2000).Wait();
+                send("0120" + "\r");
 
-            Task.Delay(2000).Wait();
-            send("0140" + "\r");
+                Task.Delay(2000).Wait();
+                send("0140" + "\r");
 
-            Task.Delay(2000).Wait();
-            send("0160" + "\r");
+                Task.Delay(2000).Wait();
+                send("0160" + "\r");
 
-            Task.Delay(2000).Wait();
-            send("0180" + "\r");
+                Task.Delay(2000).Wait();
+                send("0180" + "\r");
 
-            Task.Delay(2000).Wait();
-            send("01A0" + "\r"); // ultimo
+                Task.Delay(2000).Wait();
+                send("01A0" + "\r"); // ultimo
+            });
         }
 
         public void send(string msg)
@@ -125,19 +131,6 @@ namespace OBD_II_WiFi
             {
                 Console.WriteLine(e.Message);
             }
-
-        }
-
-        private async Task pingFunctionAsync() {
-            var ip_address = IPAddress.Parse(ipTextBox.Text);
-            Ping ping = new Ping();
-
-            PingReply result = await ping.SendPingAsync(ip_address);
-
-            display.Text = "Device with IP: " + result.Address.ToString() + " pinged";
-            display.Text += "\nTTL: " + result.RoundtripTime.ToString();
-
-            //return result.Status == IPStatus.Success;
         }
 
         private void buttonStopListening_Click(object sender, EventArgs e)
