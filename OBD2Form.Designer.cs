@@ -35,6 +35,7 @@
             this.initConnButton = new System.Windows.Forms.Button();
             this.display = new System.Windows.Forms.RichTextBox();
             this.askPIDButton = new System.Windows.Forms.Button();
+            this.buttonStopListening = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // portTextBox
@@ -69,7 +70,7 @@
             this.ipTextBox.Name = "ipTextBox";
             this.ipTextBox.Size = new System.Drawing.Size(137, 23);
             this.ipTextBox.TabIndex = 3;
-            this.ipTextBox.Text = "192.168.0.149";
+            this.ipTextBox.Text = "192.168.0.10";
             // 
             // initConnButton
             // 
@@ -99,11 +100,22 @@
             this.askPIDButton.UseVisualStyleBackColor = true;
             this.askPIDButton.Click += new System.EventHandler(this.askPIDButton_Click);
             // 
+            // buttonStopListening
+            // 
+            this.buttonStopListening.Location = new System.Drawing.Point(609, 170);
+            this.buttonStopListening.Name = "buttonStopListening";
+            this.buttonStopListening.Size = new System.Drawing.Size(132, 23);
+            this.buttonStopListening.TabIndex = 7;
+            this.buttonStopListening.Text = "Close Connection";
+            this.buttonStopListening.UseVisualStyleBackColor = true;
+            this.buttonStopListening.Click += new System.EventHandler(this.buttonStopListening_Click);
+            // 
             // OBD2Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(753, 429);
+            this.Controls.Add(this.buttonStopListening);
             this.Controls.Add(this.askPIDButton);
             this.Controls.Add(this.display);
             this.Controls.Add(this.initConnButton);
@@ -127,5 +139,6 @@
         private Button initConnButton;
         private RichTextBox display;
         private Button askPIDButton;
+        private Button buttonStopListening;
     }
 }
