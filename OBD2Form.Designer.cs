@@ -44,7 +44,7 @@
             portTextBox.Name = "portTextBox";
             portTextBox.Size = new Size(137, 23);
             portTextBox.TabIndex = 0;
-            portTextBox.Text = "35000";
+            portTextBox.Text = "49936";
             // 
             // label1
             // 
@@ -70,7 +70,7 @@
             ipTextBox.Name = "ipTextBox";
             ipTextBox.Size = new Size(137, 23);
             ipTextBox.TabIndex = 3;
-            ipTextBox.Text = "192.168.0.10";
+            ipTextBox.Text = "127.0.0.1";
             // 
             // initConnButton
             // 

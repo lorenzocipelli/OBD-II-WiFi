@@ -3,6 +3,7 @@ using System.Net.NetworkInformation;
 using System.Net;
 using System.IO;
 using System.Text;
+using System.Diagnostics;
 
 namespace OBD_II_WiFi
 {
@@ -15,6 +16,7 @@ namespace OBD_II_WiFi
 
         delegate void writeDisplayDelegate(string toDisplay);
         bool stopListening = false;
+        bool converting = false;
 
         public OBD2Form()
         {
@@ -58,17 +60,38 @@ namespace OBD_II_WiFi
             {
                 while (!stopListening)
                 {
-                    byte[] buffer = new byte[client.ReceiveBufferSize];
-                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                    byte[] mesajj = new byte[bytesRead];
-
-                    for (int i = 0; i < bytesRead; i++)
+                    try
                     {
-                        mesajj[i] = buffer[i];
+                        byte[] buffer = new byte[client.ReceiveBufferSize];
+                        int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                        byte[] mesajj = new byte[bytesRead];
+
+                        for (int i = 0; i < bytesRead; i++)
+                        {
+                            mesajj[i] = buffer[i];
+                        }
+
+                        data += Encoding.Default.GetString(mesajj, 0, bytesRead).Replace("\r", "");
+                        if (data.Length > 0)
+                        {
+                            /*if (converting)
+                            {
+                                printHexToBin("0100 41 00 BE 3E A8 13");
+                            }
+                            else
+                            {
+                                writeDisplay(data);
+                            }*/
+                            writeDisplay(data);
+
+                        }
+                    }
+                    catch (IOException error)
+                    {
+                        stopListening = true;
+                        writeDisplay(error.Message);
                     }
 
-                    data += Encoding.Default.GetString(mesajj, 0, bytesRead).Replace("\r", " ");
-                    writeDisplay(data);
                 }
             });
         }
@@ -82,7 +105,7 @@ namespace OBD_II_WiFi
             }
             else
             {
-                display.Text += "\n" + text;
+                display.Text += "\n" + text.TrimEnd('\r', '\n');
             }
         }
 
@@ -93,12 +116,16 @@ namespace OBD_II_WiFi
 
         private async void findOutPIDs()
         {
+            converting = true;
             await Task.Run(() =>
             {
+                send("AT H1"); // per mostrare gli headers, per capire quale componente sta inviando indietro
+                /* dopodiché bisognerà mandare solamente AT CRA 7E8, se per esempio il motore è 7E8
+                   successivamente si può anche togliere la possibilità di vedere gli header con AT H0 */
                 send("0100" + "\r");
                 // 0100 41 00 BE 3E A8 13  
                 // 0100 41 00 BE 3E A8 13
-                Task.Delay(2000).Wait();
+                /*Task.Delay(2000).Wait();
                 send("0120" + "\r");
 
                 Task.Delay(2000).Wait();
@@ -112,7 +139,10 @@ namespace OBD_II_WiFi
 
                 Task.Delay(2000).Wait();
                 send("01A0" + "\r"); // ultimo
+
+                Task.Delay(2000).Wait();*/
             });
+            converting = false;
         }
 
         public void send(string msg)
@@ -137,6 +167,18 @@ namespace OBD_II_WiFi
         {
             stopListening = true;
             client.Close();
+        }
+
+        private void printHexToBin(string hex) {
+            string to_print = "";
+            hex = hex.Replace(" ", string.Empty);
+            writeDisplay(hex);
+            var test = Convert.FromHexString(hex);
+            foreach (byte spaced in test.Skip(4))
+            {
+                to_print = Convert.ToString(spaced, 2).PadLeft(8, '0');
+                writeDisplay(to_print);
+            }
         }
     }
 }
