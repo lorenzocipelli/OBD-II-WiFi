@@ -1,5 +1,4 @@
 {
-  "PIDs supported [$01 - $20]": 1,
   "Monitor status since DTCs cleared. (Includes malfunction indicator lamp (MIL), status and number of DTCs, components tests, DTC readiness checks)": 0,
   "DTC that caused freeze frame to be stored.": 0,
   "Fuel system status": 0,
