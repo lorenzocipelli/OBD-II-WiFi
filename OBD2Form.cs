@@ -178,6 +178,9 @@ namespace OBD_II_WiFi
             hex = hex.Replace(" ", string.Empty);
             writeDisplay(hex);
             var test = Convert.FromHexString(hex);
+            int responde_index = test[3];
+            writeDisplay("Index: " + responde_index.ToString());
+
             foreach (byte spaced in test.Skip(4)) // parte di stampa
             {
                 to_print = Convert.ToString(spaced, 2).PadLeft(8, '0');
@@ -187,18 +190,18 @@ namespace OBD_II_WiFi
                 foreach (char bit in to_print_array_tmp) {
                     to_print_array = to_print_array.Append(bit).ToArray(); ;
                 }
-            }
 
-            foreach (char bit in to_print_array) {
-                writeDisplay(bit.ToString());
+                // to_print_array è una lista di 32 "bit", sono dei char
+
+
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             printHexToBin("010041 00 BE 3E A8 13 ");
-            /*printHexToBin("012041 20 80 07 B0 11 ");
-            printHexToBin("014041 40 FE D0 84 01 ");
+            printHexToBin("012041 20 80 07 B0 11 ");
+            /*printHexToBin("014041 40 FE D0 84 01 ");
             printHexToBin("016041 60 08 08 00 01 ");
             printHexToBin("018041 80 00 00 00 01 ");
             printHexToBin("01A041 A0 00 00 00 00 ");*/

@@ -22,7 +22,7 @@ for i in range(0, len(parameters)):
     key = parameters[i]
     val = 0
     dataset[key]=val
-
+dataset.pop(parameters[0])
 with open('datafile.json', 'w') as f:
     json.dump(dataset, f)
     
