@@ -1,164 +1,680 @@
 {
-  "Monitor status since DTCs cleared. (Includes malfunction indicator lamp (MIL), status and number of DTCs, components tests, DTC readiness checks)": 0,
-  "DTC that caused freeze frame to be stored.": 0,
-  "Fuel system status": 0,
-  "Calculated engine load": 0,
-  "Engine coolant temperature": 0,
-  "Short term fuel trim (STFT)\u2014Bank 1": 0,
-  "Long term fuel trim (LTFT)\u2014Bank 1": 0,
-  "Short term fuel trim (STFT)\u2014Bank 2": 0,
-  "Long term fuel trim (LTFT)\u2014Bank 2": 0,
-  "Fuel pressure (gauge pressure)": 0,
-  "Intake manifold absolute pressure": 0,
-  "Engine speed": 0,
-  "Vehicle speed": 0,
-  "Timing advance": 0,
-  "Intake air temperature": 0,
-  "Mass air flow sensor (MAF) air flow rate": 0,
-  "Throttle position": 0,
-  "Commanded secondary air status": 0,
-  "Oxygen sensors present (in 2 banks)": 0,
-  "Oxygen Sensor 1A: VoltageB: Short term fuel trim": 0,
-  "Oxygen Sensor 2A: VoltageB: Short term fuel trim": 0,
-  "Oxygen Sensor 3A: VoltageB: Short term fuel trim": 0,
-  "Oxygen Sensor 4A: VoltageB: Short term fuel trim": 0,
-  "Oxygen Sensor 5A: VoltageB: Short term fuel trim": 0,
-  "Oxygen Sensor 6A: VoltageB: Short term fuel trim": 0,
-  "Oxygen Sensor 7A: VoltageB: Short term fuel trim": 0,
-  "Oxygen Sensor 8A: VoltageB: Short term fuel trim": 0,
-  "OBD standards this vehicle conforms to": 0,
-  "Oxygen sensors present (in 4 banks)": 0,
-  "Auxiliary input status": 0,
-  "Run time since engine start": 0,
-  "PIDs supported [$21 - $40]": 0,
-  "Distance traveled with malfunction indicator lamp (MIL) on": 0,
-  "Fuel Rail Pressure (relative to manifold vacuum)": 0,
-  "Fuel Rail Gauge Pressure (diesel, or gasoline direct injection)": 0,
-  "Oxygen Sensor 1AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage": 0,
-  "Oxygen Sensor 2AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage": 0,
-  "Oxygen Sensor 3AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage": 0,
-  "Oxygen Sensor 4AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage": 0,
-  "Oxygen Sensor 5AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage": 0,
-  "Oxygen Sensor 6AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage": 0,
-  "Oxygen Sensor 7AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage": 0,
-  "Oxygen Sensor 8AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage": 0,
-  "Commanded EGR": 0,
-  "EGR Error": 0,
-  "Commanded evaporative purge": 0,
-  "Fuel Tank Level Input": 0,
-  "Warm-ups since codes cleared": 0,
-  "Distance traveled since codes cleared": 0,
-  "Evap. System Vapor Pressure": 0,
-  "Absolute Barometric Pressure": 0,
-  "Oxygen Sensor 1AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current": 0,
-  "Oxygen Sensor 2AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current": 0,
-  "Oxygen Sensor 3AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current": 0,
-  "Oxygen Sensor 4AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current": 0,
-  "Oxygen Sensor 5AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current": 0,
-  "Oxygen Sensor 6AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current": 0,
-  "Oxygen Sensor 7AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current": 0,
-  "Oxygen Sensor 8AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current": 0,
-  "Catalyst Temperature: Bank 1, Sensor 1": 0,
-  "Catalyst Temperature: Bank 2, Sensor 1": 0,
-  "Catalyst Temperature: Bank 1, Sensor 2": 0,
-  "Catalyst Temperature: Bank 2, Sensor 2": 0,
-  "PIDs supported [$41 - $60]": 0,
-  "Monitor status this drive cycle": 0,
-  "Control module voltage": 0,
-  "Absolute load value": 0,
-  "Commanded Air-Fuel Equivalence Ratio (lambda,\u03bb)": 0,
-  "Relative throttle position": 0,
-  "Ambient air temperature": 0,
-  "Absolute throttle position B": 0,
-  "Absolute throttle position C": 0,
-  "Accelerator pedal position D": 0,
-  "Accelerator pedal position E": 0,
-  "Accelerator pedal position F": 0,
-  "Commanded throttle actuator": 0,
-  "Time run with MIL on": 0,
-  "Time since trouble codes cleared": 0,
-  "Maximum value for Fuel\u2013Air equivalence ratio, oxygen sensor voltage, oxygen sensor current, and intake manifold absolute pressure": 0,
-  "Maximum value for air flow rate from mass air flow sensor": 0,
-  "Fuel Type": 0,
-  "Ethanol fuel\u00a0%": 0,
-  "Absolute Evap system Vapor Pressure": 0,
-  "Evap system vapor pressure": 0,
-  "Short term secondary oxygen sensor trim, A: bank 1, B: bank 3": 0,
-  "Long term secondary oxygen sensor trim, A: bank 1, B: bank 3": 0,
-  "Short term secondary oxygen sensor trim, A: bank 2, B: bank 4": 0,
-  "Long term secondary oxygen sensor trim, A: bank 2, B: bank 4": 0,
-  "Fuel rail absolute pressure": 0,
-  "Relative accelerator pedal position": 0,
-  "Hybrid battery pack remaining life": 0,
-  "Engine oil temperature": 0,
-  "Fuel injection timing": 0,
-  "Engine fuel rate": 0,
-  "Emission requirements to which vehicle is designed": 0,
-  "PIDs supported [$61 - $80]": 0,
-  "Driver's demand engine - percent torque": 0,
-  "Actual engine - percent torque": 0,
-  "Engine reference torque": 0,
-  "Engine percent torque data": 0,
-  "Auxiliary input / output supported": 0,
-  "Mass air flow sensor": 0,
-  "Intake air temperature sensor": 0,
-  "Actual EGR, Commanded EGR, and EGR Error": 0,
-  "Commanded Diesel intake air flow control and relative intake air flow position": 0,
-  "Exhaust gas recirculation temperature": 0,
-  "Commanded throttle actuator control and relative throttle position": 0,
-  "Fuel pressure control system": 0,
-  "Injection pressure control system": 0,
-  "Turbocharger compressor inlet pressure": 0,
-  "Boost pressure control": 0,
-  "Variable Geometry turbo (VGT) control": 0,
-  "Wastegate control": 0,
-  "Exhaust pressure": 0,
-  "Turbocharger RPM": 0,
-  "Turbocharger temperature": 0,
-  "Charge air cooler temperature (CACT)": 0,
-  "Exhaust Gas temperature (EGT) Bank 1": 0,
-  "Exhaust Gas temperature (EGT) Bank 2": 0,
-  "Diesel particulate filter (DPF)differential pressure": 0,
-  "Diesel particulate filter (DPF)": 0,
-  "Diesel Particulate filter (DPF) temperature": 0,
-  "NOx NTE (Not-To-Exceed) control area status": 0,
-  "PM NTE (Not-To-Exceed) control area status": 0,
-  "Engine run time [b]": 0,
-  "PIDs supported [$81 - $A0]": 0,
-  "Engine run time for Auxiliary Emissions Control Device(AECD)": 0,
-  "NOx sensor": 0,
-  "Manifold surface temperature": 0,
-  "NOx reagent system": 0,
-  "Particulate matter (PM) sensor": 0,
-  "SCR Induce System": 0,
-  "Run Time for AECD #11-#15": 0,
-  "Run Time for AECD #16-#20": 0,
-  "Diesel Aftertreatment": 0,
-  "O2 Sensor (Wide Range)": 0,
-  "Throttle Position G": 0,
-  "Engine Friction - Percent Torque": 0,
-  "PM Sensor Bank 1 & 2": 0,
-  "WWH-OBD Vehicle OBD System Information": 0,
-  "Fuel System Control": 0,
-  "WWH-OBD Vehicle OBD Counters support": 0,
-  "NOx Warning And Inducement System": 0,
-  "Exhaust Gas Temperature Sensor": 0,
-  "Hybrid/EV Vehicle System Data, Battery, Voltage": 0,
-  "Diesel Exhaust Fluid Sensor Data": 0,
-  "O2 Sensor Data": 0,
-  "Engine Fuel Rate": 0,
-  "Engine Exhaust Flow Rate": 0,
-  "Fuel System Percentage Use": 0,
-  "PIDs supported [$A1 - $C0]": 0,
-  "NOx Sensor Corrected Data": 0,
-  "Cylinder Fuel Rate": 0,
-  "Evap System Vapor Pressure": 0,
-  "Transmission Actual Gear": 0,
-  "Commanded Diesel Exhaust Fluid Dosing": 0,
-  "Odometer [c]": 0,
-  "NOx Sensor Concentration Sensors 3 and 4": 0,
-  "NOx Sensor Corrected Concentration Sensors 3 and 4": 0,
-  "ABS Disable Switch State": 0,
-  "PIDs supported [$C1 - $E0]": 0,
-  "?": 0
+  "PIDs": [
+    {
+      "description": "Monitor status since DTCs cleared. (Includes malfunction indicator lamp (MIL), status and number of DTCs, components tests, DTC readiness checks)",
+      "value": 0
+    },
+    {
+      "description": "DTC that caused freeze frame to be stored.",
+      "value": 0
+    },
+    {
+      "description": "Fuel system status",
+      "value": 0
+    },
+    {
+      "description": "Calculated engine load",
+      "value": 0
+    },
+    {
+      "description": "Engine coolant temperature",
+      "value": 0
+    },
+    {
+      "description": "Short term fuel trim (STFT)\u2014Bank 1",
+      "value": 0
+    },
+    {
+      "description": "Long term fuel trim (LTFT)\u2014Bank 1",
+      "value": 0
+    },
+    {
+      "description": "Short term fuel trim (STFT)\u2014Bank 2",
+      "value": 0
+    },
+    {
+      "description": "Long term fuel trim (LTFT)\u2014Bank 2",
+      "value": 0
+    },
+    {
+      "description": "Fuel pressure (gauge pressure)",
+      "value": 0
+    },
+    {
+      "description": "Intake manifold absolute pressure",
+      "value": 0
+    },
+    {
+      "description": "Engine speed",
+      "value": 0
+    },
+    {
+      "description": "Vehicle speed",
+      "value": 0
+    },
+    {
+      "description": "Timing advance",
+      "value": 0
+    },
+    {
+      "description": "Intake air temperature",
+      "value": 0
+    },
+    {
+      "description": "Mass air flow sensor (MAF) air flow rate",
+      "value": 0
+    },
+    {
+      "description": "Throttle position",
+      "value": 0
+    },
+    {
+      "description": "Commanded secondary air status",
+      "value": 0
+    },
+    {
+      "description": "Oxygen sensors present (in 2 banks)",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 1A: VoltageB: Short term fuel trim",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 2A: VoltageB: Short term fuel trim",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 3A: VoltageB: Short term fuel trim",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 4A: VoltageB: Short term fuel trim",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 5A: VoltageB: Short term fuel trim",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 6A: VoltageB: Short term fuel trim",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 7A: VoltageB: Short term fuel trim",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 8A: VoltageB: Short term fuel trim",
+      "value": 0
+    },
+    {
+      "description": "OBD standards this vehicle conforms to",
+      "value": 0
+    },
+    {
+      "description": "Oxygen sensors present (in 4 banks)",
+      "value": 0
+    },
+    {
+      "description": "Auxiliary input status",
+      "value": 0
+    },
+    {
+      "description": "Run time since engine start",
+      "value": 0
+    },
+    {
+      "description": "PIDs supported [$21 - $40]",
+      "value": 0
+    },
+    {
+      "description": "Distance traveled with malfunction indicator lamp (MIL) on",
+      "value": 0
+    },
+    {
+      "description": "Fuel Rail Pressure (relative to manifold vacuum)",
+      "value": 0
+    },
+    {
+      "description": "Fuel Rail Gauge Pressure (diesel, or gasoline direct injection)",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 1AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 2AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 3AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 4AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 5AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 6AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 7AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 8AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Voltage",
+      "value": 0
+    },
+    {
+      "description": "Commanded EGR",
+      "value": 0
+    },
+    {
+      "description": "EGR Error",
+      "value": 0
+    },
+    {
+      "description": "Commanded evaporative purge",
+      "value": 0
+    },
+    {
+      "description": "Fuel Tank Level Input",
+      "value": 0
+    },
+    {
+      "description": "Warm-ups since codes cleared",
+      "value": 0
+    },
+    {
+      "description": "Distance traveled since codes cleared",
+      "value": 0
+    },
+    {
+      "description": "Evap. System Vapor Pressure",
+      "value": 0
+    },
+    {
+      "description": "Absolute Barometric Pressure",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 1AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 2AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 3AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 4AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 5AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 6AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 7AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current",
+      "value": 0
+    },
+    {
+      "description": "Oxygen Sensor 8AB: Air-Fuel Equivalence Ratio (lambda,\u03bb)CD: Current",
+      "value": 0
+    },
+    {
+      "description": "Catalyst Temperature: Bank 1, Sensor 1",
+      "value": 0
+    },
+    {
+      "description": "Catalyst Temperature: Bank 2, Sensor 1",
+      "value": 0
+    },
+    {
+      "description": "Catalyst Temperature: Bank 1, Sensor 2",
+      "value": 0
+    },
+    {
+      "description": "Catalyst Temperature: Bank 2, Sensor 2",
+      "value": 0
+    },
+    {
+      "description": "PIDs supported [$41 - $60]",
+      "value": 0
+    },
+    {
+      "description": "Monitor status this drive cycle",
+      "value": 0
+    },
+    {
+      "description": "Control module voltage",
+      "value": 0
+    },
+    {
+      "description": "Absolute load value",
+      "value": 0
+    },
+    {
+      "description": "Commanded Air-Fuel Equivalence Ratio (lambda,\u03bb)",
+      "value": 0
+    },
+    {
+      "description": "Relative throttle position",
+      "value": 0
+    },
+    {
+      "description": "Ambient air temperature",
+      "value": 0
+    },
+    {
+      "description": "Absolute throttle position B",
+      "value": 0
+    },
+    {
+      "description": "Absolute throttle position C",
+      "value": 0
+    },
+    {
+      "description": "Accelerator pedal position D",
+      "value": 0
+    },
+    {
+      "description": "Accelerator pedal position E",
+      "value": 0
+    },
+    {
+      "description": "Accelerator pedal position F",
+      "value": 0
+    },
+    {
+      "description": "Commanded throttle actuator",
+      "value": 0
+    },
+    {
+      "description": "Time run with MIL on",
+      "value": 0
+    },
+    {
+      "description": "Time since trouble codes cleared",
+      "value": 0
+    },
+    {
+      "description": "Maximum value for Fuel\u2013Air equivalence ratio, oxygen sensor voltage, oxygen sensor current, and intake manifold absolute pressure",
+      "value": 0
+    },
+    {
+      "description": "Maximum value for air flow rate from mass air flow sensor",
+      "value": 0
+    },
+    {
+      "description": "Fuel Type",
+      "value": 0
+    },
+    {
+      "description": "Ethanol fuel\u00a0%",
+      "value": 0
+    },
+    {
+      "description": "Absolute Evap system Vapor Pressure",
+      "value": 0
+    },
+    {
+      "description": "Evap system vapor pressure",
+      "value": 0
+    },
+    {
+      "description": "Short term secondary oxygen sensor trim, A: bank 1, B: bank 3",
+      "value": 0
+    },
+    {
+      "description": "Long term secondary oxygen sensor trim, A: bank 1, B: bank 3",
+      "value": 0
+    },
+    {
+      "description": "Short term secondary oxygen sensor trim, A: bank 2, B: bank 4",
+      "value": 0
+    },
+    {
+      "description": "Long term secondary oxygen sensor trim, A: bank 2, B: bank 4",
+      "value": 0
+    },
+    {
+      "description": "Fuel rail absolute pressure",
+      "value": 0
+    },
+    {
+      "description": "Relative accelerator pedal position",
+      "value": 0
+    },
+    {
+      "description": "Hybrid battery pack remaining life",
+      "value": 0
+    },
+    {
+      "description": "Engine oil temperature",
+      "value": 0
+    },
+    {
+      "description": "Fuel injection timing",
+      "value": 0
+    },
+    {
+      "description": "Engine fuel rate",
+      "value": 0
+    },
+    {
+      "description": "Emission requirements to which vehicle is designed",
+      "value": 0
+    },
+    {
+      "description": "PIDs supported [$61 - $80]",
+      "value": 0
+    },
+    {
+      "description": "Driver's demand engine - percent torque",
+      "value": 0
+    },
+    {
+      "description": "Actual engine - percent torque",
+      "value": 0
+    },
+    {
+      "description": "Engine reference torque",
+      "value": 0
+    },
+    {
+      "description": "Engine percent torque data",
+      "value": 0
+    },
+    {
+      "description": "Auxiliary input / output supported",
+      "value": 0
+    },
+    {
+      "description": "Mass air flow sensor",
+      "value": 0
+    },
+    {
+      "description": "Engine coolant temperature",
+      "value": 0
+    },
+    {
+      "description": "Intake air temperature sensor",
+      "value": 0
+    },
+    {
+      "description": "Actual EGR, Commanded EGR, and EGR Error",
+      "value": 0
+    },
+    {
+      "description": "Commanded Diesel intake air flow control and relative intake air flow position",
+      "value": 0
+    },
+    {
+      "description": "Exhaust gas recirculation temperature",
+      "value": 0
+    },
+    {
+      "description": "Commanded throttle actuator control and relative throttle position",
+      "value": 0
+    },
+    {
+      "description": "Fuel pressure control system",
+      "value": 0
+    },
+    {
+      "description": "Injection pressure control system",
+      "value": 0
+    },
+    {
+      "description": "Turbocharger compressor inlet pressure",
+      "value": 0
+    },
+    {
+      "description": "Boost pressure control",
+      "value": 0
+    },
+    {
+      "description": "Variable Geometry turbo (VGT) control",
+      "value": 0
+    },
+    {
+      "description": "Wastegate control",
+      "value": 0
+    },
+    {
+      "description": "Exhaust pressure",
+      "value": 0
+    },
+    {
+      "description": "Turbocharger RPM",
+      "value": 0
+    },
+    {
+      "description": "Turbocharger temperature",
+      "value": 0
+    },
+    {
+      "description": "Turbocharger temperature",
+      "value": 0
+    },
+    {
+      "description": "Charge air cooler temperature (CACT)",
+      "value": 0
+    },
+    {
+      "description": "Exhaust Gas temperature (EGT) Bank 1",
+      "value": 0
+    },
+    {
+      "description": "Exhaust Gas temperature (EGT) Bank 2",
+      "value": 0
+    },
+    {
+      "description": "Diesel particulate filter (DPF)differential pressure",
+      "value": 0
+    },
+    {
+      "description": "Diesel particulate filter (DPF)",
+      "value": 0
+    },
+    {
+      "description": "Diesel Particulate filter (DPF) temperature",
+      "value": 0
+    },
+    {
+      "description": "NOx NTE (Not-To-Exceed) control area status",
+      "value": 0
+    },
+    {
+      "description": "PM NTE (Not-To-Exceed) control area status",
+      "value": 0
+    },
+    {
+      "description": "Engine run time [b]",
+      "value": 0
+    },
+    {
+      "description": "PIDs supported [$81 - $A0]",
+      "value": 0
+    },
+    {
+      "description": "Engine run time for Auxiliary Emissions Control Device(AECD)",
+      "value": 0
+    },
+    {
+      "description": "Engine run time for Auxiliary Emissions Control Device(AECD)",
+      "value": 0
+    },
+    {
+      "description": "NOx sensor",
+      "value": 0
+    },
+    {
+      "description": "Manifold surface temperature",
+      "value": 0
+    },
+    {
+      "description": "NOx reagent system",
+      "value": 0
+    },
+    {
+      "description": "Particulate matter (PM) sensor",
+      "value": 0
+    },
+    {
+      "description": "Intake manifold absolute pressure",
+      "value": 0
+    },
+    {
+      "description": "SCR Induce System",
+      "value": 0
+    },
+    {
+      "description": "Run Time for AECD #11-#15",
+      "value": 0
+    },
+    {
+      "description": "Run Time for AECD #16-#20",
+      "value": 0
+    },
+    {
+      "description": "Diesel Aftertreatment",
+      "value": 0
+    },
+    {
+      "description": "O2 Sensor (Wide Range)",
+      "value": 0
+    },
+    {
+      "description": "Throttle Position G",
+      "value": 0
+    },
+    {
+      "description": "Engine Friction - Percent Torque",
+      "value": 0
+    },
+    {
+      "description": "PM Sensor Bank 1 & 2",
+      "value": 0
+    },
+    {
+      "description": "WWH-OBD Vehicle OBD System Information",
+      "value": 0
+    },
+    {
+      "description": "WWH-OBD Vehicle OBD System Information",
+      "value": 0
+    },
+    {
+      "description": "Fuel System Control",
+      "value": 0
+    },
+    {
+      "description": "WWH-OBD Vehicle OBD Counters support",
+      "value": 0
+    },
+    {
+      "description": "NOx Warning And Inducement System",
+      "value": 0
+    },
+    {
+      "description": "Exhaust Gas Temperature Sensor",
+      "value": 0
+    },
+    {
+      "description": "Exhaust Gas Temperature Sensor",
+      "value": 0
+    },
+    {
+      "description": "Hybrid/EV Vehicle System Data, Battery, Voltage",
+      "value": 0
+    },
+    {
+      "description": "Diesel Exhaust Fluid Sensor Data",
+      "value": 0
+    },
+    {
+      "description": "O2 Sensor Data",
+      "value": 0
+    },
+    {
+      "description": "Engine Fuel Rate",
+      "value": 0
+    },
+    {
+      "description": "Engine Exhaust Flow Rate",
+      "value": 0
+    },
+    {
+      "description": "Fuel System Percentage Use",
+      "value": 0
+    },
+    {
+      "description": "PIDs supported [$A1 - $C0]",
+      "value": 0
+    },
+    {
+      "description": "NOx Sensor Corrected Data",
+      "value": 0
+    },
+    {
+      "description": "Cylinder Fuel Rate",
+      "value": 0
+    },
+    {
+      "description": "Evap System Vapor Pressure",
+      "value": 0
+    },
+    {
+      "description": "Transmission Actual Gear",
+      "value": 0
+    },
+    {
+      "description": "Commanded Diesel Exhaust Fluid Dosing",
+      "value": 0
+    },
+    {
+      "description": "Odometer [c]",
+      "value": 0
+    },
+    {
+      "description": "NOx Sensor Concentration Sensors 3 and 4",
+      "value": 0
+    },
+    {
+      "description": "NOx Sensor Corrected Concentration Sensors 3 and 4",
+      "value": 0
+    },
+    {
+      "description": "ABS Disable Switch State",
+      "value": 0
+    },
+    {
+      "description": "PIDs supported [$C1 - $E0]",
+      "value": 0
+    },
+    {
+      "description": "?",
+      "value": 0
+    },
+    {
+      "description": "?",
+      "value": 0
+    }
+  ]
 }
