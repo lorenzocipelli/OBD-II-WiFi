@@ -1,5 +1,6 @@
 using System.Net.Sockets;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Net.NetworkInformation;
 using System.Net;
 using System.IO;
@@ -195,24 +196,48 @@ namespace OBD_II_WiFi
             }
 
             // to_print_array è una lista di 32 "bit", sono dei char
+            string json;
+            JsonNode pids;
+            int j = 0;
 
-            using (StreamReader r = new StreamReader("../../../dati/datafile.json"))
+            if (responde_index == 0) // se la prima decodifica prendo lo scheletro (tutto nullo)
             {
-                string json = r.ReadToEnd();
-                var values = JsonSerializer.Deserialize<Dictionary<string, PIDList>>(json);
-                writeDisplay(values["PIDs"].Pidlist[0].ToString());
+                using (StreamReader r = new StreamReader("../../../dati/datafile.json"))
+                {
+                    json = r.ReadToEnd();
+                    pids = JsonNode.Parse(json)!;
+                }
             }
+            else { // altrimenti continuo la modifica del file
+                using (StreamReader r = new StreamReader("../../../dati/datafile_mod.json"))
+                {
+                    json = r.ReadToEnd();
+                    pids = JsonNode.Parse(json)!;
+                }
+            }
+            
+
+            for (int i = responde_index; i < responde_index + 32; i++)
+            { // fixed number: 169
+                pids["PIDs"][i]["value"] = int.Parse(to_print_array[j].ToString());
+                j++;
+            }
+
+            writeDisplay(pids.ToString());
+            //convert to JSON string
+            var jsonOptions = new JsonSerializerOptions() { WriteIndented = true };
+            var coderJson = pids.ToJsonString(jsonOptions);
+
+            System.IO.File.WriteAllText("../../../dati/datafile_mod.json", coderJson);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             printHexToBin("010041 00 BE 3E A8 13 ");
-            printHexToBin("012041 20 80 07 B0 11 ");           
-            
-            /*printHexToBin("014041 40 FE D0 84 01 ");
+            printHexToBin("012041 20 80 07 B0 11 ");
+            printHexToBin("014041 40 FE D0 84 01 ");
             printHexToBin("016041 60 08 08 00 01 ");
             printHexToBin("018041 80 00 00 00 01 ");
-            printHexToBin("01A041 A0 00 00 00 00 ");*/
         }
     }
 }

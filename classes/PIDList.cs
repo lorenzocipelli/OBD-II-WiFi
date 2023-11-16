@@ -9,8 +9,10 @@ namespace OBD_II_WiFi.classes
 {
     internal class PIDList
     {
-        private PIDescrptior[] pid_list;
+        private string key;
+        private PIDescriptor[] pid_list;
 
-        public PIDescrptior[] Pidlist { get { return pid_list; } set { pid_list = value; } }
+        public string Key { get { return key; } set { key = value; } }
+        public PIDescriptor[] Pidlist { get { return pid_list; } set { pid_list = value; } }
     }
 }

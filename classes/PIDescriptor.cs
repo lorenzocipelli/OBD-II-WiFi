@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OBD_II_WiFi.classes
 {
-    internal class PIDescrptior
+    internal class PIDescriptor
     {
         private string description;
         private int available;
