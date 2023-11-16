@@ -76,14 +76,14 @@ namespace OBD_II_WiFi
                         {
                             /*if (converting)
                             {
-                                printHexToBin("0100 41 00 BE 3E A8 13");
+                                printHexToBin(data); // ex: "0100 41 00 BE 3E A8 13"
                             }
                             else
                             {
                                 writeDisplay(data);
                             }*/
-                            writeDisplay(data);
-
+                            writeDisplay(data); // rimuovere se scommentato il blocco sopra
+                            data = "";
                         }
                     }
                     catch (IOException error)
@@ -105,7 +105,7 @@ namespace OBD_II_WiFi
             }
             else
             {
-                display.Text += "\n" + text.TrimEnd('\r', '\n');
+                display.Text += "\n" + text;
             }
         }
 
@@ -116,16 +116,18 @@ namespace OBD_II_WiFi
 
         private async void findOutPIDs()
         {
-            converting = true;
             await Task.Run(() =>
             {
-                send("AT H1"); // per mostrare gli headers, per capire quale componente sta inviando indietro
-                /* dopodiché bisognerà mandare solamente AT CRA 7E8, se per esempio il motore è 7E8
-                   successivamente si può anche togliere la possibilità di vedere gli header con AT H0 */
+                //send("AT H1" + "\r"); // attivo gli headers
+                send("AT D" + "\r"); // impostazioni di fabbrica
+                send("AT CRA 7E8" + "\r"); // permettere solamente alla ECU di rispondere
+                //send("AT H0" + "\r"); // disattivo gli headers
+                converting = true;
+
+                Task.Delay(2000).Wait();
                 send("0100" + "\r");
                 // 0100 41 00 BE 3E A8 13  
-                // 0100 41 00 BE 3E A8 13
-                /*Task.Delay(2000).Wait();
+                Task.Delay(2000).Wait();
                 send("0120" + "\r");
 
                 Task.Delay(2000).Wait();
@@ -140,7 +142,7 @@ namespace OBD_II_WiFi
                 Task.Delay(2000).Wait();
                 send("01A0" + "\r"); // ultimo
 
-                Task.Delay(2000).Wait();*/
+                Task.Delay(2000).Wait();
             });
             converting = false;
         }
@@ -171,14 +173,35 @@ namespace OBD_II_WiFi
 
         private void printHexToBin(string hex) {
             string to_print = "";
+            char[] to_print_array = new char[] { };
+            char[] to_print_array_tmp = new char[] { };
             hex = hex.Replace(" ", string.Empty);
             writeDisplay(hex);
             var test = Convert.FromHexString(hex);
-            foreach (byte spaced in test.Skip(4))
+            foreach (byte spaced in test.Skip(4)) // parte di stampa
             {
                 to_print = Convert.ToString(spaced, 2).PadLeft(8, '0');
                 writeDisplay(to_print);
+
+                to_print_array_tmp = to_print.ToCharArray();
+                foreach (char bit in to_print_array_tmp) {
+                    to_print_array = to_print_array.Append(bit).ToArray(); ;
+                }
             }
+
+            foreach (char bit in to_print_array) {
+                writeDisplay(bit.ToString());
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            printHexToBin("010041 00 BE 3E A8 13 ");
+            /*printHexToBin("012041 20 80 07 B0 11 ");
+            printHexToBin("014041 40 FE D0 84 01 ");
+            printHexToBin("016041 60 08 08 00 01 ");
+            printHexToBin("018041 80 00 00 00 01 ");
+            printHexToBin("01A041 A0 00 00 00 00 ");*/
         }
     }
 }
