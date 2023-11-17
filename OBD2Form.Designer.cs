@@ -83,7 +83,7 @@
             this.initConnButton.TabIndex = 4;
             this.initConnButton.Text = "Init TCP Connection";
             this.initConnButton.UseVisualStyleBackColor = true;
-            this.initConnButton.Click += new System.EventHandler(this.initConnButton_Click_1);
+            this.initConnButton.Click += new System.EventHandler(this.initConnButton_Click);
             // 
             // display
             // 
@@ -102,7 +102,7 @@
             this.askPIDButton.TabIndex = 6;
             this.askPIDButton.Text = "Ask PID";
             this.askPIDButton.UseVisualStyleBackColor = true;
-            this.askPIDButton.Click += new System.EventHandler(this.askPIDButton_Click_1);
+            this.askPIDButton.Click += new System.EventHandler(this.askPIDButton_Click);
             // 
             // buttonStopListening
             // 

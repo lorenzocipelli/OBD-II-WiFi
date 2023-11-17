@@ -19,17 +19,14 @@ namespace OBD_II_WiFi
         string data;
 
         delegate void writeDisplayDelegate(string toDisplay);
+
+        bool runEngineMonitoring = true;
         bool stopListening = false;
         bool converting = false;
 
         public OBD2Form()
         {
             InitializeComponent();
-        }
-
-        private async void initConnButton_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private async void startListening()
@@ -57,29 +54,36 @@ namespace OBD_II_WiFi
                         {
                             if (converting)
                             {
-                                printHexToBin(data); // ex: "0100 41 00 BE 3E A8 13"
+                                printPIDs(data);
                             }
                             else
                             {
+                                data = data.Replace(" ", string.Empty);
+                                var tmp = Convert.FromHexString(data);
                                 // non ancora fatto il parsing per una richiesta diversa
                                 // da quella dei PIDs
                                 if (data.Contains("41 0B"))
                                 { // Intake manifold absolute pressure (MAP)
-
-                                    writeDisplay("MAP: " + data);
+                                    int map = tmp[4]*1000; // il valore arriva in kPa
+                                    writeDisplay("MAP: " + map.ToString() + " [Pascal]");
                                 } else if (data.Contains("41 0C"))
                                 { // Engine speed
-                                    
-                                    writeDisplay("RPM: " + data);
+                                    int rmp = (tmp[4] * 256 + tmp[5]) / 4; // il valore arriva in rpm * 4
+                                    writeDisplay("RPM: " + rmp.ToString() + " [rpm]");
                                 } else if (data.Contains("41 0F"))
                                 { // Intake air temperature (IAT)
-
-                                    writeDisplay("IAT: " + data);
+                                    int iat = tmp[4] - 40; // il valore arriva in iat + 40
+                                    writeDisplay("IAT: " + iat.ToString() + " [C°]");
                                 } else if (data.Contains("41 24"))
                                 { // lambda air-fuel ratio
-                                    writeDisplay("lambda: " + data);
+                                    int lambda = (tmp[4] * 256 + tmp[5]) * (2 / 65536);
+                                    writeDisplay("lambda: " + lambda + " [ratio V]");
                                 }
-                                writeDisplay(data);
+                                else if (data.Contains("41 66"))
+                                { // lambda air-fuel ratio (non dovrebbe andare teoricamente)
+                                    int maf = (tmp[4]*256 + tmp[5]) / 100;
+                                    writeDisplay("MAF: " + maf.ToString() + " [g/s]");
+                                }
                             }
                             //writeDisplay(data); // rimuovere se scommentato il blocco sopra
                             data = "";
@@ -90,7 +94,6 @@ namespace OBD_II_WiFi
                         stopListening = true;
                         writeDisplay(error.Message);
                     }
-
                 }
             });
         }
@@ -106,16 +109,6 @@ namespace OBD_II_WiFi
             {
                 display.Text += "\n" + text;
             }
-        }
-
-        private void askPIDButton_Click(object sender, EventArgs e)
-        {
-            findOutPIDs();
-        }
-
-        private async void findOutPIDs()
-        {
-            
         }
 
         public void send(string msg)
@@ -139,15 +132,17 @@ namespace OBD_II_WiFi
         private void buttonStopListening_Click(object sender, EventArgs e)
         {
             stopListening = true;
+            runEngineMonitoring = false;
             client.Close();
         }
 
-        private void printHexToBin(string hex) {
+        private void printPIDs(string hex) {
             string to_print = "";
             char[] to_print_array = new char[] { };
             char[] to_print_array_tmp = new char[] { };
-            Debug.WriteLine(hex);
+
             writeDisplay("\n" + hex);
+
             hex = hex.Replace(" ", string.Empty);
             var test = Convert.FromHexString(hex);
             int responde_index = test[3];
@@ -205,29 +200,34 @@ namespace OBD_II_WiFi
 
         private void button1_Click(object sender, EventArgs e)
         {
-            printHexToBin("010041 00 BE 3E A8 13 ");
-            printHexToBin("012041 20 80 07 B0 11 ");
-            printHexToBin("014041 40 FE D0 84 01 ");
-            printHexToBin("016041 60 08 08 00 01 ");
-            printHexToBin("018041 80 00 00 00 01 ");
-            printHexToBin("01A041 A0 10 00 00 00 ");
+            // funzione di testing, teoricamente non serve più a nulla
+            printPIDs("010041 00 BE 3E A8 13 ");
+            printPIDs("012041 20 80 07 B0 11 ");
+            printPIDs("014041 40 FE D0 84 01 ");
+            printPIDs("016041 60 08 08 00 01 ");
+            printPIDs("018041 80 00 00 00 01 ");
+            printPIDs("01A041 A0 10 00 00 00 ");
         }
 
         private async void buttonFuelData_Click(object sender, EventArgs e)
         {
-            await Task.Run(() =>
-            {
-                send("010B" + "\r"); // Intake manifold absolute pressure (MAP)
-                Task.Delay(2000).Wait();
-                send("010F" + "\r"); // Intake air temperature (IAT)
-                Task.Delay(2000).Wait();
-                send("010C" + "\r"); // Engine speed
-                Task.Delay(2000).Wait();
-                send("0124" + "\r"); // lamda air-fuel ratio
-            });
+            while (runEngineMonitoring) {
+                await Task.Run(() =>
+                {
+                    send("010B" + "\r"); // Intake manifold absolute pressure (MAP)
+                    Task.Delay(2000).Wait();
+                    send("010F" + "\r"); // Intake air temperature (IAT)
+                    Task.Delay(2000).Wait();
+                    send("010C" + "\r"); // Engine speed
+                    Task.Delay(2000).Wait();
+                    send("0124" + "\r"); // lamda air-fuel ratio
+                    Task.Delay(2000).Wait();
+                    send("0166" + "\r"); // Mass Air Flow
+                });
+            }
         }
 
-        private async void initConnButton_Click_1(object sender, EventArgs e)
+        private async void initConnButton_Click(object sender, EventArgs e)
         {
             int n_try = 0;
             var ip_address = IPAddress.Parse(ipTextBox.Text); // parsing dell'indirizzo IP
@@ -257,7 +257,7 @@ namespace OBD_II_WiFi
             else { display.Text += "\n" + "IP address is unreachable at the moment, try again later..."; }
         }
 
-        private async void askPIDButton_Click_1(object sender, EventArgs e)
+        private async void askPIDButton_Click(object sender, EventArgs e)
         {
             await Task.Run(() =>
             {
