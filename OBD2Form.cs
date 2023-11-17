@@ -216,9 +216,9 @@ namespace OBD_II_WiFi
                     pids = JsonNode.Parse(json)!;
                 }
             }
-            
 
-            for (int i = responde_index; i < responde_index + 32; i++)
+            Debug.WriteLine(to_print_array.Length.ToString());
+            for (int i = responde_index; i < responde_index + to_print_array.Length; i++)
             { // fixed number: 169
                 value = int.Parse(to_print_array[j].ToString());
                 if (value == 1) {
@@ -242,6 +242,7 @@ namespace OBD_II_WiFi
             printHexToBin("014041 40 FE D0 84 01 ");
             printHexToBin("016041 60 08 08 00 01 ");
             printHexToBin("018041 80 00 00 00 01 ");
+            printHexToBin("01A041 A0 10 00 00 00 ");
         }
     }
 }

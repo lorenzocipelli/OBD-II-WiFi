@@ -593,6 +593,18 @@
       "value": 0
     },
     {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
       "description": "Exhaust Gas Temperature Sensor",
       "value": 0
     },
@@ -626,7 +638,7 @@
     },
     {
       "description": "PIDs supported [$A1 - $C0]",
-      "value": 0
+      "value": 1
     },
     {
       "description": "NOx Sensor Corrected Data",
@@ -638,11 +650,11 @@
     },
     {
       "description": "Evap System Vapor Pressure",
-      "value": 1
+      "value": 0
     },
     {
       "description": "Transmission Actual Gear",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Commanded Diesel Exhaust Fluid Dosing",
@@ -665,15 +677,95 @@
       "value": 0
     },
     {
-      "description": "PIDs supported [$C1 - $E0]",
+      "description": "none",
       "value": 0
     },
     {
-      "description": "?",
+      "description": "none",
       "value": 0
     },
     {
-      "description": "?",
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
       "value": 0
     }
   ]

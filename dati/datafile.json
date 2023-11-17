@@ -593,6 +593,18 @@
       "value": 0
     },
     {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
       "description": "Exhaust Gas Temperature Sensor",
       "value": 0
     },
@@ -665,15 +677,95 @@
       "value": 0
     },
     {
-      "description": "PIDs supported [$C1 - $E0]",
+      "description": "none",
       "value": 0
     },
     {
-      "description": "?",
+      "description": "none",
       "value": 0
     },
     {
-      "description": "?",
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
+      "value": 0
+    },
+    {
+      "description": "none",
       "value": 0
     }
   ]
