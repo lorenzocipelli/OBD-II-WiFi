@@ -87,7 +87,7 @@
             // 
             this.display.Location = new System.Drawing.Point(241, 12);
             this.display.Name = "display";
-            this.display.Size = new System.Drawing.Size(500, 152);
+            this.display.Size = new System.Drawing.Size(500, 376);
             this.display.TabIndex = 5;
             this.display.Text = "";
             // 
@@ -104,7 +104,7 @@
             // buttonStopListening
             // 
             this.buttonStopListening.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonStopListening.Location = new System.Drawing.Point(609, 170);
+            this.buttonStopListening.Location = new System.Drawing.Point(609, 394);
             this.buttonStopListening.Name = "buttonStopListening";
             this.buttonStopListening.Size = new System.Drawing.Size(132, 23);
             this.buttonStopListening.TabIndex = 7;
@@ -113,7 +113,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(260, 247);
+            this.button1.Location = new System.Drawing.Point(12, 394);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;

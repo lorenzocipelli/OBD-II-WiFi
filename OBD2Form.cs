@@ -178,16 +178,16 @@ namespace OBD_II_WiFi
             string to_print = "";
             char[] to_print_array = new char[] { };
             char[] to_print_array_tmp = new char[] { };
+            writeDisplay("\n" + hex);
             hex = hex.Replace(" ", string.Empty);
-            writeDisplay(hex);
             var test = Convert.FromHexString(hex);
             int responde_index = test[3];
-            writeDisplay("Index: " + responde_index.ToString());
+            //writeDisplay("Index: " + responde_index.ToString());
 
             foreach (byte spaced in test.Skip(4)) // parte di stampa
             {
                 to_print = Convert.ToString(spaced, 2).PadLeft(8, '0');
-                writeDisplay(to_print);
+                //writeDisplay(to_print);
 
                 to_print_array_tmp = to_print.ToCharArray();
                 foreach (char bit in to_print_array_tmp) {
@@ -198,6 +198,7 @@ namespace OBD_II_WiFi
             // to_print_array è una lista di 32 "bit", sono dei char
             string json;
             JsonNode pids;
+            int value;
             int j = 0;
 
             if (responde_index == 0) // se la prima decodifica prendo lo scheletro (tutto nullo)
@@ -219,11 +220,14 @@ namespace OBD_II_WiFi
 
             for (int i = responde_index; i < responde_index + 32; i++)
             { // fixed number: 169
-                pids["PIDs"][i]["value"] = int.Parse(to_print_array[j].ToString());
+                value = int.Parse(to_print_array[j].ToString());
+                if (value == 1) {
+                    writeDisplay("* " + pids["PIDs"][i]["description"].ToString());
+                }
+                pids["PIDs"][i]["value"] = value;
                 j++;
             }
 
-            writeDisplay(pids.ToString());
             //convert to JSON string
             var jsonOptions = new JsonSerializerOptions() { WriteIndented = true };
             var coderJson = pids.ToJsonString(jsonOptions);
