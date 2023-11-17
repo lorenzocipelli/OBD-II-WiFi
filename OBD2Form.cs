@@ -77,15 +77,29 @@ namespace OBD_II_WiFi
                         data += Encoding.Default.GetString(mesajj, 0, bytesRead).Replace("\r", "");
                         if (data.Length > 0)
                         {
-                            /*if (converting)
+                            if (converting)
                             {
                                 printHexToBin(data); // ex: "0100 41 00 BE 3E A8 13"
                             }
                             else
                             {
+                                /*if (data.Contains("41 0B"))
+                                { // Intake manifold absolute pressure (MAP)
+
+                                    writeDisplay("MAP: " + );
+                                } else if (data.Contains("41 0C"))
+                                { // Engine speed
+
+                                } else if (data.Contains("41 0F"))
+                                { // Intake air temperature (IAT)
+
+                                } else if (data.Contains("41 24"))
+                                { // lamda air-fuel ratio
+
+                                }*/
                                 writeDisplay(data);
-                            }*/
-                            writeDisplay(data); // rimuovere se scommentato il blocco sopra
+                            }
+                            //writeDisplay(data); // rimuovere se scommentato il blocco sopra
                             data = "";
                         }
                     }
@@ -217,7 +231,6 @@ namespace OBD_II_WiFi
                 }
             }
 
-            Debug.WriteLine(to_print_array.Length.ToString());
             for (int i = responde_index; i < responde_index + to_print_array.Length; i++)
             { // fixed number: 169
                 value = int.Parse(to_print_array[j].ToString());
@@ -243,6 +256,17 @@ namespace OBD_II_WiFi
             printHexToBin("016041 60 08 08 00 01 ");
             printHexToBin("018041 80 00 00 00 01 ");
             printHexToBin("01A041 A0 10 00 00 00 ");
+        }
+
+        private async void buttonFuelData_Click(object sender, EventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                send("010B" + "\r"); // Intake manifold absolute pressure (MAP)
+                send("010F" + "\r"); // Intake air temperature (IAT)
+                send("010C" + "\r"); // Engine speed
+                send("0124" + "\r"); // lamda air-fuel ratio
+            });
         }
     }
 }

@@ -37,6 +37,7 @@
             this.askPIDButton = new System.Windows.Forms.Button();
             this.buttonStopListening = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.buttonFuelData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // portTextBox
@@ -121,12 +122,23 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // buttonFuelData
+            // 
+            this.buttonFuelData.Location = new System.Drawing.Point(12, 130);
+            this.buttonFuelData.Name = "buttonFuelData";
+            this.buttonFuelData.Size = new System.Drawing.Size(97, 23);
+            this.buttonFuelData.TabIndex = 9;
+            this.buttonFuelData.Text = "Read Data";
+            this.buttonFuelData.UseVisualStyleBackColor = true;
+            this.buttonFuelData.Click += new System.EventHandler(this.buttonFuelData_Click);
+            // 
             // OBD2Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.HighlightText;
             this.ClientSize = new System.Drawing.Size(753, 429);
+            this.Controls.Add(this.buttonFuelData);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonStopListening);
             this.Controls.Add(this.askPIDButton);
@@ -154,5 +166,6 @@
         private Button askPIDButton;
         private Button buttonStopListening;
         private Button button1;
+        private Button buttonFuelData;
     }
 }
