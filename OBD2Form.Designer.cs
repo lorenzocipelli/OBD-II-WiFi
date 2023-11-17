@@ -46,7 +46,7 @@
             this.portTextBox.Name = "portTextBox";
             this.portTextBox.Size = new System.Drawing.Size(137, 23);
             this.portTextBox.TabIndex = 0;
-            this.portTextBox.Text = "49936";
+            this.portTextBox.Text = "35000";
             // 
             // label1
             // 
@@ -72,7 +72,7 @@
             this.ipTextBox.Name = "ipTextBox";
             this.ipTextBox.Size = new System.Drawing.Size(137, 23);
             this.ipTextBox.TabIndex = 3;
-            this.ipTextBox.Text = "127.0.0.1";
+            this.ipTextBox.Text = "192.168.0.10";
             // 
             // initConnButton
             // 
@@ -83,6 +83,7 @@
             this.initConnButton.TabIndex = 4;
             this.initConnButton.Text = "Init TCP Connection";
             this.initConnButton.UseVisualStyleBackColor = true;
+            this.initConnButton.Click += new System.EventHandler(this.initConnButton_Click_1);
             // 
             // display
             // 
@@ -101,6 +102,7 @@
             this.askPIDButton.TabIndex = 6;
             this.askPIDButton.Text = "Ask PID";
             this.askPIDButton.UseVisualStyleBackColor = true;
+            this.askPIDButton.Click += new System.EventHandler(this.askPIDButton_Click_1);
             // 
             // buttonStopListening
             // 
