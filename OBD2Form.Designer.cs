@@ -113,6 +113,7 @@
             this.buttonStopListening.TabIndex = 7;
             this.buttonStopListening.Text = "Close Connection";
             this.buttonStopListening.UseVisualStyleBackColor = true;
+            this.buttonStopListening.Click += new System.EventHandler(this.buttonStopListening_Click_1);
             // 
             // button1
             // 

@@ -50,7 +50,8 @@ namespace OBD_II_WiFi
 
                         data += Encoding.Default.GetString(mesajj, 0, bytesRead).Replace("\r", "");
                         data = rgx.Replace(data, "");
-                        if (data.Length > 0)
+                        if (data.Length > 0) // limitare la lettura anche a valori minori di un tot
+                        // tanto non ha senso mandare in lettura ">" oppure gli errori in risposta
                         {
                             if (converting)
                             {
@@ -58,31 +59,43 @@ namespace OBD_II_WiFi
                             }
                             else
                             {
+                                Debug.WriteLine(data);
                                 data = data.Replace(" ", string.Empty);
-                                var tmp = Convert.FromHexString(data);
-                                // non ancora fatto il parsing per una richiesta diversa
-                                // da quella dei PIDs
-                                if (data.Contains("41 0B"))
-                                { // Intake manifold absolute pressure (MAP)
-                                    int map = tmp[4]*1000; // il valore arriva in kPa
-                                    writeDisplay("MAP: " + map.ToString() + " [Pascal]");
-                                } else if (data.Contains("41 0C"))
-                                { // Engine speed
-                                    int rmp = (tmp[4] * 256 + tmp[5]) / 4; // il valore arriva in rpm * 4
-                                    writeDisplay("RPM: " + rmp.ToString() + " [rpm]");
-                                } else if (data.Contains("41 0F"))
-                                { // Intake air temperature (IAT)
-                                    int iat = tmp[4] - 40; // il valore arriva in iat + 40
-                                    writeDisplay("IAT: " + iat.ToString() + " [C°]");
-                                } else if (data.Contains("41 24"))
-                                { // lambda air-fuel ratio
-                                    int lambda = (tmp[4] * 256 + tmp[5]) * (2 / 65536);
-                                    writeDisplay("lambda: " + lambda + " [ratio V]");
+                                try {
+                                    var tmp = Convert.FromHexString(data);
+                                    if (data.Contains("410B"))
+                                    { // Intake manifold absolute pressure (MAP)
+                                        int map = tmp[4] * 1000; // il valore arriva in kPa
+                                        writeDisplay("MAP: " + map.ToString() + " [Pascal]");
+                                    }
+                                    else if (data.Contains("410C"))
+                                    { // Engine speed
+                                        int rmp = (tmp[4] * 256 + tmp[5]) / 4; // il valore arriva in rpm * 4
+                                        writeDisplay("RPM: " + rmp.ToString() + " [rpm]");
+                                    }
+                                    else if (data.Contains("410F"))
+                                    { // Intake air temperature (IAT)
+                                        int iat = tmp[4] - 40; // il valore arriva in iat + 40
+                                        writeDisplay("IAT: " + iat.ToString() + " [C°]");
+                                    }
+                                    else if (data.Contains("4124"))
+                                    { // lambda air-fuel ratio (non va)
+                                        int lambda = (tmp[4] * 256 + tmp[5]) * (2 / 65536);
+                                        writeDisplay("lambda: " + lambda + " [ratio V]");
+                                    }
+                                    else if (data.Contains("41 66"))
+                                    { // lambda air-fuel ratio (non dovrebbe andare teoricamente)
+                                        int maf = (tmp[4] * 256 + tmp[5]) / 100;
+                                        writeDisplay("MAF: " + maf.ToString() + " [g/s]");
+                                    }
+                                    else
+                                    {
+                                        writeDisplay(data);
+                                    }
                                 }
-                                else if (data.Contains("41 66"))
-                                { // lambda air-fuel ratio (non dovrebbe andare teoricamente)
-                                    int maf = (tmp[4]*256 + tmp[5]) / 100;
-                                    writeDisplay("MAF: " + maf.ToString() + " [g/s]");
+                                catch(FormatException fe)
+                                {
+                                    writeDisplay("Reading error!");
                                 }
                             }
                             //writeDisplay(data); // rimuovere se scommentato il blocco sopra
@@ -127,13 +140,6 @@ namespace OBD_II_WiFi
             {
                 Console.WriteLine(e.Message);
             }
-        }
-
-        private void buttonStopListening_Click(object sender, EventArgs e)
-        {
-            stopListening = true;
-            runEngineMonitoring = false;
-            client.Close();
         }
 
         private void printPIDs(string hex) {
@@ -215,14 +221,12 @@ namespace OBD_II_WiFi
                 await Task.Run(() =>
                 {
                     send("010B" + "\r"); // Intake manifold absolute pressure (MAP)
-                    Task.Delay(2000).Wait();
+                    Task.Delay(0010).Wait();
                     send("010F" + "\r"); // Intake air temperature (IAT)
-                    Task.Delay(2000).Wait();
+                    Task.Delay(0010).Wait();
                     send("010C" + "\r"); // Engine speed
-                    Task.Delay(2000).Wait();
+                    Task.Delay(0010).Wait();
                     send("0124" + "\r"); // lamda air-fuel ratio
-                    Task.Delay(2000).Wait();
-                    send("0166" + "\r"); // Mass Air Flow
                 });
             }
         }
@@ -286,8 +290,15 @@ namespace OBD_II_WiFi
                 send("01A0" + "\r"); // ultimo
 
                 Task.Delay(2000).Wait();
+                converting = false;
             });
-            converting = false;
+        }
+
+        private void buttonStopListening_Click_1(object sender, EventArgs e)
+        {
+            stopListening = true;
+            runEngineMonitoring = false;
+            client.Close();
         }
     }
 }
