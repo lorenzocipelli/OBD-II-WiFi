@@ -1,4 +1,5 @@
 using System.Net.Sockets;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -8,12 +9,15 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using OBD_II_WiFi.classes;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace OBD_II_WiFi
 {
     public partial class OBD2Form : Form
     {
         TcpClient client = new TcpClient();
+        RunInfo currentInfo = new RunInfo();
         NetworkStream stream;
         StreamReader reader;
         string data;
@@ -23,6 +27,7 @@ namespace OBD_II_WiFi
         bool runEngineMonitoring = true;
         bool stopListening = false;
         bool converting = false;
+        bool append = true;
 
         public OBD2Form()
         {
@@ -63,35 +68,88 @@ namespace OBD_II_WiFi
                                 data = data.Replace(" ", string.Empty);
                                 try {
                                     var tmp = Convert.FromHexString(data);
-                                    if (data.Contains("410B"))
-                                    { // Intake manifold absolute pressure (MAP)
-                                        int map = tmp[4] * 1000; // il valore arriva in kPa
-                                        writeDisplay("MAP: " + map.ToString() + " [Pascal]");
-                                    }
-                                    else if (data.Contains("410C"))
+
+                                    if (data.Contains("410C"))
                                     { // Engine speed
-                                        int rmp = (tmp[4] * 256 + tmp[5]) / 4; // il valore arriva in rpm * 4
-                                        writeDisplay("RPM: " + rmp.ToString() + " [rpm]");
+                                        int rpm = (tmp[4] * 256 + tmp[5]) / 4; // il valore arriva in rpm * 4
+                                        currentInfo.RMP = rpm;
+                                        writeDisplay("RPM: " + rpm.ToString() + " [rpm]");
+                                    }
+                                    else if (data.Contains("4110"))
+                                    { // Mass Air Flow
+                                        int maf = (tmp[4] * 256 + tmp[5]) / 4; // il valore arriva in rpm * 4
+                                        currentInfo.MAF = maf;
+                                        writeDisplay("MAF: " + maf.ToString() + " [g/s]");
                                     }
                                     else if (data.Contains("410F"))
                                     { // Intake air temperature (IAT)
                                         int iat = tmp[4] - 40; // il valore arriva in iat + 40
+                                        currentInfo.IAT = iat;
                                         writeDisplay("IAT: " + iat.ToString() + " [C°]");
                                     }
-                                    else if (data.Contains("4124"))
-                                    { // lambda air-fuel ratio (non va)
-                                        int lambda = (tmp[4] * 256 + tmp[5]) * (2 / 65536);
-                                        writeDisplay("lambda: " + lambda + " [ratio V]");
+                                    else if (data.Contains("4149"))
+                                    { // Acc. Pedal Pos. D
+                                        int accD = tmp[4] - 37;
+                                        currentInfo.ACCPEDAL = accD;
+                                        writeDisplay("Acc. Pedal Pos. D: " + accD.ToString() + " [%]");
                                     }
-                                    else if (data.Contains("41 66"))
-                                    { // lambda air-fuel ratio (non dovrebbe andare teoricamente)
-                                        int maf = (tmp[4] * 256 + tmp[5]) / 100;
-                                        writeDisplay("MAF: " + maf.ToString() + " [g/s]");
+                                    else if (data.Contains("4111"))
+                                    { // Throttle Position
+                                        int thPos = tmp[4];
+                                        currentInfo.THROTTLEPOS = thPos;
+                                        writeDisplay("Throttle Position: " + thPos.ToString() + " [%]");
+                                    }
+                                    else if (data.Contains("410D"))
+                                    { // Vehicle Speed
+                                        int speed = tmp[4];
+                                        currentInfo.SPEED = speed;
+                                        writeDisplay("Vehicle Speed: " + speed.ToString() + " [km/h]");
+                                    }
+                                    else if (data.Contains("4104"))
+                                    { // Engine Load
+                                        int load = Convert.ToInt32(tmp[4]/2.55);
+                                        currentInfo.ENGINELOAD = load;
+                                        writeDisplay("Engine Load: " + load.ToString() + " [%]");
+                                    }
+                                    else if (data.Contains("411F"))
+                                    { // Run Time Since Engine Start
+                                        int runtime = tmp[4]*256 + tmp[5];
+                                        currentInfo.RUNTIME = runtime;
+                                        writeDisplay("Run Time: " + runtime.ToString() + " [s]");
+                                    }
+                                    else if (data.Contains("4124"))
+                                    { // Lambda Sensor 1
+                                        double lambda1 = (2/65536) * (tmp[4] * 256 + tmp[5]);
+                                        currentInfo.LAMBDA = lambda1;
+                                        writeDisplay("Lambda 1: " + lambda1.ToString() + " [mA]");
+                                    }
+                                    else if (data.Contains("4133"))
+                                    { // Absolute Barometric Pressure
+                                        int abp = tmp[4];
+                                        currentInfo.ABP = abp;
+                                        writeDisplay("ABP: " + abp.ToString() + " [kPa]");
+                                    }
+                                    else if (data.Contains("411C"))
+                                    { // PID di appoggio per la scrittura su CSV a fine ciclo
+                                        var config = new CsvConfiguration(CultureInfo.InvariantCulture);
+                                        config.HasHeaderRecord = !append;
+
+                                        using (var writer = new StreamWriter("../../../dati/dataset.csv", append))
+                                        {
+                                            using (var csv = new CsvWriter(writer, config))
+                                            {
+                                                csv.WriteRecord(currentInfo);
+                                                csv.NextRecord();
+                                            }
+                                        }
+                                        
+                                        writeDisplay("Info Added To CSV");
                                     }
                                     else
                                     {
                                         writeDisplay(data);
                                     }
+
                                 }
                                 catch(FormatException fe)
                                 {
@@ -147,6 +205,7 @@ namespace OBD_II_WiFi
             char[] to_print_array = new char[] { };
             char[] to_print_array_tmp = new char[] { };
 
+            Debug.WriteLine(hex);
             writeDisplay("\n" + hex);
 
             hex = hex.Replace(" ", string.Empty);
@@ -220,13 +279,35 @@ namespace OBD_II_WiFi
             while (runEngineMonitoring) {
                 await Task.Run(() =>
                 {
-                    send("010B" + "\r"); // Intake manifold absolute pressure (MAP)
-                    Task.Delay(0010).Wait();
+                    /*send("010B" + "\r"); // Intake manifold absolute pressure (MAP)
+                    Task.Delay(0500).Wait();*/
                     send("010F" + "\r"); // Intake air temperature (IAT)
-                    Task.Delay(0010).Wait();
+                    Task.Delay(0500).Wait();
                     send("010C" + "\r"); // Engine speed
-                    Task.Delay(0010).Wait();
-                    send("0124" + "\r"); // lamda air-fuel ratio
+                    Task.Delay(0500).Wait();
+                    send("0110" + "\r"); // MAF
+                    Task.Delay(0500).Wait();
+                    send("0149" + "\r"); // Acc. Pedal Pos. D
+                    Task.Delay(0500).Wait();
+                    /*send("014A" + "\r"); // Acc. Pedal Pos. E
+                    Task.Delay(0500).Wait();*/
+                    send("0111" + "\r"); // Throttle Position
+                    Task.Delay(0500).Wait();
+                    send("010D" + "\r"); // Vehicle Speed
+                    Task.Delay(0500).Wait();
+                    send("0104" + "\r"); // Engine Load
+                    Task.Delay(0500).Wait();
+                    send("011F" + "\r"); // Run Time
+                    Task.Delay(0500).Wait();
+                    send("0124" + "\r"); // lambda 1
+                    /*Task.Delay(0500).Wait();
+                    send("0125" + "\r"); // lambda 2*/
+                    Task.Delay(0500).Wait();
+                    send("0133" + "\r"); // Absolute Barometric Pressure
+                    Task.Delay(0500).Wait();
+                    send("011C" + "\r"); // Update CSV
+                    Task.Delay(0500).Wait();
+                    writeDisplay("");
                 });
             }
         }
@@ -287,7 +368,7 @@ namespace OBD_II_WiFi
                 send("0180" + "\r");
 
                 Task.Delay(2000).Wait();
-                send("01A0" + "\r"); // ultimo
+                //send("01A0" + "\r"); // ultimo
 
                 Task.Delay(2000).Wait();
                 converting = false;
