@@ -338,7 +338,11 @@ namespace OBD_II_WiFi
                 }
             });
 
-            if (n_try == 6) startListening(); // apertura thread di ascolto della stream
+            if (n_try == 6) {
+                currentInfo.DRIVESTYLE = "eco";
+                currentInfo.ROADTYPE = "urban";
+                startListening();
+            } // apertura thread di ascolto della stream
             else { display.Text += "\n" + "IP address is unreachable at the moment, try again later..."; }
         }
 
@@ -380,6 +384,23 @@ namespace OBD_II_WiFi
             stopListening = true;
             runEngineMonitoring = false;
             client.Close();
+        }
+
+        private void ecoButton_Click(object sender, EventArgs e) { currentInfo.DRIVESTYLE = "eco"; }
+
+        private void normalButton_Click(object sender, EventArgs e) { currentInfo.DRIVESTYLE = "normal"; }
+
+        private void sportButton_Click(object sender, EventArgs e) { currentInfo.DRIVESTYLE = "sport"; }
+
+        private void urbanButton_Click(object sender, EventArgs e) { currentInfo.ROADTYPE = "urban"; }
+
+        private void extraButton_Click(object sender, EventArgs e) { currentInfo.ROADTYPE = "suburban"; }
+
+        private void highwayButton_Click(object sender, EventArgs e) { currentInfo.ROADTYPE = "highway"; }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

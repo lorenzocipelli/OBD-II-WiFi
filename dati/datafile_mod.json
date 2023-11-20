@@ -10,7 +10,7 @@
     },
     {
       "description": "Fuel system status",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Calculated engine load",
@@ -22,11 +22,11 @@
     },
     {
       "description": "Short term fuel trim (STFT)\u2014Bank 1",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Long term fuel trim (LTFT)\u2014Bank 1",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Short term fuel trim (STFT)\u2014Bank 2",
@@ -54,7 +54,7 @@
     },
     {
       "description": "Timing advance",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Intake air temperature",
@@ -62,7 +62,7 @@
     },
     {
       "description": "Mass air flow sensor (MAF) air flow rate",
-      "value": 1
+      "value": 0
     },
     {
       "description": "Throttle position",
@@ -82,7 +82,7 @@
     },
     {
       "description": "Oxygen Sensor 2A: VoltageB: Short term fuel trim",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Oxygen Sensor 3A: VoltageB: Short term fuel trim",
@@ -138,15 +138,15 @@
     },
     {
       "description": "Fuel Rail Gauge Pressure (diesel, or gasoline direct injection)",
-      "value": 1
+      "value": 0
     },
     {
       "description": "Oxygen Sensor 1AB: Air-Fuel Equivalence Ratio (lambda,\u03BB)CD: Voltage",
-      "value": 1
+      "value": 0
     },
     {
       "description": "Oxygen Sensor 2AB: Air-Fuel Equivalence Ratio (lambda,\u03BB)CD: Voltage",
-      "value": 1
+      "value": 0
     },
     {
       "description": "Oxygen Sensor 3AB: Air-Fuel Equivalence Ratio (lambda,\u03BB)CD: Voltage",
@@ -182,11 +182,11 @@
     },
     {
       "description": "Commanded evaporative purge",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Fuel Tank Level Input",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Warm-ups since codes cleared",
@@ -206,7 +206,7 @@
     },
     {
       "description": "Oxygen Sensor 1AB: Air-Fuel Equivalence Ratio (lambda,\u03BB)CD: Current",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Oxygen Sensor 2AB: Air-Fuel Equivalence Ratio (lambda,\u03BB)CD: Current",
@@ -238,7 +238,7 @@
     },
     {
       "description": "Catalyst Temperature: Bank 1, Sensor 1",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Catalyst Temperature: Bank 2, Sensor 1",
@@ -266,11 +266,11 @@
     },
     {
       "description": "Absolute load value",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Commanded Air-Fuel Equivalence Ratio (lambda,\u03BB)",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Relative throttle position",
@@ -282,7 +282,7 @@
     },
     {
       "description": "Absolute throttle position B",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Absolute throttle position C",
@@ -314,7 +314,7 @@
     },
     {
       "description": "Maximum value for Fuel\u2013Air equivalence ratio, oxygen sensor voltage, oxygen sensor current, and intake manifold absolute pressure",
-      "value": 1
+      "value": 0
     },
     {
       "description": "Maximum value for air flow rate from mass air flow sensor",
@@ -322,7 +322,7 @@
     },
     {
       "description": "Fuel Type",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Ethanol fuel\u00A0%",
@@ -342,7 +342,7 @@
     },
     {
       "description": "Long term secondary oxygen sensor trim, A: bank 1, B: bank 3",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Short term secondary oxygen sensor trim, A: bank 2, B: bank 4",
@@ -402,7 +402,7 @@
     },
     {
       "description": "Auxiliary input / output supported",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Mass air flow sensor",
@@ -410,7 +410,7 @@
     },
     {
       "description": "Engine coolant temperature",
-      "value": 1
+      "value": 0
     },
     {
       "description": "Intake air temperature sensor",
@@ -434,7 +434,7 @@
     },
     {
       "description": "Fuel pressure control system",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Injection pressure control system",
@@ -474,11 +474,11 @@
     },
     {
       "description": "Charge air cooler temperature (CACT)",
-      "value": 1
+      "value": 0
     },
     {
       "description": "Exhaust Gas temperature (EGT) Bank 1",
-      "value": 1
+      "value": 0
     },
     {
       "description": "Exhaust Gas temperature (EGT) Bank 2",
@@ -554,7 +554,7 @@
     },
     {
       "description": "Diesel Aftertreatment",
-      "value": 1
+      "value": 0
     },
     {
       "description": "O2 Sensor (Wide Range)",
@@ -638,7 +638,7 @@
     },
     {
       "description": "PIDs supported [$A1 - $C0]",
-      "value": 0
+      "value": 1
     },
     {
       "description": "NOx Sensor Corrected Data",
@@ -654,7 +654,7 @@
     },
     {
       "description": "Transmission Actual Gear",
-      "value": 0
+      "value": 1
     },
     {
       "description": "Commanded Diesel Exhaust Fluid Dosing",

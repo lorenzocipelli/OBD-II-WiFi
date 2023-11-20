@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace OBD_II_WiFi.classes
 {
     internal class RunInfo
@@ -18,6 +19,9 @@ namespace OBD_II_WiFi.classes
         private double runTime;
         private double lambda;
         private int abp;
+        private string driveStyle;
+        private string roadType;
+
 
         public int RMP { get { return rpm; } set { rpm = value; } }
         public int MAF { get { return maf; } set { maf = value; } }
@@ -29,5 +33,8 @@ namespace OBD_II_WiFi.classes
         public double RUNTIME { get { return runTime; } set { runTime = value; } }
         public double LAMBDA { get { return lambda; } set { lambda = value; } }
         public int ABP { get { return abp; } set { abp = value; } }
+        public string DRIVESTYLE { get { return driveStyle; } set { driveStyle = value; } }
+        public string ROADTYPE { get { return roadType; } set { roadType = value; } }
+
     }
 }
