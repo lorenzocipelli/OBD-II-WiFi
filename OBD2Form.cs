@@ -113,7 +113,7 @@ namespace OBD_II_WiFi
                                     }
                                     else if (data.Contains("411F"))
                                     { // Run Time Since Engine Start
-                                        int runtime = tmp[4]*256 + tmp[5];
+                                        double runtime = tmp[4]*256 + tmp[5];
                                         currentInfo.RUNTIME = runtime;
                                         writeDisplay("Run Time: " + runtime.ToString() + " [s]");
                                     }

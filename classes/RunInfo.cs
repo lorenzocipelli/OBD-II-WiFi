@@ -15,7 +15,7 @@ namespace OBD_II_WiFi.classes
         private int throttlePos;
         private int speed;
         private int engineLoad;
-        private int runTime;
+        private double runTime;
         private double lambda;
         private int abp;
 
@@ -26,7 +26,7 @@ namespace OBD_II_WiFi.classes
         public int THROTTLEPOS { get { return throttlePos; } set { throttlePos = value; } }
         public int SPEED { get { return speed; } set { speed = value; } }
         public int ENGINELOAD { get { return engineLoad; } set { engineLoad = value; } }
-        public int RUNTIME { get { return runTime; } set { runTime = value; } }
+        public double RUNTIME { get { return runTime; } set { runTime = value; } }
         public double LAMBDA { get { return lambda; } set { lambda = value; } }
         public int ABP { get { return abp; } set { abp = value; } }
     }
