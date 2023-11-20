@@ -17,7 +17,6 @@ namespace OBD_II_WiFi.classes
         private int speed;
         private int engineLoad;
         private double runTime;
-        private double lambda;
         private int abp;
         private string driveStyle;
         private string roadType;
@@ -31,7 +30,6 @@ namespace OBD_II_WiFi.classes
         public int SPEED { get { return speed; } set { speed = value; } }
         public int ENGINELOAD { get { return engineLoad; } set { engineLoad = value; } }
         public double RUNTIME { get { return runTime; } set { runTime = value; } }
-        public double LAMBDA { get { return lambda; } set { lambda = value; } }
         public int ABP { get { return abp; } set { abp = value; } }
         public string DRIVESTYLE { get { return driveStyle; } set { driveStyle = value; } }
         public string ROADTYPE { get { return roadType; } set { roadType = value; } }

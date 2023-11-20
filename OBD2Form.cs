@@ -282,31 +282,31 @@ namespace OBD_II_WiFi
                     /*send("010B" + "\r"); // Intake manifold absolute pressure (MAP)
                     Task.Delay(0500).Wait();*/
                     send("010F" + "\r"); // Intake air temperature (IAT)
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     send("010C" + "\r"); // Engine speed
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     send("0110" + "\r"); // MAF
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     send("0149" + "\r"); // Acc. Pedal Pos. D
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     /*send("014A" + "\r"); // Acc. Pedal Pos. E
                     Task.Delay(0500).Wait();*/
                     send("0111" + "\r"); // Throttle Position
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     send("010D" + "\r"); // Vehicle Speed
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     send("0104" + "\r"); // Engine Load
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     send("011F" + "\r"); // Run Time
-                    Task.Delay(0500).Wait();
-                    send("0124" + "\r"); // lambda 1
+                   // Task.Delay(0500).Wait();
+                   // send("0124" + "\r"); // lambda 1
                     /*Task.Delay(0500).Wait();
                     send("0125" + "\r"); // lambda 2*/
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     send("0133" + "\r"); // Absolute Barometric Pressure
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     send("011C" + "\r"); // Update CSV
-                    Task.Delay(0500).Wait();
+                    Task.Delay(0200).Wait();
                     writeDisplay("");
                 });
             }
