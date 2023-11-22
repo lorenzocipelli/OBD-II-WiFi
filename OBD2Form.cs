@@ -117,12 +117,6 @@ namespace OBD_II_WiFi
                                         currentInfo.RUNTIME = runtime;
                                         writeDisplay("Run Time: " + runtime.ToString() + " [s]");
                                     }
-                                    else if (data.Contains("4124"))
-                                    { // Lambda Sensor 1
-                                        double lambda1 = (2/65536) * (tmp[4] * 256 + tmp[5]);
-                                        currentInfo.LAMBDA = lambda1;
-                                        writeDisplay("Lambda 1: " + lambda1.ToString() + " [mA]");
-                                    }
                                     else if (data.Contains("4133"))
                                     { // Absolute Barometric Pressure
                                         int abp = tmp[4];
