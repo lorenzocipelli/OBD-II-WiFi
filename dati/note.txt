@@ -1,0 +1,4 @@
+per integrare python in c# https://www.educative.io/answers/how-to-call-a-python-function-from-c-sharp
+
+
+esame adas:  ora e mezza 3.30/5
