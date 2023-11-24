@@ -47,6 +47,11 @@
             this.highwayButton = new System.Windows.Forms.Button();
             this.extraButton = new System.Windows.Forms.Button();
             this.urbanButton = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.evalDriveButton = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // portTextBox
@@ -124,7 +129,8 @@
             this.askPIDButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
             this.askPIDButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.askPIDButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.askPIDButton.Location = new System.Drawing.Point(13, 101);
+            this.askPIDButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.askPIDButton.Location = new System.Drawing.Point(6, 22);
             this.askPIDButton.Name = "askPIDButton";
             this.askPIDButton.Size = new System.Drawing.Size(85, 23);
             this.askPIDButton.TabIndex = 6;
@@ -159,7 +165,8 @@
             this.buttonFuelData.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
             this.buttonFuelData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonFuelData.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonFuelData.Location = new System.Drawing.Point(104, 101);
+            this.buttonFuelData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonFuelData.Location = new System.Drawing.Point(97, 22);
             this.buttonFuelData.Name = "buttonFuelData";
             this.buttonFuelData.Size = new System.Drawing.Size(91, 23);
             this.buttonFuelData.TabIndex = 9;
@@ -173,12 +180,11 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label3.Location = new System.Drawing.Point(17, 137);
+            this.label3.Location = new System.Drawing.Point(6, 52);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 16);
+            this.label3.Size = new System.Drawing.Size(55, 16);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Stile di Guida:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            this.label3.Text = "Drive Style:";
             // 
             // label4
             // 
@@ -186,11 +192,11 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label4.Location = new System.Drawing.Point(17, 192);
+            this.label4.Location = new System.Drawing.Point(6, 101);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(105, 16);
+            this.label4.Size = new System.Drawing.Size(56, 16);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Tipologia di Percorso:";
+            this.label4.Text = "Road Type:";
             // 
             // ecoButton
             // 
@@ -198,7 +204,8 @@
             this.ecoButton.FlatAppearance.BorderColor = System.Drawing.Color.Green;
             this.ecoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ecoButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ecoButton.Location = new System.Drawing.Point(13, 155);
+            this.ecoButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.ecoButton.Location = new System.Drawing.Point(6, 73);
             this.ecoButton.Margin = new System.Windows.Forms.Padding(0);
             this.ecoButton.Name = "ecoButton";
             this.ecoButton.Size = new System.Drawing.Size(52, 24);
@@ -213,7 +220,8 @@
             this.normalButton.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
             this.normalButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.normalButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.normalButton.Location = new System.Drawing.Point(71, 155);
+            this.normalButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.normalButton.Location = new System.Drawing.Point(64, 73);
             this.normalButton.Name = "normalButton";
             this.normalButton.Size = new System.Drawing.Size(62, 24);
             this.normalButton.TabIndex = 13;
@@ -227,8 +235,8 @@
             this.sportButton.FlatAppearance.BorderColor = System.Drawing.Color.Maroon;
             this.sportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.sportButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.sportButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.sportButton.Location = new System.Drawing.Point(139, 155);
+            this.sportButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.sportButton.Location = new System.Drawing.Point(132, 73);
             this.sportButton.Name = "sportButton";
             this.sportButton.Size = new System.Drawing.Size(52, 24);
             this.sportButton.TabIndex = 14;
@@ -242,7 +250,8 @@
             this.highwayButton.FlatAppearance.BorderColor = System.Drawing.Color.Green;
             this.highwayButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.highwayButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.highwayButton.Location = new System.Drawing.Point(151, 210);
+            this.highwayButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.highwayButton.Location = new System.Drawing.Point(144, 120);
             this.highwayButton.Name = "highwayButton";
             this.highwayButton.Size = new System.Drawing.Size(66, 24);
             this.highwayButton.TabIndex = 17;
@@ -256,7 +265,8 @@
             this.extraButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.extraButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.extraButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.extraButton.Location = new System.Drawing.Point(71, 210);
+            this.extraButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.extraButton.Location = new System.Drawing.Point(64, 120);
             this.extraButton.Name = "extraButton";
             this.extraButton.Size = new System.Drawing.Size(74, 24);
             this.extraButton.TabIndex = 16;
@@ -270,13 +280,63 @@
             this.urbanButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.urbanButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.urbanButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.urbanButton.Location = new System.Drawing.Point(13, 210);
+            this.urbanButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.urbanButton.Location = new System.Drawing.Point(6, 120);
             this.urbanButton.Name = "urbanButton";
             this.urbanButton.Size = new System.Drawing.Size(52, 24);
             this.urbanButton.TabIndex = 15;
             this.urbanButton.Text = "Urban";
             this.urbanButton.UseVisualStyleBackColor = false;
             this.urbanButton.Click += new System.EventHandler(this.urbanButton_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.askPIDButton);
+            this.groupBox1.Controls.Add(this.highwayButton);
+            this.groupBox1.Controls.Add(this.buttonFuelData);
+            this.groupBox1.Controls.Add(this.extraButton);
+            this.groupBox1.Controls.Add(this.ecoButton);
+            this.groupBox1.Controls.Add(this.urbanButton);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.sportButton);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.normalButton);
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox1.Location = new System.Drawing.Point(7, 99);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(223, 152);
+            this.groupBox1.TabIndex = 19;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Logging Data";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.evalDriveButton);
+            this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.groupBox2.Location = new System.Drawing.Point(7, 257);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(223, 131);
+            this.groupBox2.TabIndex = 20;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Active Monitoring";
+            // 
+            // evalDriveButton
+            // 
+            this.evalDriveButton.BackColor = System.Drawing.Color.White;
+            this.evalDriveButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.evalDriveButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.evalDriveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.evalDriveButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.evalDriveButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.evalDriveButton.Location = new System.Drawing.Point(6, 22);
+            this.evalDriveButton.Name = "evalDriveButton";
+            this.evalDriveButton.Size = new System.Drawing.Size(120, 23);
+            this.evalDriveButton.TabIndex = 7;
+            this.evalDriveButton.Text = "Evaluate Drive Style";
+            this.evalDriveButton.UseVisualStyleBackColor = false;
+            this.evalDriveButton.Click += new System.EventHandler(this.evalDriveButton_Click);
             // 
             // OBD2Form
             // 
@@ -286,18 +346,10 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(776, 429);
-            this.Controls.Add(this.highwayButton);
-            this.Controls.Add(this.extraButton);
-            this.Controls.Add(this.urbanButton);
-            this.Controls.Add(this.sportButton);
-            this.Controls.Add(this.normalButton);
-            this.Controls.Add(this.ecoButton);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.buttonFuelData);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonStopListening);
-            this.Controls.Add(this.askPIDButton);
             this.Controls.Add(this.display);
             this.Controls.Add(this.initConnButton);
             this.Controls.Add(this.ipTextBox);
@@ -308,6 +360,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "OBD2Form";
             this.Text = "OBD II - Logger";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,5 +388,8 @@
         private Button highwayButton;
         private Button extraButton;
         private Button urbanButton;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
+        private Button evalDriveButton;
     }
 }
