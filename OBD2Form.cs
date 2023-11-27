@@ -1,5 +1,6 @@
 using System.Net.Sockets;
 using System.Globalization;
+using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -16,10 +17,12 @@ namespace OBD_II_WiFi
 {
     public partial class OBD2Form : Form
     {
+        static HttpClient httpClient = new HttpClient();
         TcpClient client = new TcpClient();
         RunInfo currentInfo = new RunInfo();
         NetworkStream stream;
         StreamReader reader;
+        int mode;
         string data;
 
         delegate void writeDisplayDelegate(string toDisplay);
@@ -38,7 +41,14 @@ namespace OBD_II_WiFi
         {
             Regex rgx = new Regex("[^a-zA-Z0-9 -]"); // keep only alphanumerics
             display.Text = "Connection established!";
-            await Task.Run(() =>
+
+            const string URL = "http://localhost:8000/";
+            string messageFromAPI;
+            string urlParameters = "";
+
+            httpClient.BaseAddress = new Uri(URL);
+
+            await Task.Run(async () =>
             {
                 while (!stopListening)
                 {
@@ -107,13 +117,13 @@ namespace OBD_II_WiFi
                                     }
                                     else if (data.Contains("4104"))
                                     { // Engine Load
-                                        int load = Convert.ToInt32(tmp[4]/2.55);
+                                        int load = Convert.ToInt32(tmp[4] / 2.55);
                                         currentInfo.ENGINELOAD = load;
                                         writeDisplay("Engine Load: " + load.ToString() + " [%]");
                                     }
                                     else if (data.Contains("411F"))
                                     { // Run Time Since Engine Start
-                                        double runtime = tmp[4]*256 + tmp[5];
+                                        double runtime = tmp[4] * 256 + tmp[5];
                                         currentInfo.RUNTIME = runtime;
                                         writeDisplay("Run Time: " + runtime.ToString() + " [s]");
                                     }
@@ -123,34 +133,51 @@ namespace OBD_II_WiFi
                                         currentInfo.ABP = abp;
                                         writeDisplay("ABP: " + abp.ToString() + " [kPa]");
                                     }
-                                    else if (data.Contains("411C"))
-                                    { // PID di appoggio per la scrittura su CSV a fine ciclo
-                                        var config = new CsvConfiguration(CultureInfo.InvariantCulture);
-                                        config.HasHeaderRecord = !append;
-
-                                        using (var writer = new StreamWriter("../../../dati/dataset.csv", append))
+                                    else if (data.Contains("411C")) // PID di appoggio per la scrittura su CSV a fine ciclo
+                                    {
+                                        if (mode == 0) // scrittura su CSV
                                         {
-                                            using (var csv = new CsvWriter(writer, config))
+                                            var config = new CsvConfiguration(CultureInfo.InvariantCulture);
+                                            config.HasHeaderRecord = !append;
+
+                                            using (var writer = new StreamWriter("../../../dati/dataset.csv", append))
                                             {
-                                                csv.WriteRecord(currentInfo);
-                                                csv.NextRecord();
+                                                using (var csv = new CsvWriter(writer, config))
+                                                {
+                                                    csv.WriteRecord(currentInfo);
+                                                    csv.NextRecord();
+                                                }
+                                            }
+
+                                            writeDisplay("Info Added To CSV");
+                                        }
+                                        else if (mode == 1) // utilizzo dell'API di ML
+                                        {
+                                            try
+                                            {
+                                                HttpResponseMessage response = await httpClient.GetAsync(URL);
+                                                if (response.IsSuccessStatusCode)
+                                                {
+                                                    messageFromAPI = await response.Content.ReadAsStringAsync();
+                                                    writeDisplay(messageFromAPI);
+                                                }
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                writeDisplay(e.Message);
                                             }
                                         }
-                                        
-                                        writeDisplay("Info Added To CSV");
                                     }
                                     else
                                     {
                                         writeDisplay(data);
                                     }
-
                                 }
                                 catch(FormatException fe)
                                 {
                                     writeDisplay("Reading error!");
                                 }
                             }
-                            //writeDisplay(data); // rimuovere se scommentato il blocco sopra
                             data = "";
                         }
                     }
@@ -257,24 +284,35 @@ namespace OBD_II_WiFi
             System.IO.File.WriteAllText("../../../dati/datafile_mod.json", coderJson);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             // funzione di testing, teoricamente non serve più a nulla
-            printPIDs("010041 00 BE 3E A8 13 ");
+            /*printPIDs("010041 00 BE 3E A8 13 ");
             printPIDs("012041 20 80 07 B0 11 ");
             printPIDs("014041 40 FE D0 84 01 ");
             printPIDs("016041 60 08 08 00 01 ");
             printPIDs("018041 80 00 00 00 01 ");
-            printPIDs("01A041 A0 10 00 00 00 ");
+            printPIDs("01A041 A0 10 00 00 00 ");*/
+
+            const string URL = "http://localhost:8000/";
+            string messageFromAPI;
+            string urlParameters = "";
+
+            HttpResponseMessage response = await httpClient.GetAsync(URL);
+            if (response.IsSuccessStatusCode)
+            {
+                messageFromAPI = await response.Content.ReadAsStringAsync();
+                writeDisplay(messageFromAPI);
+            }
         }
 
         private async void buttonFuelData_Click(object sender, EventArgs e)
         {
-            while (runEngineMonitoring) {
+            mode = 0; // per permettere la scrittura su CSV
+            while (runEngineMonitoring)
+            {
                 await Task.Run(() =>
                 {
-                    /*send("010B" + "\r"); // Intake manifold absolute pressure (MAP)
-                    Task.Delay(0500).Wait();*/
                     send("010F" + "\r"); // Intake air temperature (IAT)
                     Task.Delay(0200).Wait();
                     send("010C" + "\r"); // Engine speed
@@ -283,8 +321,6 @@ namespace OBD_II_WiFi
                     Task.Delay(0200).Wait();
                     send("0149" + "\r"); // Acc. Pedal Pos. D
                     Task.Delay(0200).Wait();
-                    /*send("014A" + "\r"); // Acc. Pedal Pos. E
-                    Task.Delay(0500).Wait();*/
                     send("0111" + "\r"); // Throttle Position
                     Task.Delay(0200).Wait();
                     send("010D" + "\r"); // Vehicle Speed
@@ -292,10 +328,6 @@ namespace OBD_II_WiFi
                     send("0104" + "\r"); // Engine Load
                     Task.Delay(0200).Wait();
                     send("011F" + "\r"); // Run Time
-                   // Task.Delay(0500).Wait();
-                   // send("0124" + "\r"); // lambda 1
-                    /*Task.Delay(0500).Wait();
-                    send("0125" + "\r"); // lambda 2*/
                     Task.Delay(0200).Wait();
                     send("0133" + "\r"); // Absolute Barometric Pressure
                     Task.Delay(0200).Wait();
@@ -373,6 +405,11 @@ namespace OBD_II_WiFi
             });
         }
 
+        private async void evalDriveButton_Click(object sender, EventArgs e)
+        {
+            mode = 1;
+        }
+
         private void buttonStopListening_Click_1(object sender, EventArgs e)
         {
             stopListening = true;
@@ -392,9 +429,5 @@ namespace OBD_II_WiFi
 
         private void highwayButton_Click(object sender, EventArgs e) { currentInfo.ROADTYPE = "highway"; }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
