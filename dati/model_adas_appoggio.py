@@ -41,7 +41,7 @@ def f1_m(y_true, y_pred):
 
 #keras.utils.get_custom_objects().update({"f1_m": f1_m})
 
-data = pd.read_csv("dataset.csv")
+data = pd.read_csv("dati/dataset.csv")
 print(f"There are {len(data)} rows in the dataset.")
 test_split = 0.1
 X = pd.DataFrame(data, columns=["rpm","iat","accpedal","throttlepos","speed","engineload","abp"]) #"maf",,"runtime"
@@ -62,20 +62,20 @@ X_train_array = X.values
 y_train_array = y.values
 
 #trasform datasets in np arrays to be compatible with smote kmeans
-smote_kmeans = KMeansSMOTE(random_state = 42,cluster_balance_threshold=0.05)
+""" smote_kmeans = KMeansSMOTE(random_state = 42,cluster_balance_threshold=0.05)
 X_smotekmeans, y_smotekmeans = smote_kmeans.fit_resample(X_train_array, y_train_array)
 y_smotekmeans_db = pd.DataFrame(y_smotekmeans , columns= ["drivestyle"])
-'''
+
 y_smotekmeans_db.columns[0]
 fig = plt.figure(figsize = (8,8))
 ax = fig.gca()
 y_smotekmeans_db.hist(ax=ax)
-plt.show()
-'''
+plt.show() """
+
 
 #normalization
-X = preprocessing.normalize(X_smotekmeans)
-y = preprocessing.normalize(y_smotekmeans_db)
+X = preprocessing.normalize(X_train_array)
+y = preprocessing.normalize(y_train_array)
 
 
 # Split the data into training and test sets
