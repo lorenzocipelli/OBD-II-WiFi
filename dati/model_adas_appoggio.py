@@ -89,7 +89,14 @@ def evaluate_model(X, y):
     print(len(history.history['loss']))
     # make a prediction on the test set
     y_pred = model.predict(X_test)
+    for idx in range(0, len(y_pred)) :
+        position = np.argmax(y_pred[idx])
+        one_element = [0,0,0]
+        one_element[position] = 1
+        y_pred[idx] = one_element
+
     print(y_pred)
+ 
     print(y_test)
     # round probabilities to class labels
     y_pred = y_pred.round()
