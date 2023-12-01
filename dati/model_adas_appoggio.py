@@ -1,6 +1,6 @@
 from keras import layers, Sequential 
 from keras.regularizers import l2
-from keras.layers import Dense, LSTM, SimpleRNN
+from keras.layers import Dense, LSTM, SimpleRNN, Dropout
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -40,6 +40,13 @@ def f1_m(y_true, y_pred):
     recall = recall_m(y_true, y_pred)
     return 2*((precision*recall)/(precision+recall+K.epsilon()))
 
+def train_test_split_custom(X, y, percentage) :
+    train_samples = round(X.shape[0] * (1 - percentage))
+    X_train, X_test = X[:train_samples, :], X[train_samples:, :]
+    y_train, y_test = y[:train_samples], y[train_samples:]
+
+    return  X_train, X_test, y_train, y_test
+
 def cut_exceeding(X,y) :
     reminder = X.shape[0] % TIMESTEPS
     if reminder > 0 : # rimozione necessaria
@@ -49,25 +56,32 @@ def cut_exceeding(X,y) :
     else :
         return X, y # nessuna rimozione se non è necessario
     
-def remove_non_single_label(data, labels) :
+""" def remove_non_single_label(data, labels) :
+    tmp_data = data
+    tmp_labels = list(labels['drivestyle'])
+
+    print(tmp_data)
+    print(tmp_labels)
+
     fixed_data = []
     fixed_labels = []
     check = True
-    for idx in range(0,len(labels),TIMESTEPS) : # step di TIMESTEP
-        tmp1 = labels[idx]
+    counter = 0
+    
+    for idx in range(0,len(tmp_labels),TIMESTEPS) :
         for idx2 in range(0,TIMESTEPS) :
-            tmp2 = labels[idx2]
-            print("tmp1: " + str(tmp1))
-            print("tmp2: " + str(tmp2))
-            if (tmp1 != tmp2).any() :
+            if tmp_labels[idx] != tmp_labels[idx2] :
                 check = False
         if check :
-            fixed_data.append(data[idx/TIMESTEPS])
-            for idx2 in range(0,TIMESTEPS) :
-                fixed_labels.append(labels[idx+idx2])
+            for idx3 in range(0,TIMESTEPS) :
+                fixed_data.append(tmp_data[idx + idx3])
+                fixed_labels.append(tmp_labels[idx + idx3])
+        else :
+            counter += 1
         check = True
 
-    return np.asarray(fixed_data), np.asarray(fixed_labels)
+    print("counter: " + str(counter*5))
+    return np.asarray(fixed_data), np.asarray(fixed_labels) """
 
 def get_model_RNN(batch_size, time_steps, number_of_features, n_outputs):
     print("\nBATCH SIZE: " + str(batch_size))
@@ -76,7 +90,8 @@ def get_model_RNN(batch_size, time_steps, number_of_features, n_outputs):
     print("NUMBER OF OUTPUTS: " + str(n_outputs))
 
     model = Sequential()
-    model.add(LSTM(7, batch_input_shape=(batch_size, time_steps, number_of_features), dropout = 0.2, recurrent_dropout=0.2))
+    model.add(LSTM(7, batch_input_shape=(batch_size, time_steps, number_of_features), dropout = 0.5, recurrent_dropout=0.5))
+    model.add(Dense(16, activation='relu'))
     model.add(Dense(n_outputs, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer= keras.optimizers.Adam(lr=0.01), metrics=['accuracy'])
 
@@ -85,12 +100,13 @@ def get_model_RNN(batch_size, time_steps, number_of_features, n_outputs):
     return model
 
 def get_model_MLP(number_of_features, n_outputs) :
+    print("NUMBER OF OUTPUTS: " + str(n_outputs))
     model = Sequential()
-    model.add(Dense(64, input_dim=number_of_features, dropout = 0.2))
-    model.add(Dense(64, dropout = 0.2))
-    model.add(Dense(64, dropout = 0.2))
-    model.add(Dense(n_outputs, activation='softmax'))
-    model.compile(loss='categorical_crossentropy', optimizer= keras.optimizers.Adam(lr=0.01), metrics=['accuracy'])
+    model.add(Dense(7, input_dim=number_of_features, activation='relu'))
+    #model.add(Dense(n_outputs, activation='softmax'))
+    model.add(Dense(1, activation='sigmoid'))
+    #model.compile(loss='categorical_crossentropy', optimizer= keras.optimizers.Adam(lr=0.01), metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     print(model.summary())
 
@@ -104,11 +120,12 @@ def evaluate_model(X, y):
     callback = EarlyStopping(monitor='loss', patience=3)
 
     # Split the data into training and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify = y)
+    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify = y)
+    X_train, X_test, y_train, y_test = train_test_split_custom(X=X, y=y, percentage=0.2)
 
-    y_train = to_categorical(y_train, dtype="int32")
-    y_test = to_categorical(y_test, dtype="int32")
-
+    #y_train = to_categorical(y_train, dtype="int32") # per RNN
+    #y_test = to_categorical(y_test, dtype="int32")  # per RNN
+    """
     # rimozione delle istanze in eccesso per avere un numero sempre uguale di timesteps per ogni batch
     X_train, y_train = cut_exceeding(X_train, y_train)
     X_test, y_test = cut_exceeding(X_test, y_test)
@@ -116,39 +133,29 @@ def evaluate_model(X, y):
     # da mandare in input allo strato LSTM del modello
     X_train = X_train.reshape((int(X_train.shape[0] / TIMESTEPS), TIMESTEPS, X_train.shape[1]))
     X_test = X_test.reshape((int(X_test.shape[0] / TIMESTEPS), TIMESTEPS, X_test.shape[1]))
-    print("X_train:" + str(X_train.shape))
-    print("X_test:" + str(X_test.shape))
-    print("y_train:" + str(y_train.shape))
-    print("y_test:" + str(y_test.shape))
-    # tolgo le serie di dati del training e testing che hanno più di una label
-    X_train, y_train = remove_non_single_label(X_train, y_train)
-    X_test, y_test = remove_non_single_label(X_test, y_test)
-    print("X_train:" + str(X_train.shape))
-    print("X_test:" + str(X_test.shape))
-    print("y_train:" + str(y_train.shape))
-    print("y_test:" + str(y_test.shape))
     # mantengo come label solamente l'ultima del batch, quelle precedenti non mi servono
     y_train = y_train[np.arange(len(y_train)) % TIMESTEPS == (TIMESTEPS - 1)]
-    y_test = y_test[np.arange(len(y_test)) % TIMESTEPS == (TIMESTEPS - 1)]
+    y_test = y_test[np.arange(len(y_test)) % TIMESTEPS == (TIMESTEPS - 1)] 
+    """
 
     # definizione del modello
-    batch_size, number_of_features = X_train.shape[0], X_train.shape[2]
-    model = get_model_RNN(batch_size, TIMESTEPS, number_of_features, NUM_OF_CLASSES)
-    #model = get_model_MLP(number_of_features, NUM_OF_CLASSES)
+    # batch_size, number_of_features = X_train.shape[0], X_train.shape[2] # per RNN
+    number_of_features = X_train.shape[1] # per MLP
+    #model = get_model_RNN(batch_size, TIMESTEPS, number_of_features, NUM_OF_CLASSES)
+    model = get_model_MLP(number_of_features, NUM_OF_CLASSES)
 
     # fit model
-    history = model.fit(X_train, y_train, validation_split = 0.33, callbacks=[callback], epochs=100, batch_size=1) 
+    history = model.fit(X_train, y_train, validation_split = 0.33, callbacks=[callback], epochs=5, batch_size=10) 
     print(len(history.history['loss']))
     # make a prediction on the test set
     y_pred = model.predict(X_test)
-    for idx in range(0, len(y_pred)) :
+    """ for idx in range(0, len(y_pred)) :
         position = np.argmax(y_pred[idx])
         one_element = [0,0,0]
         one_element[position] = 1
-        y_pred[idx] = one_element
+        y_pred[idx] = one_element """
 
     print(y_pred)
- 
     print(y_test)
     # round probabilities to class labels
     y_pred = y_pred.round()
@@ -167,6 +174,7 @@ TIMESTEPS = 5
 NUM_OF_CLASSES = 0
 
 data = pd.read_csv("dati/dataset.csv")
+data = data[data['drivestyle'] != "normal"] # semplificazione
 print(f"There are {len(data)} rows in the dataset.")
 
 X = pd.DataFrame(data, columns=["rpm","maf","iat","accpedal","speed","engineload","abp"]) # "throttlepos" escluso
