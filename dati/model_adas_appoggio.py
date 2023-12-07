@@ -1,14 +1,18 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from keras import layers, Sequential 
 from keras.regularizers import l2
 from keras.layers import Dense, LSTM, SimpleRNN, Dropout
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import pandas as pd
+from pandas.plotting import scatter_matrix
+from xgboost import XGBClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import make_multilabel_classification
 from sklearn.model_selection import train_test_split
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, hamming_loss, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.model_selection import RepeatedKFold
 from sklearn import preprocessing
 from keras.utils import to_categorical, plot_model  
@@ -118,10 +122,10 @@ def evaluate_model(X, y):
 
     # define evaluation procedure
     callback = EarlyStopping(monitor='loss', patience=3)
-
+    
     # Split the data into training and test sets
     #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify = y)
-    X_train, X_test, y_train, y_test = train_test_split_custom(X=X, y=y, percentage=0.2)
+    X_train, X_test, y_train, y_test = train_test_split_custom(X=X.values, y=y, percentage=0.3)
 
     #y_train = to_categorical(y_train, dtype="int32") # per RNN
     #y_test = to_categorical(y_test, dtype="int32")  # per RNN
@@ -138,33 +142,61 @@ def evaluate_model(X, y):
     y_test = y_test[np.arange(len(y_test)) % TIMESTEPS == (TIMESTEPS - 1)] 
     """
 
+    print(X_train.shape)
+    print(y_train.shape)
+    print(X_test.shape)
+    print(y_test.shape)
+
     # definizione del modello
     # batch_size, number_of_features = X_train.shape[0], X_train.shape[2] # per RNN
-    number_of_features = X_train.shape[1] # per MLP
+    #number_of_features = X_train.shape[1] # per MLP
     #model = get_model_RNN(batch_size, TIMESTEPS, number_of_features, NUM_OF_CLASSES)
-    model = get_model_MLP(number_of_features, NUM_OF_CLASSES)
+    #model = get_model_MLP(number_of_features, NUM_OF_CLASSES)
 
-    # fit model
-    history = model.fit(X_train, y_train, validation_split = 0.33, callbacks=[callback], epochs=5, batch_size=10) 
-    print(len(history.history['loss']))
+    model = RandomForestClassifier(n_estimators=200, max_depth=5, random_state=42, n_jobs=-1)
+    model.fit(X_train, y_train.values.ravel())
     # make a prediction on the test set
     y_pred = model.predict(X_test)
+    # calculate accuracy
+    acc_RF = accuracy_score(y_test, y_pred)
+    cm_RF = confusion_matrix(y_test, y_pred)
+    f1_sco_RF = f1_score(y_test, y_pred)
+    # store result
+    print("Random Forest")
+    print("Accuracy: " + '%.3f' % acc_RF)
+    print("F1 Score: " + '%.3f' % f1_sco_RF)
+
+    model1 = KNeighborsClassifier(n_neighbors=3)
+    model1.fit(X_train, y_train.values.ravel())
+    # make a prediction on the test set
+    y_pred1 = model1.predict(X_test)
+    # calculate accuracy
+    acc_KNN = accuracy_score(y_test, y_pred1)
+    cm_KNN = confusion_matrix(y_test, y_pred1)
+    f1_sco_KNN = f1_score(y_test, y_pred1)
+    # store result
+    print("K-Nearest Neighbour: ")
+    print("Accuracy: " + '%.3f' % acc_KNN)
+    print("F1 Score: " + '%.3f' % f1_sco_KNN)
+
+    disp_RF = ConfusionMatrixDisplay(confusion_matrix=cm_RF, display_labels=model.classes_)
+    disp_RF.plot()
+
+    disp_KNN = ConfusionMatrixDisplay(confusion_matrix=cm_KNN, display_labels=model.classes_)
+    disp_KNN.plot()
+
+    plt.show()
+
+    # fit model
+    #history = model.fit(X_train, y_train, validation_split = 0.33, callbacks=[callback], epochs=5, batch_size=10) 
+    #print(len(history.history['loss']))
     """ for idx in range(0, len(y_pred)) :
         position = np.argmax(y_pred[idx])
         one_element = [0,0,0]
         one_element[position] = 1
         y_pred[idx] = one_element """
 
-    print(y_pred)
-    print(y_test)
-    # round probabilities to class labels
-    y_pred = y_pred.round()
-    # calculate accuracy
-    acc = accuracy_score(y_test, y_pred)
-
-    # store result
-    print('%.3f' % acc)
-    results.append(acc)
+    results.append(acc_RF)
     
     return results
 
@@ -175,22 +207,29 @@ NUM_OF_CLASSES = 0
 
 data = pd.read_csv("dati/dataset.csv")
 data = data[data['drivestyle'] != "normal"] # semplificazione
-print(f"There are {len(data)} rows in the dataset.")
+#print(f"There are {len(data)} rows in the dataset.")
 
-X = pd.DataFrame(data, columns=["rpm","maf","iat","accpedal","speed","engineload","abp"]) # "throttlepos" escluso
+# ["rpm","maf","iat","accpedal","speed","engineload","abp"] acc -> 0.935, f1 -> 0.874
+# ["rpm","maf","iat","speed","engineload"] acc -> 0.935, f1 -> 0.874
+# ["rpm","maf","speed","engineload"] acc -> 0.780, f1 -> 0.711
+# ["rpm","maf","engineload"] acc -> 0.815, f1 -> 0.741
+X = pd.DataFrame(data, columns=["rpm","maf","iat","speed","engineload"]) # "throttlepos" escluso
 y = pd.DataFrame(data, columns=["drivestyle"])
 
 NUM_OF_CLASSES = len(y['drivestyle'].unique())
 
-print(X)
-print(y)
+#print(X)
+#print(y)
+
+fig, ax = plt.subplots(figsize=(12,12))
+scatter_matrix(X, alpha=1, ax=ax)
 
 y['drivestyle'] = y['drivestyle'].replace('normal', 0)
 y['drivestyle'] = y['drivestyle'].replace('sport', 1)
 y['drivestyle'] = y['drivestyle'].replace('eco', 2)
 
 #trasform datasets in np arrays to be compatible with smote kmeans
-X_train_array = X.values
+#X_train_array = X.values
 y_train_array = y.values
 
 #trasform datasets in np arrays to be compatible with smote kmeans
@@ -205,9 +244,9 @@ y_smotekmeans_db.hist(ax=ax)
 plt.show() """
 
 # normalization
-X = preprocessing.normalize(X_train_array)
+#X = preprocessing.normalize(X_train_array)
 
 # evaluate model
-results = evaluate_model(X, y)
+#results = evaluate_model(X, y)
 # summarize performance
-print('Accuracy: %.3f (%.3f)' % (statistics.mean(results), std(results)))
+#print('Accuracy: %.3f (%.3f)' % (statistics.mean(results), std(results)))
