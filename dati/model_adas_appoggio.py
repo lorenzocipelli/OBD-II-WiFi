@@ -1,23 +1,14 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from keras import layers, Sequential 
-from keras.regularizers import l2
 from keras.layers import Dense, LSTM, SimpleRNN, Dropout
 import matplotlib.pyplot as plt
 import pandas as pd
-from pandas.plotting import scatter_matrix
-from xgboost import XGBClassifier
+import joblib
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import make_multilabel_classification
-from sklearn.model_selection import train_test_split
-from sklearn.multioutput import MultiOutputClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, ConfusionMatrixDisplay
-from sklearn.model_selection import RepeatedKFold
-from sklearn import preprocessing
-from keras.utils import to_categorical, plot_model  
-from numpy import std
-import numpy as np
 import statistics
 #from imblearn.over_sampling import KMeansSMOTE
 from keras import backend as K
@@ -142,10 +133,10 @@ def evaluate_model(X, y):
     y_test = y_test[np.arange(len(y_test)) % TIMESTEPS == (TIMESTEPS - 1)] 
     """
 
-    print(X_train.shape)
+    """ print(X_train.shape)
     print(y_train.shape)
     print(X_test.shape)
-    print(y_test.shape)
+    print(y_test.shape) """
 
     # definizione del modello
     # batch_size, number_of_features = X_train.shape[0], X_train.shape[2] # per RNN
@@ -179,13 +170,40 @@ def evaluate_model(X, y):
     print("Accuracy: " + '%.3f' % acc_KNN)
     print("F1 Score: " + '%.3f' % f1_sco_KNN)
 
-    disp_RF = ConfusionMatrixDisplay(confusion_matrix=cm_RF, display_labels=model.classes_)
-    disp_RF.plot()
+    model2 = DecisionTreeClassifier()
+    model2.fit(X_train, y_train.values.ravel())
+    # make a prediction on the test set
+    y_pred2 = model2.predict(X_test)
+    # calculate accuracy
+    acc_DT = accuracy_score(y_test, y_pred2)
+    cm_DT = confusion_matrix(y_test, y_pred2)
+    f1_sco_DT = f1_score(y_test, y_pred2)
+    # store result
+    print("Decision Tree Classifier: ")
+    print("Accuracy: " + '%.3f' % acc_DT)
+    print("F1 Score: " + '%.3f' % f1_sco_DT)
 
-    disp_KNN = ConfusionMatrixDisplay(confusion_matrix=cm_KNN, display_labels=model.classes_)
+    disp_RF = ConfusionMatrixDisplay(confusion_matrix=cm_RF, display_labels=model.classes_)
+    
+    disp_RF.plot()
+    disp_RF.ax_.set_title("Random Forest")
+
+    disp_KNN = ConfusionMatrixDisplay(confusion_matrix=cm_KNN, display_labels=model1.classes_)
+    
     disp_KNN.plot()
+    disp_KNN.ax_.set_title("K-Nearest Neighbours")
+
+    disp_DT = ConfusionMatrixDisplay(confusion_matrix=cm_DT, display_labels=model2.classes_)
+    
+    disp_DT.plot()
+    disp_DT.ax_.set_title("Decision Tree")
 
     plt.show()
+
+    # save the model to disk
+    """ filename = 'dati/model/finalized_model.pkl'
+    with open(filename, 'wb') as file:  
+        joblib.dump(model, filename) """
 
     # fit model
     #history = model.fit(X_train, y_train, validation_split = 0.33, callbacks=[callback], epochs=5, batch_size=10) 
@@ -216,13 +234,16 @@ data = data[data['drivestyle'] != "normal"] # semplificazione
 X = pd.DataFrame(data, columns=["rpm","maf","iat","speed","engineload"]) # "throttlepos" escluso
 y = pd.DataFrame(data, columns=["drivestyle"])
 
+# [869,163,20,14,67] # eco testing
+# [2022,968,9,106,72] # sport testing
+
 NUM_OF_CLASSES = len(y['drivestyle'].unique())
 
 #print(X)
 #print(y)
 
-fig, ax = plt.subplots(figsize=(12,12))
-scatter_matrix(X, alpha=1, ax=ax)
+pd.plotting.scatter_matrix(X)
+plt.show()
 
 y['drivestyle'] = y['drivestyle'].replace('normal', 0)
 y['drivestyle'] = y['drivestyle'].replace('sport', 1)
@@ -232,21 +253,10 @@ y['drivestyle'] = y['drivestyle'].replace('eco', 2)
 #X_train_array = X.values
 y_train_array = y.values
 
-#trasform datasets in np arrays to be compatible with smote kmeans
-""" smote_kmeans = KMeansSMOTE(random_state = 42,cluster_balance_threshold=0.05)
-X_smotekmeans, y_smotekmeans = smote_kmeans.fit_resample(X_train_array, y_train_array)
-y_smotekmeans_db = pd.DataFrame(y_smotekmeans , columns= ["drivestyle"])
-
-y_smotekmeans_db.columns[0]
-fig = plt.figure(figsize = (8,8))
-ax = fig.gca()
-y_smotekmeans_db.hist(ax=ax)
-plt.show() """
-
 # normalization
 #X = preprocessing.normalize(X_train_array)
 
 # evaluate model
-#results = evaluate_model(X, y)
+results = evaluate_model(X, y) # UNCOMMENT TO TEST
 # summarize performance
 #print('Accuracy: %.3f (%.3f)' % (statistics.mean(results), std(results)))
