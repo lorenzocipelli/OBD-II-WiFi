@@ -50,6 +50,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.evalDriveButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -118,7 +119,7 @@
             this.display.Location = new System.Drawing.Point(241, 12);
             this.display.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.display.Name = "display";
-            this.display.Size = new System.Drawing.Size(500, 376);
+            this.display.Size = new System.Drawing.Size(500, 239);
             this.display.TabIndex = 5;
             this.display.Text = "";
             // 
@@ -338,6 +339,15 @@
             this.evalDriveButton.UseVisualStyleBackColor = false;
             this.evalDriveButton.Click += new System.EventHandler(this.evalDriveButton_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(349, 303);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 15);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "label5";
+            // 
             // OBD2Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -346,6 +356,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(776, 429);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
@@ -391,5 +402,6 @@
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private Button evalDriveButton;
+        private Label label5;
     }
 }

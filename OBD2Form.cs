@@ -1,12 +1,9 @@
 using System.Net.Sockets;
 using System.Globalization;
-using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
-using System.Net.NetworkInformation;
 using System.Net;
-using System.IO;
 using System.Text;
 using System.Diagnostics;
 using OBD_II_WiFi.classes;
