@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OBD2Form));
             this.portTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,6 +52,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.evalDriveButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.formsPlot1 = new ScottPlot.FormsPlot();
+            this.updatePlotTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -119,7 +122,7 @@
             this.display.Location = new System.Drawing.Point(241, 12);
             this.display.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.display.Name = "display";
-            this.display.Size = new System.Drawing.Size(500, 239);
+            this.display.Size = new System.Drawing.Size(500, 169);
             this.display.TabIndex = 5;
             this.display.Text = "";
             // 
@@ -348,6 +351,20 @@
             this.label5.TabIndex = 21;
             this.label5.Text = "label5";
             // 
+            // formsPlot1
+            // 
+            this.formsPlot1.Location = new System.Drawing.Point(241, 187);
+            this.formsPlot1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.formsPlot1.Name = "formsPlot1";
+            this.formsPlot1.Size = new System.Drawing.Size(500, 201);
+            this.formsPlot1.TabIndex = 22;
+            this.formsPlot1.Load += new System.EventHandler(this.formsPlot1_Load);
+            // 
+            // updatePlotTimer
+            // 
+            this.updatePlotTimer.Interval = 1000;
+            this.updatePlotTimer.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // OBD2Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -356,6 +373,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(776, 429);
+            this.Controls.Add(this.formsPlot1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -403,5 +421,7 @@
         private GroupBox groupBox2;
         private Button evalDriveButton;
         private Label label5;
+        private ScottPlot.FormsPlot formsPlot1;
+        private System.Windows.Forms.Timer updatePlotTimer;
     }
 }

@@ -29,6 +29,9 @@ namespace OBD_II_WiFi
         bool converting = false;
         bool append = true;
 
+        double[] xs = new double[] { 1, 2, 3, 4, 5 };
+        double[] ys = new double[] { 1, 4, 9, 16, 25 };
+
         public OBD2Form()
         {
             InitializeComponent();
@@ -238,7 +241,7 @@ namespace OBD_II_WiFi
 
                 to_print_array_tmp = to_print.ToCharArray();
                 foreach (char bit in to_print_array_tmp) {
-                    to_print_array = to_print_array.Append(bit).ToArray(); ;
+                    to_print_array = to_print_array.Append(bit).ToArray();
                 }
             }
 
@@ -283,14 +286,6 @@ namespace OBD_II_WiFi
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            // funzione di testing, teoricamente non serve più a nulla
-            /*printPIDs("010041 00 BE 3E A8 13 ");
-            printPIDs("012041 20 80 07 B0 11 ");
-            printPIDs("014041 40 FE D0 84 01 ");
-            printPIDs("016041 60 08 08 00 01 ");
-            printPIDs("018041 80 00 00 00 01 ");
-            printPIDs("01A041 A0 10 00 00 00 ");*/
-
             const string URL = "http://localhost:8000/";
             string messageFromAPI;
             string urlParameters = "";
@@ -426,5 +421,17 @@ namespace OBD_II_WiFi
 
         private void highwayButton_Click(object sender, EventArgs e) { currentInfo.ROADTYPE = "highway"; }
 
+        private void formsPlot1_Load(object sender, EventArgs e)
+        {
+            formsPlot1.Plot.AddScatter(xs, ys);
+            formsPlot1.Refresh();
+
+            updatePlotTimer.Enabled = true;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            formsPlot1.Render();
+        }
     }
 }
