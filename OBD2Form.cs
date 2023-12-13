@@ -29,8 +29,8 @@ namespace OBD_II_WiFi
         bool converting = false;
         bool append = true;
 
-        double[] xs = new double[] { 1, 2, 3, 4, 5 };
-        double[] ys = new double[] { 1, 4, 9, 16, 25 };
+        double[] speed = new double[] { };
+        double[] runtime = new double[] { };
 
         public OBD2Form()
         {
@@ -423,7 +423,7 @@ namespace OBD_II_WiFi
 
         private void formsPlot1_Load(object sender, EventArgs e)
         {
-            formsPlot1.Plot.AddScatter(xs, ys);
+            formsPlot1.Plot.AddScatter(runtime, speed);
             formsPlot1.Refresh();
 
             updatePlotTimer.Enabled = true;
@@ -431,7 +431,37 @@ namespace OBD_II_WiFi
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            // spostare tutto questo codice nella parte sopra
+            // dove si trova l'invio al csv dei dati, in questo modo al termine di 
+            // una sessione di campionamento sarà stampato il valore nel grafico delle telemetrie
+            
+
             formsPlot1.Render();
         }
     }
 }
+
+/*
+    rpm,maf,iat,accpedal,throttlepos,speed,engineload,runtime,abp
+    828,182,36,12,202,0,38,53,100
+    972,296,35,36,202,14,35,58,100
+    1076,264,35,61,202,24,76,63,100
+    947,187,35,0,202,21,40,68,100
+    1088,163,35,35,202,17,43,74,100
+    1326,252,35,76,202,22,43,79,100
+    893,161,35,0,202,0,59,84,100
+    1826,235,34,71,202,22,32,89,100
+    903,242,34,0,202,25,88,95,100
+    1017,205,34,7,202,27,100,100,100
+    1178,282,34,7,202,32,36,105,100
+    997,130,34,0,202,25,68,111,100
+    943,207,34,107,203,25,98,116,100
+    1286,676,33,148,202,47,98,121,100
+    1886,460,31,0,202,52,77,126,100
+    2111,1205,30,0,202,60,98,132,100
+    1602,800,29,125,202,68,100,137,100
+    1930,357,26,0,203,73,0,142,100
+    923,170,28,0,202,58,0,147,100
+    2048,391,27,0,202,46,0,153,100
+    1517,1075,27,159,202,54,83,158,100
+     */
