@@ -29,12 +29,29 @@ namespace OBD_II_WiFi
         bool converting = false;
         bool append = true;
 
+        readonly ScottPlot.Plottable.DataLogger Logger_speed;
+        readonly ScottPlot.Plottable.DataLogger Logger_rpm;
+
         double[] speed = new double[] { };
         double[] runtime = new double[] { };
 
         public OBD2Form()
         {
             InitializeComponent();
+
+            Logger_speed = chart_speed.Plot.AddDataLogger(label: "speed", color: Color.Blue, lineWidth: 2);
+            Logger_rpm = chart_rpm.Plot.AddDataLogger(label: "rpm", color: Color.Red, lineWidth: 2);
+
+            Logger_speed.ViewSlide();
+            Logger_rpm.ViewSlide();
+
+            // 75 secondi come finestra, mostrati fino a 200 khm
+            chart_speed.Plot.SetAxisLimits(0, 75, 0, 200);
+            chart_speed.Plot.Title("Speed");
+            // 75 secondi come finestra, mostrati fino a 3000 khm
+            chart_rpm.Plot.SetAxisLimits(0, 75, 0, 3000);
+            chart_rpm.Plot.Title("RPM");
+
         }
 
         private async void startListening()
@@ -155,6 +172,10 @@ namespace OBD_II_WiFi
                                         {
                                             try
                                             {
+                                                // aggiornamento dei grafici
+                                                //Logger_rpm.Add(currentInfo.RUNTIME, currentInfo.RMP);
+                                                //Logger_speed.Add(currentInfo.RUNTIME, currentInfo.SPEED);
+
                                                 HttpResponseMessage response = await httpClient.GetAsync(URL);
                                                 if (response.IsSuccessStatusCode)
                                                 {
@@ -397,11 +418,6 @@ namespace OBD_II_WiFi
             });
         }
 
-        private async void evalDriveButton_Click(object sender, EventArgs e)
-        {
-            mode = 1;
-        }
-
         private void buttonStopListening_Click_1(object sender, EventArgs e)
         {
             stopListening = true;
@@ -421,22 +437,39 @@ namespace OBD_II_WiFi
 
         private void highwayButton_Click(object sender, EventArgs e) { currentInfo.ROADTYPE = "highway"; }
 
-        private void formsPlot1_Load(object sender, EventArgs e)
-        {
-            formsPlot1.Plot.AddScatter(runtime, speed);
-            formsPlot1.Refresh();
+        int to_remove = 0;
+        int to_remove1 = 0;
+        int[] speed_fake = new int[] { 0, 14, 24, 40, 17, 22, 59, 22, 0, 22, 25, 27, 32, 36, 40, 60, 50, 51, 33 };
+        int[] rpm_fake = new int[] { 0, 1000, 1120, 1156, 1350, 1350, 1260, 1388, 2000, 2120, 2350, 27, 32, 36, 40, 60, 50, 51, 33 };
+        int[] runtime_fake = new int[] { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140 };
 
-            updatePlotTimer.Enabled = true;
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            //speed.Append(speed_fake[to_remove]).ToArray();
+            //runtime.Append(runtime_fake[to_remove]).ToArray();
+
+            Logger_speed.Add(runtime_fake[to_remove1], speed_fake[to_remove]);
+            Logger_rpm.Add(runtime_fake[to_remove1], rpm_fake[to_remove]);
+
+            to_remove++;
+            to_remove1++;
+
+            if (to_remove == (speed_fake.Length-1)) { to_remove = 0; } 
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void updatePlotTimer_Tick(object sender, EventArgs e)
         {
-            // spostare tutto questo codice nella parte sopra
-            // dove si trova l'invio al csv dei dati, in questo modo al termine di 
-            // una sessione di campionamento sarà stampato il valore nel grafico delle telemetrie
-            
+            if (Logger_speed.Count == Logger_speed.CountOnLastRender)
+                return;
 
-            formsPlot1.Render();
+            chart_speed.Refresh();
+            chart_rpm.Refresh();
+        }
+
+        private void evalDriveButton_Click_1(object sender, EventArgs e)
+        {
+            mode = 1;
+            updatePlotTimer.Enabled = true;
         }
     }
 }
