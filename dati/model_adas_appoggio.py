@@ -257,6 +257,6 @@ y_train_array = y.values
 #X = preprocessing.normalize(X_train_array)
 
 # evaluate model
-results = evaluate_model(X, y) # UNCOMMENT TO TEST
+#results = evaluate_model(X, y) # UNCOMMENT TO TEST
 # summarize performance
 #print('Accuracy: %.3f (%.3f)' % (statistics.mean(results), std(results)))

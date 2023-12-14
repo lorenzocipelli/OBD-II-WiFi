@@ -9,6 +9,7 @@ using System.Diagnostics;
 using OBD_II_WiFi.classes;
 using CsvHelper;
 using CsvHelper.Configuration;
+using ScottPlot;
 
 namespace OBD_II_WiFi
 {
@@ -31,27 +32,17 @@ namespace OBD_II_WiFi
 
         readonly ScottPlot.Plottable.DataLogger Logger_speed;
         readonly ScottPlot.Plottable.DataLogger Logger_rpm;
-
-        double[] speed = new double[] { };
-        double[] runtime = new double[] { };
+        readonly ScottPlot.Plottable.DataLogger Logger_load;
 
         public OBD2Form()
         {
             InitializeComponent();
 
-            Logger_speed = chart_speed.Plot.AddDataLogger(label: "speed", color: Color.Blue, lineWidth: 2);
-            Logger_rpm = chart_rpm.Plot.AddDataLogger(label: "rpm", color: Color.Red, lineWidth: 2);
+            Logger_speed = chart_speed.Plot.AddDataLogger(label: "speed", color: Color.LightGoldenrodYellow, lineWidth: 2);
+            Logger_rpm = chart_rpm.Plot.AddDataLogger(label: "rpm", color: Color.LightSalmon, lineWidth: 2);
+            Logger_load = chart_load.Plot.AddDataLogger(label: "load", color: Color.LightGreen, lineWidth: 2);
 
-            Logger_speed.ViewSlide();
-            Logger_rpm.ViewSlide();
-
-            // 75 secondi come finestra, mostrati fino a 200 khm
-            chart_speed.Plot.SetAxisLimits(0, 75, 0, 200);
-            chart_speed.Plot.Title("Speed");
-            // 75 secondi come finestra, mostrati fino a 3000 khm
-            chart_rpm.Plot.SetAxisLimits(0, 75, 0, 3000);
-            chart_rpm.Plot.Title("RPM");
-
+            initializeCharts();
         }
 
         private async void startListening()
@@ -175,6 +166,14 @@ namespace OBD_II_WiFi
                                                 // aggiornamento dei grafici
                                                 //Logger_rpm.Add(currentInfo.RUNTIME, currentInfo.RMP);
                                                 //Logger_speed.Add(currentInfo.RUNTIME, currentInfo.SPEED);
+                                                //Logger_load.Add(currentInfo.RUNTIME, currentInfo.ENGINELOAD);
+
+                                                // if (Logger_speed.Count == Logger_speed.CountOnLastRender)
+                                                //   return;
+
+                                                //chart_speed.Refresh();
+                                                //chart_rpm.Refresh();
+                                                //chart_load.Refresh();
 
                                                 HttpResponseMessage response = await httpClient.GetAsync(URL);
                                                 if (response.IsSuccessStatusCode)
@@ -437,19 +436,57 @@ namespace OBD_II_WiFi
 
         private void highwayButton_Click(object sender, EventArgs e) { currentInfo.ROADTYPE = "highway"; }
 
+        private void initializeCharts() {
+            Logger_speed.ViewSlide();
+            Logger_rpm.ViewSlide();
+            Logger_load.ViewSlide();
+
+            // 75 secondi come finestra, mostrati fino a 200 khm
+            chart_speed.Plot.SetAxisLimits(-2, 75, -20, 200);
+            chart_speed.Plot.Style(dataBackground: Color.FromArgb(7, 102, 173));
+            chart_speed.Plot.YAxis.Label("Speed [Km/h]", Color.White, size: 12, fontName: "Courier New");
+            chart_speed.Plot.Grid(lineStyle: LineStyle.Dot, color: Color.FromArgb(155, 176, 176));
+            chart_speed.Plot.XAxis2.Line(false);
+            chart_speed.Plot.YAxis2.Line(false);
+            chart_speed.Plot.XAxis.Color(Color.White);
+            chart_speed.Plot.YAxis.Color(Color.White);
+
+            // 75 secondi come finestra, mostrati fino a 3000 rpm
+            chart_rpm.Plot.SetAxisLimits(-2, 75, 900, 3000);
+            chart_rpm.Plot.Style(dataBackground: Color.FromArgb(7, 102, 173));
+            chart_rpm.Plot.YAxis.Label("Engine Speed [RPM]", Color.White, size: 12, fontName: "Courier New");
+            chart_rpm.Plot.Grid(lineStyle: LineStyle.Dot, color: Color.FromArgb(155, 176, 176));
+            chart_rpm.Plot.XAxis2.Line(false);
+            chart_rpm.Plot.YAxis2.Line(false);
+            chart_rpm.Plot.XAxis.Color(Color.White);
+            chart_rpm.Plot.YAxis.Color(Color.White);
+            
+            // 75 secondi come finestra, mostrati fino a 100 %
+            chart_load.Plot.SetAxisLimits(-2, 75, -20, 120);
+            chart_load.Plot.Style(dataBackground: Color.FromArgb(7, 102, 173));
+            chart_load.Plot.YAxis.Label("Engine Load [%]", Color.White, size: 12, fontName: "Courier New");
+            chart_load.Plot.Grid(lineStyle: LineStyle.Dot, color: Color.FromArgb(155, 176, 176));
+            chart_load.Plot.XAxis2.Line(false);
+            chart_load.Plot.YAxis2.Line(false);
+            chart_load.Plot.XAxis.Color(Color.White);
+            chart_load.Plot.YAxis.Color(Color.White);
+
+            chart_speed.Refresh();
+            chart_rpm.Refresh();
+            chart_load.Refresh();
+        }
+
         int to_remove = 0;
         int to_remove1 = 0;
-        int[] speed_fake = new int[] { 0, 14, 24, 40, 17, 22, 59, 22, 0, 22, 25, 27, 32, 36, 40, 60, 50, 51, 33 };
-        int[] rpm_fake = new int[] { 0, 1000, 1120, 1156, 1350, 1350, 1260, 1388, 2000, 2120, 2350, 27, 32, 36, 40, 60, 50, 51, 33 };
+        int[] speed_fake = new int[] { 10, 14, 24, 40, 17, 22, 59, 22, 0, 22, 25, 27, 32, 36, 40, 60, 50, 51, 33 };
+        int[] rpm_fake = new int[] { 950, 1000, 1120, 1156, 1350, 1350, 1260, 1388, 2000, 2120, 2350, 27, 32, 36, 40, 60, 50, 51, 33 };
         int[] runtime_fake = new int[] { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140 };
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            //speed.Append(speed_fake[to_remove]).ToArray();
-            //runtime.Append(runtime_fake[to_remove]).ToArray();
-
             Logger_speed.Add(runtime_fake[to_remove1], speed_fake[to_remove]);
             Logger_rpm.Add(runtime_fake[to_remove1], rpm_fake[to_remove]);
+            Logger_load.Add(runtime_fake[to_remove1], speed_fake[to_remove]);
 
             to_remove++;
             to_remove1++;
@@ -464,6 +501,7 @@ namespace OBD_II_WiFi
 
             chart_speed.Refresh();
             chart_rpm.Refresh();
+            chart_load.Refresh();
         }
 
         private void evalDriveButton_Click_1(object sender, EventArgs e)
