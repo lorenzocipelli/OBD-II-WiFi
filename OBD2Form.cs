@@ -1,5 +1,6 @@
 using System.Net.Sockets;
 using System.Globalization;
+using Newtonsoft.Json;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -16,6 +17,10 @@ namespace OBD_II_WiFi
     public partial class OBD2Form : Form
     {
         static HttpClient httpClient = new HttpClient();
+        const string URL = "http://localhost:8000/predict";
+        string messageFromAPI;
+        string urlParameters = "";
+
         TcpClient client = new TcpClient();
         RunInfo currentInfo = new RunInfo();
         NetworkStream stream;
@@ -38,6 +43,8 @@ namespace OBD_II_WiFi
         {
             InitializeComponent();
 
+            httpClient.BaseAddress = new Uri(URL);
+
             Logger_speed = chart_speed.Plot.AddDataLogger(label: "speed", color: Color.LightGoldenrodYellow, lineWidth: 2);
             Logger_rpm = chart_rpm.Plot.AddDataLogger(label: "rpm", color: Color.LightSalmon, lineWidth: 2);
             Logger_load = chart_load.Plot.AddDataLogger(label: "load", color: Color.LightGreen, lineWidth: 2);
@@ -50,11 +57,8 @@ namespace OBD_II_WiFi
             Regex rgx = new Regex("[^a-zA-Z0-9 -]"); // keep only alphanumerics
             display.Text = "Connection established!";
 
-            const string URL = "http://localhost:8000/";
-            string messageFromAPI;
-            string urlParameters = "";
-
-            httpClient.BaseAddress = new Uri(URL);
+            JsonNode responseAsJson;
+            string responseContent;
 
             await Task.Run(async () =>
             {
@@ -107,13 +111,13 @@ namespace OBD_II_WiFi
                                     }
                                     else if (data.Contains("4149"))
                                     { // Acc. Pedal Pos. D
-                                        int accD = tmp[4] - 37;
+                                        int accD = Convert.ToInt32(tmp[4] / 2.55);
                                         currentInfo.ACCPEDAL = accD;
                                         writeDisplay("Acc. Pedal Pos. D: " + accD.ToString() + " [%]");
                                     }
                                     else if (data.Contains("4111"))
                                     { // Throttle Position
-                                        int thPos = tmp[4];
+                                        int thPos = Convert.ToInt32(tmp[4] / 2.55);
                                         currentInfo.THROTTLEPOS = thPos;
                                         writeDisplay("Throttle Position: " + thPos.ToString() + " [%]");
                                     }
@@ -164,22 +168,37 @@ namespace OBD_II_WiFi
                                             try
                                             {
                                                 // aggiornamento dei grafici
-                                                //Logger_rpm.Add(currentInfo.RUNTIME, currentInfo.RMP);
-                                                //Logger_speed.Add(currentInfo.RUNTIME, currentInfo.SPEED);
-                                                //Logger_load.Add(currentInfo.RUNTIME, currentInfo.ENGINELOAD);
+                                                // UNCOMMENT Logger_rpm.Add(currentInfo.RUNTIME, currentInfo.RMP);
+                                                // UNCOMMENT Logger_speed.Add(currentInfo.RUNTIME, currentInfo.SPEED);
+                                                // UNCOMMENT Logger_load.Add(currentInfo.RUNTIME, currentInfo.ENGINELOAD);
 
-                                                // if (Logger_speed.Count == Logger_speed.CountOnLastRender)
-                                                //   return;
+                                                // UNCOMMENT if (Logger_speed.Count == Logger_speed.CountOnLastRender)
+                                                // UNCOMMENT   return;
 
-                                                //chart_speed.Refresh();
-                                                //chart_rpm.Refresh();
-                                                //chart_load.Refresh();
+                                                // UNCOMMENT chart_speed.Refresh();
+                                                // UNCOMMENT chart_rpm.Refresh();
+                                                // UNCOMMENT chart_load.Refresh();
 
-                                                HttpResponseMessage response = await httpClient.GetAsync(URL);
+                                                // Serialize our concrete class into a JSON String
+                                                var stringPayload = JsonConvert.SerializeObject(currentInfo);
+                                                // dentro al body ci devo mettere il json con i parametri per la predizione
+                                                var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
+                                                HttpResponseMessage response = await httpClient.PostAsync(URL, httpContent);
                                                 if (response.IsSuccessStatusCode)
                                                 {
                                                     messageFromAPI = await response.Content.ReadAsStringAsync();
-                                                    writeDisplay(messageFromAPI);
+                                                    responseAsJson = JsonNode.Parse(messageFromAPI)!;
+                                                    // parsing del messaggio come un json e andare a prendere il campo 'prediction'
+                                                    // sse lo stato della risposta: 'state' vale OK
+                                                    if (responseAsJson["state"].ToString() == "OK")
+                                                    {
+                                                        responseContent = responseAsJson["prediction"].ToString();
+                                                        writeDisplay(responseContent);
+                                                    }
+                                                    else if (responseAsJson["state"].ToString() == "ERROR")
+                                                    {
+                                                        writeDisplay("Can't Read Prediction!");
+                                                    }
                                                 }
                                             }
                                             catch (Exception e)
@@ -484,14 +503,14 @@ namespace OBD_II_WiFi
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Logger_speed.Add(runtime_fake[to_remove1], speed_fake[to_remove]);
+            /*Logger_speed.Add(runtime_fake[to_remove1], speed_fake[to_remove]);
             Logger_rpm.Add(runtime_fake[to_remove1], rpm_fake[to_remove]);
             Logger_load.Add(runtime_fake[to_remove1], speed_fake[to_remove]);
 
             to_remove++;
             to_remove1++;
 
-            if (to_remove == (speed_fake.Length-1)) { to_remove = 0; } 
+            if (to_remove == (speed_fake.Length-1)) { to_remove = 0; } */
         }
 
         private void updatePlotTimer_Tick(object sender, EventArgs e)
@@ -508,6 +527,41 @@ namespace OBD_II_WiFi
         {
             mode = 1;
             updatePlotTimer.Enabled = true;
+        }
+
+        private async void button1_Click_2(object sender, EventArgs e)
+        {
+            JsonNode responseAsJson;
+            string responseContent;
+
+            await Task.Run(async () => {
+                try
+                {
+                    // Serialize our concrete class into a JSON String
+                    // UNCOMMENT var stringPayload = JsonConvert.SerializeObject(currentInfo);
+                    // dentro al body ci devo mettere il json con i parametri per la predizione
+                    // UNCOMMENT var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
+                    var httpContent = new StringContent("{ \"rpm\": 2022, \"maf\": 968, \"iat\": 9, \"speed\": 106, \"engineload\": 72 }", Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await httpClient.PostAsync(URL, httpContent);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        messageFromAPI = await response.Content.ReadAsStringAsync();
+                        responseAsJson = JsonNode.Parse(messageFromAPI)!;
+                        // parsing del messaggio come un json e andare a prendere il campo 'prediction'
+                        // sse lo stato della risposta: 'state' vale OK
+                        if (responseAsJson["state"].ToString() == "OK") {
+                            responseContent = responseAsJson["prediction"].ToString();
+                            writeDisplay(responseContent);
+                        } else if (responseAsJson["state"].ToString() == "ERROR") {
+                            writeDisplay("Can't Read Prediction!");
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    writeDisplay(e.Message);
+                }
+            });
         }
     }
 }

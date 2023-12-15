@@ -37,9 +37,9 @@ def predict_car_type(instance:CarData):
     speed=instance['speed']
     engineload=instance['engineload']
     
-    #prediction.append(model.predict([[age, gender]]))
-
     pred = model.predict([[rpm, maf, iat, speed, engineload]])
+
+    #prediction.append(pred)
 
     if pred == 1 :
         return {
