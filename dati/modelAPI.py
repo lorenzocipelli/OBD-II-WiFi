@@ -2,6 +2,7 @@
 # - pip install fastapi
 # - pip install joblib
 
+import os
 import uvicorn
 from fastapi import FastAPI
 import joblib
@@ -14,7 +15,10 @@ class CarData(BaseModel):
   speed: int
   engineload: int
 
+#print('getcwd:      ', os.getcwd())
+
 app = FastAPI()
+#joblib_in = open("dati/model/finalized_model.pkl","rb")
 joblib_in = open("dati/model/finalized_model.pkl","rb")
 model = joblib.load(joblib_in)
 

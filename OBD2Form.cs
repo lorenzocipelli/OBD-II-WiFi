@@ -172,9 +172,6 @@ namespace OBD_II_WiFi
                                                 // UNCOMMENT Logger_speed.Add(currentInfo.RUNTIME, currentInfo.SPEED);
                                                 // UNCOMMENT Logger_load.Add(currentInfo.RUNTIME, currentInfo.ENGINELOAD);
 
-                                                // UNCOMMENT if (Logger_speed.Count == Logger_speed.CountOnLastRender)
-                                                // UNCOMMENT   return;
-
                                                 // UNCOMMENT chart_speed.Refresh();
                                                 // UNCOMMENT chart_rpm.Refresh();
                                                 // UNCOMMENT chart_load.Refresh();
