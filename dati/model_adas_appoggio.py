@@ -97,7 +97,7 @@ def get_model_RNN(batch_size, time_steps, number_of_features, n_outputs):
 def get_model_MLP(number_of_features, n_outputs) :
     print("NUMBER OF OUTPUTS: " + str(n_outputs))
     model = Sequential()
-    model.add(Dense(7, input_dim=number_of_features, activation='relu'))
+    model.add(Dense(6, input_dim=number_of_features, activation='relu'))
     #model.add(Dropout(0.2))
     model.add(Dense(3, activation = 'relu'))
     #model.add(Dropout(0.2))
@@ -190,7 +190,7 @@ def evaluate_model(X, y):
     print("F1 Score: " + '%.3f' % f1_sco_DT)
 
     #get_MLP_model
-    model3 = get_model_MLP(7, 1)
+    model3 = get_model_MLP(6, 1)
     #print (X_train)
     #print(y_train.values.ravel())
     #print(y_test.values.ravel())
@@ -233,9 +233,9 @@ def evaluate_model(X, y):
     plt.show()
 
     # save the model to disk
-    """ filename = 'dati/model/finalized_model.pkl'
+    filename = 'model/finalized_model.pkl'
     with open(filename, 'wb') as file:  
-        joblib.dump(model, filename) """
+        joblib.dump(model, filename) 
 
     # fit model
     #history = model.fit(X_train, y_train, validation_split = 0.33, callbacks=[callback], epochs=5, batch_size=10) 
@@ -263,7 +263,7 @@ data = data[data['drivestyle'] != "normal"] # semplificazione
 # ["rpm","maf","iat","speed","engineload"] acc -> 0.935, f1 -> 0.874
 # ["rpm","maf","speed","engineload"] acc -> 0.780, f1 -> 0.711
 # ["rpm","maf","engineload"] acc -> 0.815, f1 -> 0.741
-X = pd.DataFrame(data, columns=["rpm","maf","iat","accpedal","speed","engineload","abp"]) # "throttlepos" escluso
+X = pd.DataFrame(data, columns=["rpm","maf","iat","accpedal","speed","engineload"]) # "throttlepos" escluso
 y = pd.DataFrame(data, columns=["drivestyle"])
 
 # [869,163,20,14,67] # eco testing
