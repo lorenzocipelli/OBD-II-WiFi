@@ -506,13 +506,6 @@ namespace OBD_II_WiFi
             chart_load.Refresh();
         }
 
-        private void evalDriveButton_Click_1(object sender, EventArgs e)
-        {
-            mode = 1;
-            askEngineData();
-            //updatePlotTimer.Enabled = true;
-        }
-
         private async void button1_Click_2(object sender, EventArgs e)
         {
             try
@@ -550,6 +543,7 @@ namespace OBD_II_WiFi
         private void evalDriveButton_Click(object sender, EventArgs e)
         {
             mode = 1;
+            askEngineData();
             writeDisplay("Mode Changed");
         }
     }

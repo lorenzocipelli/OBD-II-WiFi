@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.portTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,7 +50,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.evalDriveButton = new System.Windows.Forms.Button();
             this.chart_speed = new ScottPlot.FormsPlot();
-            this.updatePlotTimer = new System.Windows.Forms.Timer(this.components);
             this.chart_rpm = new ScottPlot.FormsPlot();
             this.chart_load = new ScottPlot.FormsPlot();
             this.groupBox1.SuspendLayout();
@@ -348,10 +346,6 @@
             this.chart_speed.Size = new System.Drawing.Size(903, 187);
             this.chart_speed.TabIndex = 22;
             // 
-            // updatePlotTimer
-            // 
-            this.updatePlotTimer.Interval = 1000;
-            // 
             // chart_rpm
             // 
             this.chart_rpm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(102)))), ((int)(((byte)(173)))));
@@ -430,7 +424,6 @@
         private GroupBox groupBox2;
         private Button evalDriveButton;
         private ScottPlot.FormsPlot chart_speed;
-        private System.Windows.Forms.Timer updatePlotTimer;
         private ScottPlot.FormsPlot chart_rpm;
         private ScottPlot.FormsPlot chart_load;
     }
