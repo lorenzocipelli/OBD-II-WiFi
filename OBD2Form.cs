@@ -19,7 +19,6 @@ namespace OBD_II_WiFi
         static HttpClient httpClient = new HttpClient();
         const string URL = "http://localhost:8000/predict";
         string messageFromAPI;
-        string urlParameters = "";
 
         TcpClient client = new TcpClient();
         RunInfo currentInfo = new RunInfo();
@@ -29,6 +28,7 @@ namespace OBD_II_WiFi
         string data;
 
         delegate void writeDisplayDelegate(string toDisplay);
+        delegate void updateChartDelegate();
 
         bool runEngineMonitoring = true;
         bool stopListening = false;
@@ -95,7 +95,7 @@ namespace OBD_II_WiFi
                                     if (data.Contains("410C"))
                                     { // Engine speed
                                         int rpm = (tmp[4] * 256 + tmp[5]) / 4; // il valore arriva in rpm * 4
-                                        currentInfo.RMP = rpm;
+                                        currentInfo.RPM = rpm;
                                         writeDisplay("RPM: " + rpm.ToString() + " [rpm]");
                                     }
                                     else if (data.Contains("4110"))
@@ -169,16 +169,15 @@ namespace OBD_II_WiFi
                                             try
                                             {
                                                 // aggiornamento dei grafici
-                                                // UNCOMMENT Logger_rpm.Add(currentInfo.RUNTIME, currentInfo.RMP);
-                                                // UNCOMMENT Logger_speed.Add(currentInfo.RUNTIME, currentInfo.SPEED);
-                                                // UNCOMMENT Logger_load.Add(currentInfo.RUNTIME, currentInfo.ENGINELOAD);
+                                                Logger_rpm.Add(currentInfo.RUNTIME, currentInfo.RPM);
+                                                Logger_speed.Add(currentInfo.RUNTIME, currentInfo.SPEED);
+                                                Logger_load.Add(currentInfo.RUNTIME, currentInfo.ENGINELOAD);
 
-                                                // UNCOMMENT chart_speed.Refresh();
-                                                // UNCOMMENT chart_rpm.Refresh();
-                                                // UNCOMMENT chart_load.Refresh();
+                                                refreshCharts(); // metodo con delegate
 
                                                 // Serialize our concrete class into a JSON String
                                                 var stringPayload = JsonConvert.SerializeObject(currentInfo);
+                                                //writeDisplay(stringPayload);
                                                 // dentro al body ci devo mettere il json con i parametri per la predizione
                                                 var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
                                                 HttpResponseMessage response = await httpClient.PostAsync(URL, httpContent);
@@ -239,6 +238,21 @@ namespace OBD_II_WiFi
             else
             {
                 display.Text += "\n" + text;
+            }
+        }
+
+        private void refreshCharts()
+        {
+            if (chart_speed.InvokeRequired)
+            {
+                updateChartDelegate d = new updateChartDelegate(refreshCharts);
+                this.Invoke(d, new object[] {});
+            }
+            else
+            { 
+                chart_speed.Refresh();
+                chart_rpm.Refresh();
+                chart_load.Refresh();
             }
         }
 
@@ -340,6 +354,10 @@ namespace OBD_II_WiFi
         private async void buttonFuelData_Click(object sender, EventArgs e)
         {
             mode = 0; // per permettere la scrittura su CSV
+            askEngineData();
+        }
+
+        private async void askEngineData() {
             while (runEngineMonitoring)
             {
                 await Task.Run(() =>
@@ -362,7 +380,7 @@ namespace OBD_II_WiFi
                     Task.Delay(0200).Wait();
                     send("0133" + "\r"); // Absolute Barometric Pressure
                     Task.Delay(0200).Wait();
-                    send("011C" + "\r"); // Update CSV
+                    send("011C" + "\r"); // Update CSV or Predict Drivestyle
                     Task.Delay(0200).Wait();
                     writeDisplay("");
                 });
@@ -428,19 +446,12 @@ namespace OBD_II_WiFi
                 Task.Delay(2000).Wait();
                 send("0180" + "\r");
 
-                Task.Delay(2000).Wait();
+                //Task.Delay(2000).Wait();
                 //send("01A0" + "\r"); // ultimo
 
                 Task.Delay(2000).Wait();
                 converting = false;
             });
-        }
-
-        private void buttonStopListening_Click_1(object sender, EventArgs e)
-        {
-            stopListening = true;
-            runEngineMonitoring = false;
-            client.Close();
         }
 
         private void ecoButton_Click(object sender, EventArgs e) { currentInfo.DRIVESTYLE = "eco"; }
@@ -495,78 +506,51 @@ namespace OBD_II_WiFi
             chart_load.Refresh();
         }
 
-        int to_remove = 0;
-        int to_remove1 = 0;
-        int[] speed_fake = new int[] { 10, 14, 24, 40, 17, 22, 59, 22, 0, 22, 25, 27, 32, 36, 40, 60, 50, 51, 33 };
-        int[] rpm_fake = new int[] { 950, 1000, 1120, 1156, 1350, 1350, 1260, 1388, 2000, 2120, 2350, 27, 32, 36, 40, 60, 50, 51, 33 };
-        int[] runtime_fake = new int[] { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140 };
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            /*Logger_speed.Add(runtime_fake[to_remove1], speed_fake[to_remove]);
-            Logger_rpm.Add(runtime_fake[to_remove1], rpm_fake[to_remove]);
-            Logger_load.Add(runtime_fake[to_remove1], speed_fake[to_remove]);
-
-            to_remove++;
-            to_remove1++;
-
-            if (to_remove == (speed_fake.Length-1)) { to_remove = 0; } */
-        }
-
-        private void updatePlotTimer_Tick(object sender, EventArgs e)
-        {
-            if (Logger_speed.Count == Logger_speed.CountOnLastRender)
-                return;
-
-            chart_speed.Refresh();
-            chart_rpm.Refresh();
-            chart_load.Refresh();
-        }
-
         private void evalDriveButton_Click_1(object sender, EventArgs e)
         {
             mode = 1;
-            updatePlotTimer.Enabled = true;
+            askEngineData();
+            //updatePlotTimer.Enabled = true;
         }
 
         private async void button1_Click_2(object sender, EventArgs e)
         {
-            JsonNode responseAsJson;
-            string responseContent;
-            string responseState;
+            try
+            {
+                await Task.Run(async () =>
+                {
+                    Logger_rpm.Add(5, 2000);
+                    Logger_speed.Add(5, 90);
+                    Logger_load.Add(5, 90);
 
-            await Task.Run(async () => {
-                try
-                {
-                    // Serialize our concrete class into a JSON String
-                    // UNCOMMENT var stringPayload = JsonConvert.SerializeObject(currentInfo);
-                    // dentro al body ci devo mettere il json con i parametri per la predizione
-                    // UNCOMMENT var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
-                    var httpContent = new StringContent("{ \"rpm\": 2022, \"maf\": 968, \"iat\": 9, \"accpedal\":12, \"speed\": 106, \"engineload\": 72 }", Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await httpClient.PostAsync(URL, httpContent);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        messageFromAPI = await response.Content.ReadAsStringAsync();
-                        responseAsJson = JsonNode.Parse(messageFromAPI)!;
-                        // parsing del messaggio come un json e andare a prendere il campo 'prediction'
-                        // sse lo stato della risposta: 'state' vale OK
-                        responseState = responseAsJson["state"].ToString();
-                        if (responseState == "OK") {
-                            responseContent = responseAsJson["prediction"].ToString();
-                            writeDisplay(responseContent);
-                        }
-                        else if (responseState == "BUFFERING" || responseState == "ERROR")
-                        {
-                            responseContent = responseAsJson["message"].ToString();
-                            writeDisplay(responseContent);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    writeDisplay(e.Message);
-                }
-            });
+                    Logger_rpm.Add(10, 1615);
+                    Logger_speed.Add(10, 55);
+                    Logger_load.Add(10, 30);
+
+                    Logger_rpm.Add(15, 2100);
+                    Logger_speed.Add(15, 90);
+                    Logger_load.Add(15, 90);
+
+                    refreshCharts();
+                });
+            }
+            catch (Exception err)
+            {
+                writeDisplay(err.Message);
+            }
+        }
+
+        private void buttonStopListening_Click(object sender, EventArgs e)
+        {
+            stopListening = true;
+            runEngineMonitoring = false;
+            client.Close();
+        }
+
+        private void evalDriveButton_Click(object sender, EventArgs e)
+        {
+            mode = 1;
+            writeDisplay("Mode Changed");
         }
     }
 }

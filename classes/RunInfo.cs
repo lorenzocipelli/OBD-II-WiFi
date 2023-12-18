@@ -22,7 +22,7 @@ namespace OBD_II_WiFi.classes
         private string roadType;
 
 
-        public int RMP { get { return rpm; } set { rpm = value; } }
+        public int RPM { get { return rpm; } set { rpm = value; } }
         public int MAF { get { return maf; } set { maf = value; } }
         public int IAT { get { return iat; } set { iat = value; } }
         public int ACCPEDAL { get { return accPedal; } set { accPedal = value; } }

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OBD2Form));
             this.portTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -113,6 +112,7 @@
             this.initConnButton.TabIndex = 4;
             this.initConnButton.Text = "Init TCP Connection";
             this.initConnButton.UseVisualStyleBackColor = false;
+            this.initConnButton.Click += new System.EventHandler(this.initConnButton_Click);
             // 
             // display
             // 
@@ -141,6 +141,7 @@
             this.askPIDButton.TabIndex = 6;
             this.askPIDButton.Text = "Ask PID";
             this.askPIDButton.UseVisualStyleBackColor = false;
+            this.askPIDButton.Click += new System.EventHandler(this.askPIDButton_Click);
             // 
             // buttonStopListening
             // 
@@ -151,6 +152,7 @@
             this.buttonStopListening.TabIndex = 7;
             this.buttonStopListening.Text = "Close Connection";
             this.buttonStopListening.UseVisualStyleBackColor = true;
+            this.buttonStopListening.Click += new System.EventHandler(this.buttonStopListening_Click);
             // 
             // button1
             // 
@@ -175,6 +177,7 @@
             this.buttonFuelData.TabIndex = 9;
             this.buttonFuelData.Text = "Read Data";
             this.buttonFuelData.UseVisualStyleBackColor = false;
+            this.buttonFuelData.Click += new System.EventHandler(this.buttonFuelData_Click);
             // 
             // label3
             // 
@@ -332,6 +335,7 @@
             this.evalDriveButton.TabIndex = 7;
             this.evalDriveButton.Text = "Evaluate Drive Style";
             this.evalDriveButton.UseVisualStyleBackColor = false;
+            this.evalDriveButton.Click += new System.EventHandler(this.evalDriveButton_Click);
             // 
             // chart_speed
             // 
@@ -374,8 +378,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Lavender;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(102)))), ((int)(((byte)(173)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1214, 567);
             this.Controls.Add(this.chart_load);

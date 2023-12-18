@@ -11,18 +11,23 @@ from pydantic import BaseModel
 from collections import Counter
 
 class CarData(BaseModel):
-  rpm: int
-  maf: int
-  iat: int
-  accpedal: int
-  speed: int
-  engineload: int
+  RPM: int
+  MAF: int
+  IAT: int
+  ACCPEDAL: int
+  THROTTLEPOS: int
+  SPEED: int
+  ENGINELOAD: int
+  RUNTIME: float
+  ABP: int
+  DRIVESTYLE: str
+  ROADTYPE: str
 
 #print('getcwd:      ', os.getcwd())
 
 app = FastAPI()
 #joblib_in = open("dati/model/finalized_model.pkl","rb")
-joblib_in = open("model/finalized_model.pkl","rb")
+joblib_in = open("dati/model/finalized_model.pkl","rb")
 model = joblib.load(joblib_in)
 
 predictions = []
@@ -44,20 +49,19 @@ def predict_car_type(instance:CarData):
     instance = instance.model_dump()
 
     # qui prendo solamente le informazioni necessarie per la predizione
-    rpm = instance['rpm']
-    maf = instance['maf']
-    iat = instance['iat']
-    accpedal = instance['accpedal']
-    speed = instance['speed']
-    engineload = instance['engineload']
+    rpm = instance['RPM']
+    maf = instance['MAF']
+    iat = instance['IAT']
+    accpedal = instance['ACCPEDAL']
+    speed = instance['SPEED']
+    engineload = instance['ENGINELOAD']
 
    
     # il modello addestrato effettua la predizione
     pred = model.predict([[rpm, maf, iat, accpedal, speed, engineload]])
-    predictions.append(pred)
+    predictions.append(pred[0])
 
     if len(predictions) < BUFFER_SIZE :
-        predictions.append(pred)
         return {
             'state': "BUFFERING",
             'message': "System needs more data.\nWait a few seconds!"

@@ -233,7 +233,7 @@ def evaluate_model(X, y):
     plt.show()
 
     # save the model to disk
-    filename = 'model/finalized_model.pkl'
+    filename = 'dati/model/finalized_model.pkl'
     with open(filename, 'wb') as file:  
         joblib.dump(model, filename) 
 
@@ -255,7 +255,7 @@ def evaluate_model(X, y):
 TIMESTEPS = 5
 NUM_OF_CLASSES = 0
 
-data = pd.read_csv("dataset.csv")
+data = pd.read_csv("dati/dataset.csv")
 data = data[data['drivestyle'] != "normal"] # semplificazione
 #print(f"There are {len(data)} rows in the dataset.")
 
