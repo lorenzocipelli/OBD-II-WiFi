@@ -14,6 +14,7 @@ class CarData(BaseModel):
   rpm: int
   maf: int
   iat: int
+  accpedal: int
   speed: int
   engineload: int
 
@@ -21,7 +22,7 @@ class CarData(BaseModel):
 
 app = FastAPI()
 #joblib_in = open("dati/model/finalized_model.pkl","rb")
-joblib_in = open("dati/model/finalized_model.pkl","rb")
+joblib_in = open("model/finalized_model.pkl","rb")
 model = joblib.load(joblib_in)
 
 predictions = []
@@ -46,11 +47,13 @@ def predict_car_type(instance:CarData):
     rpm = instance['rpm']
     maf = instance['maf']
     iat = instance['iat']
+    accpedal = instance['accpedal']
     speed = instance['speed']
     engineload = instance['engineload']
 
+   
     # il modello addestrato effettua la predizione
-    pred = model.predict([[rpm, maf, iat, speed, engineload]])
+    pred = model.predict([[rpm, maf, iat, accpedal, speed, engineload]])
     predictions.append(pred)
 
     if len(predictions) < BUFFER_SIZE :

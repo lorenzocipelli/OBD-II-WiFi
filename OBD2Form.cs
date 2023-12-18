@@ -542,7 +542,7 @@ namespace OBD_II_WiFi
                     // UNCOMMENT var stringPayload = JsonConvert.SerializeObject(currentInfo);
                     // dentro al body ci devo mettere il json con i parametri per la predizione
                     // UNCOMMENT var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
-                    var httpContent = new StringContent("{ \"rpm\": 2022, \"maf\": 968, \"iat\": 9, \"speed\": 106, \"engineload\": 72 }", Encoding.UTF8, "application/json");
+                    var httpContent = new StringContent("{ \"rpm\": 2022, \"maf\": 968, \"iat\": 9, \"accpedal\":12, \"speed\": 106, \"engineload\": 72 }", Encoding.UTF8, "application/json");
                     HttpResponseMessage response = await httpClient.PostAsync(URL, httpContent);
                     if (response.IsSuccessStatusCode)
                     {
