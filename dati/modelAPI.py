@@ -62,12 +62,12 @@ def predict_car_type(instance:CarData):
     else : # se abbiamo abbastanza predizioni nel buffer
         final_pred = most_common(predictions) # prendo il valore con più ricorrenze
         del predictions[0] # tolgo il primo elemento della lista per il giro successivo
-        if final_pred == 1 :
+        if final_pred == 0 :
             return {
                 'state': "OK",
                 'prediction': "SPORT"
             }
-        elif final_pred == 2 :
+        elif final_pred == 1 :
             return {
                 'state': "OK",
                 'prediction': "ECO"
@@ -75,7 +75,7 @@ def predict_car_type(instance:CarData):
         else :
             return {
                 'state': "ERROR",
-                'message': "Cannot Predict"
+                'message': "API error while trying to predict!"
             }
 
 if __name__ == '__main__':

@@ -59,6 +59,7 @@ namespace OBD_II_WiFi
 
             JsonNode responseAsJson;
             string responseContent;
+            string responseState;
 
             await Task.Run(async () =>
             {
@@ -187,14 +188,16 @@ namespace OBD_II_WiFi
                                                     responseAsJson = JsonNode.Parse(messageFromAPI)!;
                                                     // parsing del messaggio come un json e andare a prendere il campo 'prediction'
                                                     // sse lo stato della risposta: 'state' vale OK
-                                                    if (responseAsJson["state"].ToString() == "OK")
+                                                    responseState = responseAsJson["state"].ToString();
+                                                    if (responseState == "OK")
                                                     {
                                                         responseContent = responseAsJson["prediction"].ToString();
                                                         writeDisplay(responseContent);
                                                     }
-                                                    else if (responseAsJson["state"].ToString() == "ERROR")
+                                                    else if (responseState == "BUFFERING" || responseState == "ERROR")
                                                     {
-                                                        writeDisplay("Can't Read Prediction!");
+                                                        responseContent = responseAsJson["message"].ToString();
+                                                        writeDisplay(responseContent);
                                                     }
                                                 }
                                             }
@@ -530,6 +533,7 @@ namespace OBD_II_WiFi
         {
             JsonNode responseAsJson;
             string responseContent;
+            string responseState;
 
             await Task.Run(async () => {
                 try
@@ -546,11 +550,15 @@ namespace OBD_II_WiFi
                         responseAsJson = JsonNode.Parse(messageFromAPI)!;
                         // parsing del messaggio come un json e andare a prendere il campo 'prediction'
                         // sse lo stato della risposta: 'state' vale OK
-                        if (responseAsJson["state"].ToString() == "OK") {
+                        responseState = responseAsJson["state"].ToString();
+                        if (responseState == "OK") {
                             responseContent = responseAsJson["prediction"].ToString();
                             writeDisplay(responseContent);
-                        } else if (responseAsJson["state"].ToString() == "ERROR") {
-                            writeDisplay("Can't Read Prediction!");
+                        }
+                        else if (responseState == "BUFFERING" || responseState == "ERROR")
+                        {
+                            responseContent = responseAsJson["message"].ToString();
+                            writeDisplay(responseContent);
                         }
                     }
                 }
