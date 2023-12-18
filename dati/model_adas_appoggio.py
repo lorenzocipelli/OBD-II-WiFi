@@ -98,8 +98,11 @@ def get_model_MLP(number_of_features, n_outputs) :
     print("NUMBER OF OUTPUTS: " + str(n_outputs))
     model = Sequential()
     model.add(Dense(7, input_dim=number_of_features, activation='relu'))
+    #model.add(Dropout(0.2))
+    model.add(Dense(3, activation = 'relu'))
+    #model.add(Dropout(0.2))
     #model.add(Dense(n_outputs, activation='softmax'))
-    model.add(Dense(1, activation='sigmoid'))
+    model.add(Dense(1, activation = 'sigmoid'))
     #model.compile(loss='categorical_crossentropy', optimizer= keras.optimizers.Adam(lr=0.01), metrics=['accuracy'])
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
@@ -174,14 +177,38 @@ def evaluate_model(X, y):
     model2.fit(X_train, y_train.values.ravel())
     # make a prediction on the test set
     y_pred2 = model2.predict(X_test)
+
+    
     # calculate accuracy
     acc_DT = accuracy_score(y_test, y_pred2)
     cm_DT = confusion_matrix(y_test, y_pred2)
     f1_sco_DT = f1_score(y_test, y_pred2)
+
     # store result
     print("Decision Tree Classifier: ")
     print("Accuracy: " + '%.3f' % acc_DT)
     print("F1 Score: " + '%.3f' % f1_sco_DT)
+
+    #get_MLP_model
+    model3 = get_model_MLP(7, 1)
+    #print (X_train)
+    #print(y_train.values.ravel())
+    #print(y_test.values.ravel())
+    model3.fit(X_train, y_train.values.ravel(), epochs = 100, batch_size= 8)
+    #test_loss, test_acc = model3.evaluate(X_test, y_test.values.ravel())
+    y_pred3 = model3.predict(X_test)
+    print(y_pred3)
+    y_pred3 = (y_pred3>0.5).astype(int)
+    # calculate accuracy
+    acc_ML = accuracy_score(y_test, y_pred3)
+    cm_ML = confusion_matrix(y_test, y_pred3)
+    f1_sco_ML = f1_score(y_test, y_pred3)
+    
+    # store result
+    print("ML model: ")
+   
+    print("Accuracy: " + '%.3f' % acc_ML)
+    print("F1 Score: " + '%.3f' % f1_sco_ML)
 
     disp_RF = ConfusionMatrixDisplay(confusion_matrix=cm_RF, display_labels=model.classes_)
     
@@ -197,6 +224,11 @@ def evaluate_model(X, y):
     
     disp_DT.plot()
     disp_DT.ax_.set_title("Decision Tree")
+
+    disp_ML = ConfusionMatrixDisplay(confusion_matrix=cm_ML, display_labels = model.classes_)
+
+    disp_ML.plot()
+    disp_ML.ax_.set_title("ML model")
 
     plt.show()
 
@@ -223,7 +255,7 @@ def evaluate_model(X, y):
 TIMESTEPS = 5
 NUM_OF_CLASSES = 0
 
-data = pd.read_csv("dati/dataset.csv")
+data = pd.read_csv("dataset.csv")
 data = data[data['drivestyle'] != "normal"] # semplificazione
 #print(f"There are {len(data)} rows in the dataset.")
 
@@ -231,7 +263,7 @@ data = data[data['drivestyle'] != "normal"] # semplificazione
 # ["rpm","maf","iat","speed","engineload"] acc -> 0.935, f1 -> 0.874
 # ["rpm","maf","speed","engineload"] acc -> 0.780, f1 -> 0.711
 # ["rpm","maf","engineload"] acc -> 0.815, f1 -> 0.741
-X = pd.DataFrame(data, columns=["rpm","maf","iat","speed","engineload"]) # "throttlepos" escluso
+X = pd.DataFrame(data, columns=["rpm","maf","iat","accpedal","speed","engineload","abp"]) # "throttlepos" escluso
 y = pd.DataFrame(data, columns=["drivestyle"])
 
 # [869,163,20,14,67] # eco testing
@@ -245,9 +277,9 @@ NUM_OF_CLASSES = len(y['drivestyle'].unique())
 pd.plotting.scatter_matrix(X)
 plt.show()
 
-y['drivestyle'] = y['drivestyle'].replace('normal', 0)
-y['drivestyle'] = y['drivestyle'].replace('sport', 1)
-y['drivestyle'] = y['drivestyle'].replace('eco', 2)
+y['drivestyle'] = y['drivestyle'].replace('normal', 2)
+y['drivestyle'] = y['drivestyle'].replace('sport', 0)
+y['drivestyle'] = y['drivestyle'].replace('eco', 1)
 
 #trasform datasets in np arrays to be compatible with smote kmeans
 #X_train_array = X.values
@@ -257,6 +289,6 @@ y_train_array = y.values
 #X = preprocessing.normalize(X_train_array)
 
 # evaluate model
-#results = evaluate_model(X, y) # UNCOMMENT TO TEST
+results = evaluate_model(X, y) # UNCOMMENT TO TEST
 # summarize performance
 #print('Accuracy: %.3f (%.3f)' % (statistics.mean(results), std(results)))
