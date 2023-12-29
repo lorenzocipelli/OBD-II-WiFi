@@ -89,7 +89,8 @@ namespace OBD_II_WiFi
                             {
                                 Debug.WriteLine(data);
                                 data = data.Replace(" ", string.Empty);
-                                try {
+                                try
+                                {
                                     var tmp = Convert.FromHexString(data);
 
                                     if (data.Contains("410C"))
@@ -211,7 +212,7 @@ namespace OBD_II_WiFi
                                         writeDisplay(data);
                                     }
                                 }
-                                catch(FormatException fe)
+                                catch (FormatException fe)
                                 {
                                     writeDisplay("Reading error!");
                                 }
@@ -246,10 +247,10 @@ namespace OBD_II_WiFi
             if (chart_speed.InvokeRequired)
             {
                 updateChartDelegate d = new updateChartDelegate(refreshCharts);
-                this.Invoke(d, new object[] {});
+                this.Invoke(d, new object[] { });
             }
             else
-            { 
+            {
                 chart_speed.Refresh();
                 chart_rpm.Refresh();
                 chart_load.Refresh();
@@ -274,7 +275,8 @@ namespace OBD_II_WiFi
             }
         }
 
-        private void printPIDs(string hex) {
+        private void printPIDs(string hex)
+        {
             string to_print = "";
             char[] to_print_array = new char[] { };
             char[] to_print_array_tmp = new char[] { };
@@ -293,7 +295,8 @@ namespace OBD_II_WiFi
                 //writeDisplay(to_print);
 
                 to_print_array_tmp = to_print.ToCharArray();
-                foreach (char bit in to_print_array_tmp) {
+                foreach (char bit in to_print_array_tmp)
+                {
                     to_print_array = to_print_array.Append(bit).ToArray();
                 }
             }
@@ -312,7 +315,8 @@ namespace OBD_II_WiFi
                     pids = JsonNode.Parse(json)!;
                 }
             }
-            else { // altrimenti continuo la modifica del file
+            else
+            { // altrimenti continuo la modifica del file
                 using (StreamReader r = new StreamReader("../../../dati/datafile_mod.json"))
                 {
                     json = r.ReadToEnd();
@@ -323,7 +327,8 @@ namespace OBD_II_WiFi
             for (int i = responde_index; i < responde_index + to_print_array.Length; i++)
             { // fixed number: 169
                 value = int.Parse(to_print_array[j].ToString());
-                if (value == 1) {
+                if (value == 1)
+                {
                     writeDisplay("* " + pids["PIDs"][i]["description"].ToString());
                 }
                 pids["PIDs"][i]["value"] = value;
@@ -357,7 +362,8 @@ namespace OBD_II_WiFi
             askEngineData();
         }
 
-        private async void askEngineData() {
+        private async void askEngineData()
+        {
             while (runEngineMonitoring)
             {
                 await Task.Run(() =>
@@ -413,7 +419,8 @@ namespace OBD_II_WiFi
                 }
             });
 
-            if (n_try == 6) {
+            if (n_try == 6)
+            {
                 currentInfo.DRIVESTYLE = "eco";
                 currentInfo.ROADTYPE = "urban";
                 startListening();
@@ -433,7 +440,7 @@ namespace OBD_II_WiFi
                 Task.Delay(2000).Wait();
                 converting = true;
                 send("0100" + "\r");
-                  
+
                 Task.Delay(2000).Wait();
                 send("0120" + "\r");
 
@@ -466,13 +473,14 @@ namespace OBD_II_WiFi
 
         private void highwayButton_Click(object sender, EventArgs e) { currentInfo.ROADTYPE = "highway"; }
 
-        private void initializeCharts() {
+        private void initializeCharts()
+        {
             Logger_speed.ViewSlide();
             Logger_rpm.ViewSlide();
             Logger_load.ViewSlide();
 
             // 75 secondi come finestra, mostrati fino a 200 khm
-            chart_speed.Plot.SetAxisLimits(-2, 75, -20, 200);
+            chart_speed.Plot.SetAxisLimits(-2, 500, -20, 200);
             chart_speed.Plot.Style(dataBackground: Color.FromArgb(7, 102, 173));
             chart_speed.Plot.YAxis.Label("Speed [Km/h]", Color.White, size: 12, fontName: "Courier New");
             chart_speed.Plot.Grid(lineStyle: LineStyle.Dot, color: Color.FromArgb(155, 176, 176));
@@ -482,7 +490,7 @@ namespace OBD_II_WiFi
             chart_speed.Plot.YAxis.Color(Color.White);
 
             // 75 secondi come finestra, mostrati fino a 3000 rpm
-            chart_rpm.Plot.SetAxisLimits(-2, 75, 900, 3000);
+            chart_rpm.Plot.SetAxisLimits(-2, 500, 900, 3000);
             chart_rpm.Plot.Style(dataBackground: Color.FromArgb(7, 102, 173));
             chart_rpm.Plot.YAxis.Label("Engine Speed [RPM]", Color.White, size: 12, fontName: "Courier New");
             chart_rpm.Plot.Grid(lineStyle: LineStyle.Dot, color: Color.FromArgb(155, 176, 176));
@@ -490,9 +498,9 @@ namespace OBD_II_WiFi
             chart_rpm.Plot.YAxis2.Line(false);
             chart_rpm.Plot.XAxis.Color(Color.White);
             chart_rpm.Plot.YAxis.Color(Color.White);
-            
+
             // 75 secondi come finestra, mostrati fino a 100 %
-            chart_load.Plot.SetAxisLimits(-2, 75, -20, 120);
+            chart_load.Plot.SetAxisLimits(-2, 500, -20, 120);
             chart_load.Plot.Style(dataBackground: Color.FromArgb(7, 102, 173));
             chart_load.Plot.YAxis.Label("Engine Load [%]", Color.White, size: 12, fontName: "Courier New");
             chart_load.Plot.Grid(lineStyle: LineStyle.Dot, color: Color.FromArgb(155, 176, 176));
@@ -504,33 +512,6 @@ namespace OBD_II_WiFi
             chart_speed.Refresh();
             chart_rpm.Refresh();
             chart_load.Refresh();
-        }
-
-        private async void button1_Click_2(object sender, EventArgs e)
-        {
-            try
-            {
-                await Task.Run(async () =>
-                {
-                    Logger_rpm.Add(5, 2000);
-                    Logger_speed.Add(5, 90);
-                    Logger_load.Add(5, 90);
-
-                    Logger_rpm.Add(10, 1615);
-                    Logger_speed.Add(10, 55);
-                    Logger_load.Add(10, 30);
-
-                    Logger_rpm.Add(15, 2100);
-                    Logger_speed.Add(15, 90);
-                    Logger_load.Add(15, 90);
-
-                    refreshCharts();
-                });
-            }
-            catch (Exception err)
-            {
-                writeDisplay(err.Message);
-            }
         }
 
         private void buttonStopListening_Click(object sender, EventArgs e)
@@ -546,30 +527,19 @@ namespace OBD_II_WiFi
             askEngineData();
             writeDisplay("Mode Changed");
         }
+
+        private void videoSyncButton_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            videoSyncTimer.Tick += new EventHandler(TimerEventProcessor);
+            syncPanel.BackColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+            videoSyncTimer.Enabled = true;
+        }
+
+        private void TimerEventProcessor(object myObject, EventArgs e)
+        {
+            syncPanel.BackColor = Color.FromArgb(7, 102, 173);
+            videoSyncTimer.Enabled = false;
+        }
     }
 }
-
-/*
-    rpm,maf,iat,accpedal,throttlepos,speed,engineload,runtime,abp
-    828,182,36,12,202,0,38,53,100
-    972,296,35,36,202,14,35,58,100
-    1076,264,35,61,202,24,76,63,100
-    947,187,35,0,202,21,40,68,100
-    1088,163,35,35,202,17,43,74,100
-    1326,252,35,76,202,22,43,79,100
-    893,161,35,0,202,0,59,84,100
-    1826,235,34,71,202,22,32,89,100
-    903,242,34,0,202,25,88,95,100
-    1017,205,34,7,202,27,100,100,100
-    1178,282,34,7,202,32,36,105,100
-    997,130,34,0,202,25,68,111,100
-    943,207,34,107,203,25,98,116,100
-    1286,676,33,148,202,47,98,121,100
-    1886,460,31,0,202,52,77,126,100
-    2111,1205,30,0,202,60,98,132,100
-    1602,800,29,125,202,68,100,137,100
-    1930,357,26,0,203,73,0,142,100
-    923,170,28,0,202,58,0,147,100
-    2048,391,27,0,202,46,0,153,100
-    1517,1075,27,159,202,54,83,158,100
-     */
