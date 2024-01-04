@@ -62,6 +62,7 @@ def predict_car_type(instance:CarData):
     predictions.append(pred[0])
 
     if len(predictions) < BUFFER_SIZE :
+        print("Predicted -> BUFFERING")
         return {
             'state': "BUFFERING",
             'message': "System needs more data.\nWait a few seconds!"
@@ -70,16 +71,19 @@ def predict_car_type(instance:CarData):
         final_pred = most_common(predictions) # prendo il valore con più ricorrenze
         del predictions[0] # tolgo il primo elemento della lista per il giro successivo
         if final_pred == 0 :
+            print("Predicted -> SPORT")
             return {
                 'state': "OK",
                 'prediction': "SPORT"
             }
         elif final_pred == 1 :
+            print("Predicted -> ECO")
             return {
                 'state': "OK",
                 'prediction': "ECO"
             }
         else :
+            print("Predicted -> ERROR")
             return {
                 'state': "ERROR",
                 'message': "API error while trying to predict!"

@@ -28,6 +28,7 @@ namespace OBD_II_WiFi
         string data;
 
         delegate void writeDisplayDelegate(string toDisplay);
+        delegate void writeDriveStyleDelegate(string toDisplay); 
         delegate void updateChartDelegate();
 
         bool runEngineMonitoring = true;
@@ -193,20 +194,13 @@ namespace OBD_II_WiFi
                                                     {
                                                         responseContent = responseAsJson["prediction"].ToString();
                                                         writeDisplay(responseContent);
-                                                        if (responseContent == "SPORT") {
-                                                            displayDriverStyle.Text = "SPORT";
-                                                            displayDriverStyle.ForeColor = Color.LightCoral;
-                                                        } else if (responseContent == "ECO") {
-                                                            displayDriverStyle.Text = "ECO";
-                                                            displayDriverStyle.ForeColor = Color.LightGreen;
-                                                        }
+                                                        updateText(responseContent);
                                                     }
                                                     else if (responseState == "BUFFERING" || responseState == "ERROR")
                                                     {
                                                         responseContent = responseAsJson["message"].ToString();
                                                         writeDisplay(responseContent);
-                                                        displayDriverStyle.Text = "BUFFERING";
-                                                        displayDriverStyle.ForeColor = Color.LightSteelBlue;
+                                                        updateText(responseContent);
                                                     }
                                                 }
                                             }
@@ -263,6 +257,31 @@ namespace OBD_II_WiFi
                 chart_speed.Refresh();
                 chart_rpm.Refresh();
                 chart_load.Refresh();
+            }
+        }
+
+        private void updateText(string text) {
+            if (display.InvokeRequired)
+            {
+                writeDriveStyleDelegate d = new writeDriveStyleDelegate(updateText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                if (text == "SPORT")
+                {
+                    displayDriverStyle.Text = "SPORT";
+                    displayDriverStyle.ForeColor = Color.LightCoral;
+                }
+                else if (text == "ECO")
+                {
+                    displayDriverStyle.Text = "ECO";
+                    displayDriverStyle.ForeColor = Color.LightGreen;
+                }
+                else if (text == "BUFFERING" || text == "ERROR") {
+                    displayDriverStyle.Text = "BUFFERING";
+                    displayDriverStyle.ForeColor = Color.LightSteelBlue;
+                }
             }
         }
 
@@ -378,25 +397,25 @@ namespace OBD_II_WiFi
                 await Task.Run(() =>
                 {
                     send("010F" + "\r"); // Intake air temperature (IAT)
-                    Task.Delay(0200).Wait();
+                    Task.Delay(0300).Wait();
                     send("010C" + "\r"); // Engine speed
-                    Task.Delay(0200).Wait();
+                    Task.Delay(0300).Wait();
                     send("0110" + "\r"); // MAF
-                    Task.Delay(0200).Wait();
+                    Task.Delay(0300).Wait();
                     send("0149" + "\r"); // Acc. Pedal Pos. D
-                    Task.Delay(0200).Wait();
+                    Task.Delay(0300).Wait();
                     send("0111" + "\r"); // Throttle Position
-                    Task.Delay(0200).Wait();
+                    Task.Delay(0300).Wait();
                     send("010D" + "\r"); // Vehicle Speed
-                    Task.Delay(0200).Wait();
+                    Task.Delay(0300).Wait();
                     send("0104" + "\r"); // Engine Load
-                    Task.Delay(0200).Wait();
+                    Task.Delay(0300).Wait();
                     send("011F" + "\r"); // Run Time
-                    Task.Delay(0200).Wait();
+                    Task.Delay(0300).Wait();
                     send("0133" + "\r"); // Absolute Barometric Pressure
-                    Task.Delay(0200).Wait();
+                    Task.Delay(1000).Wait();
                     send("011C" + "\r"); // Update CSV or Predict Drivestyle
-                    Task.Delay(0200).Wait();
+                    Task.Delay(0300).Wait();
                     writeDisplay("");
                 });
             }

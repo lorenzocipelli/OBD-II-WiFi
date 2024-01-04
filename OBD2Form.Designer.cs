@@ -65,10 +65,9 @@
             // 
             // portTextBox
             // 
-            this.portTextBox.Location = new System.Drawing.Point(80, 55);
-            this.portTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.portTextBox.Location = new System.Drawing.Point(70, 41);
             this.portTextBox.Name = "portTextBox";
-            this.portTextBox.Size = new System.Drawing.Size(155, 27);
+            this.portTextBox.Size = new System.Drawing.Size(136, 23);
             this.portTextBox.TabIndex = 0;
             this.portTextBox.Text = "35000";
             // 
@@ -78,9 +77,9 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(22, 59);
+            this.label1.Location = new System.Drawing.Point(19, 44);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 20);
+            this.label1.Size = new System.Drawing.Size(45, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "OBD2 IP";
             // 
@@ -90,19 +89,18 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label2.Location = new System.Drawing.Point(39, 20);
+            this.label2.Location = new System.Drawing.Point(34, 15);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 20);
+            this.label2.Size = new System.Drawing.Size(31, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "PORT";
             // 
             // ipTextBox
             // 
-            this.ipTextBox.Location = new System.Drawing.Point(80, 16);
-            this.ipTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ipTextBox.Location = new System.Drawing.Point(70, 12);
             this.ipTextBox.Name = "ipTextBox";
             this.ipTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.ipTextBox.Size = new System.Drawing.Size(155, 27);
+            this.ipTextBox.Size = new System.Drawing.Size(136, 23);
             this.ipTextBox.TabIndex = 3;
             this.ipTextBox.Text = "192.168.0.10";
             // 
@@ -113,13 +111,13 @@
             this.initConnButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
             this.initConnButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.initConnButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.initConnButton.Location = new System.Drawing.Point(242, 16);
-            this.initConnButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.initConnButton.Location = new System.Drawing.Point(212, 12);
             this.initConnButton.Name = "initConnButton";
-            this.initConnButton.Size = new System.Drawing.Size(87, 69);
+            this.initConnButton.Size = new System.Drawing.Size(76, 52);
             this.initConnButton.TabIndex = 4;
             this.initConnButton.Text = "Init TCP Connection";
             this.initConnButton.UseVisualStyleBackColor = false;
+            this.initConnButton.Click += new System.EventHandler(this.initConnButton_Click);
             // 
             // display
             // 
@@ -127,10 +125,10 @@
             this.display.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.display.Font = new System.Drawing.Font("Cascadia Code Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.display.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.display.Location = new System.Drawing.Point(8, 20);
-            this.display.Margin = new System.Windows.Forms.Padding(3, 4, 11, 4);
+            this.display.Location = new System.Drawing.Point(7, 15);
+            this.display.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.display.Name = "display";
-            this.display.Size = new System.Drawing.Size(303, 320);
+            this.display.Size = new System.Drawing.Size(265, 240);
             this.display.TabIndex = 5;
             this.display.Text = "";
             // 
@@ -142,24 +140,24 @@
             this.askPIDButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.askPIDButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.askPIDButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.askPIDButton.Location = new System.Drawing.Point(7, 29);
-            this.askPIDButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.askPIDButton.Location = new System.Drawing.Point(6, 22);
             this.askPIDButton.Name = "askPIDButton";
-            this.askPIDButton.Size = new System.Drawing.Size(137, 31);
+            this.askPIDButton.Size = new System.Drawing.Size(120, 23);
             this.askPIDButton.TabIndex = 6;
             this.askPIDButton.Text = "Ask PID";
             this.askPIDButton.UseVisualStyleBackColor = false;
+            this.askPIDButton.Click += new System.EventHandler(this.askPIDButton_Click);
             // 
             // buttonStopListening
             // 
             this.buttonStopListening.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonStopListening.Location = new System.Drawing.Point(1223, 709);
-            this.buttonStopListening.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.buttonStopListening.Location = new System.Drawing.Point(1070, 532);
             this.buttonStopListening.Name = "buttonStopListening";
-            this.buttonStopListening.Size = new System.Drawing.Size(151, 31);
+            this.buttonStopListening.Size = new System.Drawing.Size(132, 23);
             this.buttonStopListening.TabIndex = 7;
             this.buttonStopListening.Text = "Close Connection";
             this.buttonStopListening.UseVisualStyleBackColor = true;
+            this.buttonStopListening.Click += new System.EventHandler(this.buttonStopListening_Click);
             // 
             // buttonFuelData
             // 
@@ -168,13 +166,13 @@
             this.buttonFuelData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonFuelData.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonFuelData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.buttonFuelData.Location = new System.Drawing.Point(173, 29);
-            this.buttonFuelData.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.buttonFuelData.Location = new System.Drawing.Point(151, 22);
             this.buttonFuelData.Name = "buttonFuelData";
-            this.buttonFuelData.Size = new System.Drawing.Size(137, 31);
+            this.buttonFuelData.Size = new System.Drawing.Size(120, 23);
             this.buttonFuelData.TabIndex = 9;
             this.buttonFuelData.Text = "Read Data";
             this.buttonFuelData.UseVisualStyleBackColor = false;
+            this.buttonFuelData.Click += new System.EventHandler(this.buttonFuelData_Click);
             // 
             // label3
             // 
@@ -182,9 +180,9 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label3.Location = new System.Drawing.Point(7, 69);
+            this.label3.Location = new System.Drawing.Point(6, 52);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 20);
+            this.label3.Size = new System.Drawing.Size(55, 16);
             this.label3.TabIndex = 10;
             this.label3.Text = "Drive Style:";
             // 
@@ -194,9 +192,9 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label4.Location = new System.Drawing.Point(7, 135);
+            this.label4.Location = new System.Drawing.Point(6, 101);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 20);
+            this.label4.Size = new System.Drawing.Size(56, 16);
             this.label4.TabIndex = 11;
             this.label4.Text = "Road Type:";
             // 
@@ -207,13 +205,14 @@
             this.ecoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ecoButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ecoButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ecoButton.Location = new System.Drawing.Point(7, 97);
+            this.ecoButton.Location = new System.Drawing.Point(6, 73);
             this.ecoButton.Margin = new System.Windows.Forms.Padding(0);
             this.ecoButton.Name = "ecoButton";
-            this.ecoButton.Size = new System.Drawing.Size(91, 32);
+            this.ecoButton.Size = new System.Drawing.Size(80, 24);
             this.ecoButton.TabIndex = 12;
             this.ecoButton.Text = "Eco";
             this.ecoButton.UseVisualStyleBackColor = false;
+            this.ecoButton.Click += new System.EventHandler(this.ecoButton_Click);
             // 
             // normalButton
             // 
@@ -222,13 +221,13 @@
             this.normalButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.normalButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.normalButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.normalButton.Location = new System.Drawing.Point(112, 97);
-            this.normalButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.normalButton.Location = new System.Drawing.Point(98, 73);
             this.normalButton.Name = "normalButton";
-            this.normalButton.Size = new System.Drawing.Size(91, 32);
+            this.normalButton.Size = new System.Drawing.Size(80, 24);
             this.normalButton.TabIndex = 13;
             this.normalButton.Text = "Normal";
             this.normalButton.UseVisualStyleBackColor = false;
+            this.normalButton.Click += new System.EventHandler(this.normalButton_Click);
             // 
             // sportButton
             // 
@@ -237,13 +236,13 @@
             this.sportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.sportButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.sportButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.sportButton.Location = new System.Drawing.Point(217, 97);
-            this.sportButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.sportButton.Location = new System.Drawing.Point(190, 73);
             this.sportButton.Name = "sportButton";
-            this.sportButton.Size = new System.Drawing.Size(91, 32);
+            this.sportButton.Size = new System.Drawing.Size(80, 24);
             this.sportButton.TabIndex = 14;
             this.sportButton.Text = "Sport";
             this.sportButton.UseVisualStyleBackColor = false;
+            this.sportButton.Click += new System.EventHandler(this.sportButton_Click);
             // 
             // highwayButton
             // 
@@ -252,13 +251,13 @@
             this.highwayButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.highwayButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.highwayButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.highwayButton.Location = new System.Drawing.Point(217, 160);
-            this.highwayButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.highwayButton.Location = new System.Drawing.Point(190, 120);
             this.highwayButton.Name = "highwayButton";
-            this.highwayButton.Size = new System.Drawing.Size(91, 32);
+            this.highwayButton.Size = new System.Drawing.Size(80, 24);
             this.highwayButton.TabIndex = 17;
             this.highwayButton.Text = "Highway";
             this.highwayButton.UseVisualStyleBackColor = false;
+            this.highwayButton.Click += new System.EventHandler(this.highwayButton_Click);
             // 
             // extraButton
             // 
@@ -267,13 +266,13 @@
             this.extraButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.extraButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.extraButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.extraButton.Location = new System.Drawing.Point(112, 160);
-            this.extraButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.extraButton.Location = new System.Drawing.Point(98, 120);
             this.extraButton.Name = "extraButton";
-            this.extraButton.Size = new System.Drawing.Size(91, 32);
+            this.extraButton.Size = new System.Drawing.Size(80, 24);
             this.extraButton.TabIndex = 16;
             this.extraButton.Text = "Suburban";
             this.extraButton.UseVisualStyleBackColor = false;
+            this.extraButton.Click += new System.EventHandler(this.extraButton_Click);
             // 
             // urbanButton
             // 
@@ -282,13 +281,13 @@
             this.urbanButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.urbanButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.urbanButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.urbanButton.Location = new System.Drawing.Point(7, 160);
-            this.urbanButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.urbanButton.Location = new System.Drawing.Point(6, 120);
             this.urbanButton.Name = "urbanButton";
-            this.urbanButton.Size = new System.Drawing.Size(91, 32);
+            this.urbanButton.Size = new System.Drawing.Size(80, 24);
             this.urbanButton.TabIndex = 15;
             this.urbanButton.Text = "Urban";
             this.urbanButton.UseVisualStyleBackColor = false;
+            this.urbanButton.Click += new System.EventHandler(this.urbanButton_Click);
             // 
             // groupBox1
             // 
@@ -304,11 +303,9 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.normalButton);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox1.Location = new System.Drawing.Point(8, 93);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox1.Location = new System.Drawing.Point(7, 70);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox1.Size = new System.Drawing.Size(321, 215);
+            this.groupBox1.Size = new System.Drawing.Size(281, 161);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Logging Data";
@@ -319,11 +316,9 @@
             this.groupBox2.Controls.Add(this.videoSyncButton);
             this.groupBox2.Controls.Add(this.evalDriveButton);
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox2.Location = new System.Drawing.Point(8, 316);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox2.Location = new System.Drawing.Point(7, 237);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox2.Size = new System.Drawing.Size(321, 76);
+            this.groupBox2.Size = new System.Drawing.Size(281, 57);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Active Monitoring";
@@ -336,13 +331,13 @@
             this.videoSyncButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.videoSyncButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.videoSyncButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.videoSyncButton.Location = new System.Drawing.Point(173, 29);
-            this.videoSyncButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.videoSyncButton.Location = new System.Drawing.Point(151, 22);
             this.videoSyncButton.Name = "videoSyncButton";
-            this.videoSyncButton.Size = new System.Drawing.Size(137, 31);
+            this.videoSyncButton.Size = new System.Drawing.Size(120, 23);
             this.videoSyncButton.TabIndex = 26;
             this.videoSyncButton.Text = "Video Sync";
             this.videoSyncButton.UseVisualStyleBackColor = false;
+            this.videoSyncButton.Click += new System.EventHandler(this.videoSyncButton_Click);
             // 
             // evalDriveButton
             // 
@@ -352,23 +347,23 @@
             this.evalDriveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.evalDriveButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.evalDriveButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.evalDriveButton.Location = new System.Drawing.Point(7, 29);
-            this.evalDriveButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.evalDriveButton.Location = new System.Drawing.Point(6, 22);
             this.evalDriveButton.Name = "evalDriveButton";
-            this.evalDriveButton.Size = new System.Drawing.Size(137, 31);
+            this.evalDriveButton.Size = new System.Drawing.Size(120, 23);
             this.evalDriveButton.TabIndex = 7;
             this.evalDriveButton.Text = "Evaluate Drive Style";
             this.evalDriveButton.UseVisualStyleBackColor = false;
+            this.evalDriveButton.Click += new System.EventHandler(this.evalDriveButton_Click);
             // 
             // chart_speed
             // 
             this.chart_speed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(102)))), ((int)(((byte)(173)))));
             this.chart_speed.Enabled = false;
             this.chart_speed.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.chart_speed.Location = new System.Drawing.Point(360, -7);
-            this.chart_speed.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.chart_speed.Location = new System.Drawing.Point(315, -5);
+            this.chart_speed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart_speed.Name = "chart_speed";
-            this.chart_speed.Size = new System.Drawing.Size(1032, 249);
+            this.chart_speed.Size = new System.Drawing.Size(903, 187);
             this.chart_speed.TabIndex = 22;
             // 
             // chart_rpm
@@ -376,10 +371,10 @@
             this.chart_rpm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(102)))), ((int)(((byte)(173)))));
             this.chart_rpm.Enabled = false;
             this.chart_rpm.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.chart_rpm.Location = new System.Drawing.Point(360, 229);
-            this.chart_rpm.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.chart_rpm.Location = new System.Drawing.Point(315, 172);
+            this.chart_rpm.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart_rpm.Name = "chart_rpm";
-            this.chart_rpm.Size = new System.Drawing.Size(1032, 249);
+            this.chart_rpm.Size = new System.Drawing.Size(903, 187);
             this.chart_rpm.TabIndex = 23;
             // 
             // chart_load
@@ -387,21 +382,19 @@
             this.chart_load.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(102)))), ((int)(((byte)(173)))));
             this.chart_load.Enabled = false;
             this.chart_load.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.chart_load.Location = new System.Drawing.Point(360, 449);
-            this.chart_load.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.chart_load.Location = new System.Drawing.Point(315, 337);
+            this.chart_load.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.chart_load.Name = "chart_load";
-            this.chart_load.Size = new System.Drawing.Size(1032, 249);
+            this.chart_load.Size = new System.Drawing.Size(903, 187);
             this.chart_load.TabIndex = 24;
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.display);
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox3.Location = new System.Drawing.Point(7, 400);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox3.Location = new System.Drawing.Point(6, 300);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox3.Size = new System.Drawing.Size(322, 352);
+            this.groupBox3.Size = new System.Drawing.Size(282, 264);
             this.groupBox3.TabIndex = 25;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Message Display";
@@ -412,10 +405,9 @@
             // 
             // syncPanel
             // 
-            this.syncPanel.Location = new System.Drawing.Point(333, 16);
-            this.syncPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.syncPanel.Location = new System.Drawing.Point(291, 12);
             this.syncPanel.Name = "syncPanel";
-            this.syncPanel.Size = new System.Drawing.Size(31, 736);
+            this.syncPanel.Size = new System.Drawing.Size(27, 552);
             this.syncPanel.TabIndex = 26;
             // 
             // label5
@@ -423,9 +415,9 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label5.Location = new System.Drawing.Point(401, 694);
+            this.label5.Location = new System.Drawing.Point(351, 520);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(194, 46);
+            this.label5.Size = new System.Drawing.Size(155, 37);
             this.label5.TabIndex = 27;
             this.label5.Text = "Drive Style: ";
             // 
@@ -434,18 +426,18 @@
             this.displayDriverStyle.AutoSize = true;
             this.displayDriverStyle.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.displayDriverStyle.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.displayDriverStyle.Location = new System.Drawing.Point(589, 694);
+            this.displayDriverStyle.Location = new System.Drawing.Point(515, 520);
             this.displayDriverStyle.Name = "displayDriverStyle";
-            this.displayDriverStyle.Size = new System.Drawing.Size(0, 46);
+            this.displayDriverStyle.Size = new System.Drawing.Size(0, 37);
             this.displayDriverStyle.TabIndex = 28;
             // 
             // OBD2Form
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(7)))), ((int)(((byte)(102)))), ((int)(((byte)(173)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(1387, 756);
+            this.ClientSize = new System.Drawing.Size(1215, 571);
             this.Controls.Add(this.displayDriverStyle);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.syncPanel);
@@ -463,7 +455,6 @@
             this.Controls.Add(this.portTextBox);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "OBD2Form";
             this.Text = "OBD II - Logger";
             this.groupBox1.ResumeLayout(false);
