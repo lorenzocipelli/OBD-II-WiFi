@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.portTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,16 +47,14 @@
             this.urbanButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.videoSyncButton = new System.Windows.Forms.Button();
             this.evalDriveButton = new System.Windows.Forms.Button();
             this.chart_speed = new ScottPlot.FormsPlot();
             this.chart_rpm = new ScottPlot.FormsPlot();
             this.chart_load = new ScottPlot.FormsPlot();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.videoSyncTimer = new System.Windows.Forms.Timer(this.components);
-            this.syncPanel = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.displayDriverStyle = new System.Windows.Forms.Label();
+            this.CSVbutton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -313,7 +310,7 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox2.Controls.Add(this.videoSyncButton);
+            this.groupBox2.Controls.Add(this.CSVbutton);
             this.groupBox2.Controls.Add(this.evalDriveButton);
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.groupBox2.Location = new System.Drawing.Point(7, 237);
@@ -322,22 +319,6 @@
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Active Monitoring";
-            // 
-            // videoSyncButton
-            // 
-            this.videoSyncButton.BackColor = System.Drawing.Color.White;
-            this.videoSyncButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.videoSyncButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.videoSyncButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.videoSyncButton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.videoSyncButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.videoSyncButton.Location = new System.Drawing.Point(151, 22);
-            this.videoSyncButton.Name = "videoSyncButton";
-            this.videoSyncButton.Size = new System.Drawing.Size(120, 23);
-            this.videoSyncButton.TabIndex = 26;
-            this.videoSyncButton.Text = "Video Sync";
-            this.videoSyncButton.UseVisualStyleBackColor = false;
-            this.videoSyncButton.Click += new System.EventHandler(this.videoSyncButton_Click);
             // 
             // evalDriveButton
             // 
@@ -399,17 +380,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Message Display";
             // 
-            // videoSyncTimer
-            // 
-            this.videoSyncTimer.Interval = 2000;
-            // 
-            // syncPanel
-            // 
-            this.syncPanel.Location = new System.Drawing.Point(291, 12);
-            this.syncPanel.Name = "syncPanel";
-            this.syncPanel.Size = new System.Drawing.Size(27, 552);
-            this.syncPanel.TabIndex = 26;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -431,6 +401,22 @@
             this.displayDriverStyle.Size = new System.Drawing.Size(0, 37);
             this.displayDriverStyle.TabIndex = 28;
             // 
+            // CSVbutton
+            // 
+            this.CSVbutton.BackColor = System.Drawing.Color.White;
+            this.CSVbutton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CSVbutton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.CSVbutton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CSVbutton.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.CSVbutton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.CSVbutton.Location = new System.Drawing.Point(151, 22);
+            this.CSVbutton.Name = "CSVbutton";
+            this.CSVbutton.Size = new System.Drawing.Size(120, 23);
+            this.CSVbutton.TabIndex = 8;
+            this.CSVbutton.Text = "Write on CSV";
+            this.CSVbutton.UseVisualStyleBackColor = false;
+            this.CSVbutton.Click += new System.EventHandler(this.CSVbutton_Click);
+            // 
             // OBD2Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -440,7 +426,6 @@
             this.ClientSize = new System.Drawing.Size(1215, 571);
             this.Controls.Add(this.displayDriverStyle);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.syncPanel);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.chart_load);
             this.Controls.Add(this.chart_rpm);
@@ -492,10 +477,8 @@
         private ScottPlot.FormsPlot chart_rpm;
         private ScottPlot.FormsPlot chart_load;
         private GroupBox groupBox3;
-        private Button videoSyncButton;
-        private System.Windows.Forms.Timer videoSyncTimer;
-        private Panel syncPanel;
         private Label label5;
         private Label displayDriverStyle;
+        private Button CSVbutton;
     }
 }

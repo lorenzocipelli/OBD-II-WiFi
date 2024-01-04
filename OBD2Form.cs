@@ -260,8 +260,9 @@ namespace OBD_II_WiFi
             }
         }
 
-        private void updateText(string text) {
-            if (display.InvokeRequired)
+        private void updateText(string text) 
+        {
+            if (displayDriverStyle.InvokeRequired)
             {
                 writeDriveStyleDelegate d = new writeDriveStyleDelegate(updateText);
                 this.Invoke(d, new object[] { text });
@@ -278,7 +279,7 @@ namespace OBD_II_WiFi
                     displayDriverStyle.Text = "ECO";
                     displayDriverStyle.ForeColor = Color.LightGreen;
                 }
-                else if (text == "BUFFERING" || text == "ERROR") {
+                else if (text == "BUFFERING") {
                     displayDriverStyle.Text = "BUFFERING";
                     displayDriverStyle.ForeColor = Color.LightSteelBlue;
                 }
@@ -451,8 +452,9 @@ namespace OBD_II_WiFi
             {
                 currentInfo.DRIVESTYLE = "eco";
                 currentInfo.ROADTYPE = "urban";
-                startListening();
-            } // apertura thread di ascolto della stream
+                mode = -1; // nessuna modalità attiva
+                startListening(); // apertura thread di ascolto della stream
+            } 
             else { display.Text += "\n" + "IP address is unreachable at the moment, try again later..."; }
         }
 
@@ -546,28 +548,20 @@ namespace OBD_II_WiFi
         {
             stopListening = true;
             runEngineMonitoring = false;
+            mode = -1;
             client.Close();
         }
 
         private void evalDriveButton_Click(object sender, EventArgs e)
         {
             mode = 1;
-            askEngineData();
             writeDisplay("Mode Changed");
         }
 
-        private void videoSyncButton_Click(object sender, EventArgs e)
+        private void CSVbutton_Click(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            videoSyncTimer.Tick += new EventHandler(TimerEventProcessor);
-            syncPanel.BackColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
-            videoSyncTimer.Enabled = true;
-        }
-
-        private void TimerEventProcessor(object myObject, EventArgs e)
-        {
-            syncPanel.BackColor = Color.FromArgb(7, 102, 173);
-            videoSyncTimer.Enabled = false;
+            mode = 0;
+            writeDisplay("Mode Changed");
         }
     }
 }
