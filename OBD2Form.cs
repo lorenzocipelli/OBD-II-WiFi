@@ -193,11 +193,20 @@ namespace OBD_II_WiFi
                                                     {
                                                         responseContent = responseAsJson["prediction"].ToString();
                                                         writeDisplay(responseContent);
+                                                        if (responseContent == "SPORT") {
+                                                            displayDriverStyle.Text = "SPORT";
+                                                            displayDriverStyle.ForeColor = Color.LightCoral;
+                                                        } else if (responseContent == "ECO") {
+                                                            displayDriverStyle.Text = "ECO";
+                                                            displayDriverStyle.ForeColor = Color.LightGreen;
+                                                        }
                                                     }
                                                     else if (responseState == "BUFFERING" || responseState == "ERROR")
                                                     {
                                                         responseContent = responseAsJson["message"].ToString();
                                                         writeDisplay(responseContent);
+                                                        displayDriverStyle.Text = "BUFFERING";
+                                                        displayDriverStyle.ForeColor = Color.LightSteelBlue;
                                                     }
                                                 }
                                             }
